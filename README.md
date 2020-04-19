@@ -1,14 +1,40 @@
 # storybook_flutter
 
-A new Flutter project.
+Create a simple storybook to showcase widgets.
+
+![](./meta/preview.png)
 
 ## Getting Started
 
-This project is a starting point for a Dart
-[package](https://flutter.dev/developing-packages/),
-a library module containing code that can be shared easily across
-multiple Flutter or Dart projects.
+```dart
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) => Storybook(
+    children: [
+      Story(
+        name: 'Flat button',
+        child: MaterialButton(child: Text('Flat button'), onPressed: () {}),
+      ),
+      Story(
+        name: 'Raised button',
+        child: RaisedButton(child: Text('Raised button'), onPressed: () {}),
+      ),
+      Story(
+        name: 'Input field',
+        child: TextField(
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: 'Input field',
+          ),
+        ),
+      ),
+    ],
+  );
+}
+```
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+## Features and bugs
+
+Please file feature requests and bugs at the [issue tracker][tracker].
+
+[tracker]: https://github.com/ookami-kb/storybook_flutter/issues
