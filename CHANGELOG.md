@@ -1,3 +1,7 @@
+## 0.0.4
+- Fixed docs.
+- Fixed exported components.
+
 ## 0.0.3
 - Fixed docs.
 - Removed stub classes.

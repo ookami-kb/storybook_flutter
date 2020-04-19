@@ -9,28 +9,28 @@ import 'package:storybook_flutter/src/story.dart';
 ///
 /// This example shows how to create a simple Storybook:
 ///
-/// ```dart
+/// ```
 /// Widget build(BuildContext context) => Storybook(
-//      children: [
-//        Story(
-//          name: 'Flat button',
-//          child: MaterialButton(child: Text('Flat button'), onPressed: () {}),
-//        ),
-//        Story(
-//          name: 'Raised button',
-//          child: RaisedButton(child: Text('Raised button'), onPressed: () {}),
-//        ),
-//        Story(
-//          name: 'Input field',
-//          child: TextField(
-//            decoration: InputDecoration(
-//              border: OutlineInputBorder(),
-//              labelText: 'Input field',
-//            ),
-//          ),
-//        ),
-//      ],
-//    );
+///     children: [
+///       Story(
+///         name: 'Flat button',
+///         child: MaterialButton(child: Text('Flat button'), onPressed: () {}),
+///       ),
+///       Story(
+///         name: 'Raised button',
+///         child: RaisedButton(child: Text('Raised button'), onPressed: () {}),
+///       ),
+///       Story(
+///         name: 'Input field',
+///         child: TextField(
+///           decoration: InputDecoration(
+///             border: OutlineInputBorder(),
+///             labelText: 'Input field',
+///           ),
+///         ),
+///       ),
+///     ],
+///   );
 /// ```
 class Storybook extends StatelessWidget {
   Storybook({Key key, this.children = const []}) : super(key: key);
