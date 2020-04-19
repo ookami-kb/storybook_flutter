@@ -2,7 +2,7 @@
 
 Create a simple storybook to showcase widgets.
 
-![](./meta/preview.png)
+![](https://github.com/ookami-kb/storybook_flutter/raw/master/meta/preview.png)
 
 ## Getting Started
 

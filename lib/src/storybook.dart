@@ -7,8 +7,7 @@ import 'package:storybook_flutter/src/story.dart';
 ///
 /// It generates Contents in navigation drawer based on stories names.
 ///
-/// {@tool sample --template=stateless_widget_material}
-/// This example shows how to create a simple Storybook.
+/// This example shows how to create a simple Storybook:
 ///
 /// ```dart
 /// Widget build(BuildContext context) => Storybook(
@@ -33,7 +32,6 @@ import 'package:storybook_flutter/src/story.dart';
 //      ],
 //    );
 /// ```
-/// {@end-tool}
 class Storybook extends StatelessWidget {
   Storybook({Key key, this.children = const []}) : super(key: key);
 
