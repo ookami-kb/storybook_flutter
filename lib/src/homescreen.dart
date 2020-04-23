@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:storybook_flutter/src/breakpoint.dart';
+import 'package:storybook_flutter/src/route.dart';
 import 'package:storybook_flutter/src/story.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -24,11 +26,12 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  bool get _shouldDisplayDrawer =>
+      MediaQuery.of(context).breakpoint == Breakpoint.small;
+
   @override
   Widget build(BuildContext context) => Scaffold(
-        drawer: Drawer(
-          child: _Contents(onTap: _onStoryTap, children: widget.children),
-        ),
+        drawer: _shouldDisplayDrawer ? Drawer(child: _buildContents()) : null,
         appBar: AppBar(
           title: StreamBuilder<String>(
             stream: _title.stream,
@@ -36,14 +39,28 @@ class _HomeScreenState extends State<HomeScreen> {
             builder: (context, snapshot) => Text(snapshot.data),
           ),
         ),
-        body: Navigator(
-          key: navigatorKey,
-          onGenerateRoute: (settings) => MaterialPageRoute(
-            maintainState: false,
-            settings: settings,
-            builder: (context) => _buildStory(context, _getElement(settings)),
-          ),
+        body: _shouldDisplayDrawer
+            ? _buildBody()
+            : Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Container(child: _buildContents(), width: 200),
+                  Expanded(child: _buildBody()),
+                ],
+              ),
+      );
+
+  Navigator _buildBody() => Navigator(
+        key: navigatorKey,
+        onGenerateRoute: (settings) => StoryRoute(
+          settings: settings,
+          builder: (context) => _buildStory(context, _getElement(settings)),
         ),
+      );
+
+  _Contents _buildContents() => _Contents(
+        onTap: _onStoryTap,
+        children: widget.children,
       );
 
   Widget _buildStory(BuildContext context, Story story) {
@@ -52,13 +69,13 @@ class _HomeScreenState extends State<HomeScreen> {
     }
     return Container(
       color: Colors.white,
-      child: Center(child: story ?? Text('Select widget')),
+      child: Center(child: story ?? Text('Select story')),
     );
   }
 
   void _onStoryTap(Story story) {
     navigatorKey.currentState.pushReplacementNamed('/stories/${story.path}');
-    Navigator.of(context).pop();
+    if (_shouldDisplayDrawer) Navigator.of(context).pop();
   }
 
   Story _getElement(RouteSettings settings) => widget.children.firstWhere(
