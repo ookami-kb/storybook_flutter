@@ -17,7 +17,7 @@ abstract class KnobsBuilder {
 
   String text(String label, {String initial = ''});
 
-  T options<T>(String label, {T initial, List<Select<T>> options});
+  T options<T>(String label, {T initial, List<Option<T>> options});
 }
 
 class Knobs extends ChangeNotifier implements KnobsBuilder {
@@ -32,7 +32,7 @@ class Knobs extends ChangeNotifier implements KnobsBuilder {
       _addKnob(StringKnob(label, initial));
 
   @override
-  T options<T>(String label, {T initial, List<Select<T>> options}) =>
+  T options<T>(String label, {T initial, List<Option<T>> options}) =>
       _addKnob(SelectKnob(label, initial, options));
 
   T _addKnob<T>(Knob<T> value) =>

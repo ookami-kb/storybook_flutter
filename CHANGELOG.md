@@ -1,3 +1,6 @@
+## 0.0.5
+- Added knobs.
+
 ## 0.0.4
 - Fixed docs.
 - Fixed exported components.

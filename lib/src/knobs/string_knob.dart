@@ -1,27 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:storybook_flutter/src/knobs/knobs.dart';
+import 'package:storybook_flutter/src/knobs/utils.dart';
 
 class StringKnob extends Knob<String> {
   StringKnob(String label, String value) : super(label, value);
 
   @override
-  Widget build() => StringKnobWidget(label: label);
+  Widget build() => StringKnobWidget(label: label, value: value);
 }
 
 class StringKnobWidget extends StatelessWidget {
-  const StringKnobWidget({Key key, this.label}) : super(key: key);
+  const StringKnobWidget({Key key, this.label, this.value}) : super(key: key);
 
   final String label;
+  final String value;
 
   @override
-  Widget build(BuildContext context) => Consumer<Knobs>(
-        builder: (context, knobs, _) => ListTile(
-          title: TextFormField(
-            decoration: InputDecoration(labelText: label),
-            initialValue: knobs.get(label),
-            onChanged: (v) => knobs.update(label, v),
-          ),
+  Widget build(BuildContext context) => ListTile(
+        title: TextFormField(
+          decoration: InputDecoration(labelText: label),
+          initialValue: value,
+          onChanged: (v) => context.knobs.update(label, v),
         ),
       );
 }

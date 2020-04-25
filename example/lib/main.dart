@@ -22,8 +22,8 @@ class MyApp extends StatelessWidget {
                 'Color',
                 initial: Colors.deepOrange,
                 options: const [
-                  Select('Red', Colors.deepOrange),
-                  Select('Green', Colors.teal),
+                  Option('Red', Colors.deepOrange),
+                  Option('Green', Colors.teal),
                 ],
               ),
               textColor: Colors.white,

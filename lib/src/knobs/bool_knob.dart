@@ -1,26 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:storybook_flutter/src/knobs/knob_panel.dart';
 import 'package:storybook_flutter/src/knobs/knobs.dart';
+import 'package:storybook_flutter/src/knobs/utils.dart';
 
 class BoolKnob extends Knob<bool> {
   BoolKnob(String label, bool value) : super(label, value);
 
   @override
-  Widget build() => BooleanKnobWidget(label: label);
+  Widget build() => BooleanKnobWidget(label: label, value: value);
 }
 
 class BooleanKnobWidget extends StatelessWidget {
-  const BooleanKnobWidget({Key key, this.label}) : super(key: key);
+  const BooleanKnobWidget({Key key, this.label, this.value}) : super(key: key);
 
   final String label;
+  final bool value;
 
   @override
-  Widget build(BuildContext context) => Consumer<Knobs>(
-        builder: (context, knobs, _) => CheckboxListTile(
-          title: Text(label),
-          value: knobs.get(label),
-          onChanged: (v) => knobs.update(label, v),
-        ),
+  Widget build(BuildContext context) => CheckboxListTile(
+        title: Text(label),
+        value: value,
+        onChanged: (v) => context.knobs.update(label, v),
       );
 }
