@@ -10,20 +10,29 @@ class MyApp extends StatelessWidget {
           Story(
             name: 'Flat button',
             builder: (_, k) => MaterialButton(
-              child: Text(k.text('Text', initial: 'Flat button')),
               onPressed: k.boolean('Enabled', initial: true) ? () {} : null,
+              child: Text(k.text('Text', initial: 'Flat button')),
             ),
           ),
           Story(
             name: 'Raised button',
             builder: (_, k) => RaisedButton(
-              child: Text(k.text('Text', initial: 'Raised button')),
               onPressed: k.boolean('Enabled', initial: true) ? () {} : null,
+              color: k.options(
+                'Color',
+                initial: Colors.deepOrange,
+                options: const [
+                  Select('Red', Colors.deepOrange),
+                  Select('Green', Colors.teal),
+                ],
+              ),
+              textColor: Colors.white,
+              child: Text(k.text('Text', initial: 'Raised button')),
             ),
           ),
           Story.simple(
             name: 'Input field',
-            child: TextField(
+            child: const TextField(
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Input field',
