@@ -18,5 +18,3 @@ class KnobPanel extends StatelessWidget {
               ),
       );
 }
-
-
