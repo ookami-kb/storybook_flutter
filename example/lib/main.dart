@@ -9,13 +9,19 @@ class MyApp extends StatelessWidget {
         children: [
           Story(
             name: 'Flat button',
-            child: MaterialButton(child: Text('Flat button'), onPressed: () {}),
+            builder: (_, k) => MaterialButton(
+              child: Text(k.text('Text', initial: 'Flat button')),
+              onPressed: k.boolean('Enabled', initial: true) ? () {} : null,
+            ),
           ),
           Story(
             name: 'Raised button',
-            child: RaisedButton(child: Text('Raised button'), onPressed: () {}),
+            builder: (_, k) => RaisedButton(
+              child: Text(k.text('Text', initial: 'Raised button')),
+              onPressed: k.boolean('Enabled', initial: true) ? () {} : null,
+            ),
           ),
-          Story(
+          Story.simple(
             name: 'Input field',
             child: TextField(
               decoration: InputDecoration(

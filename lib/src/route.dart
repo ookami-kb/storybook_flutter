@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-class StoryRoute extends PopupRoute {
+class StoryRoute extends PopupRoute<void> {
   StoryRoute({
     @required this.builder,
     RouteSettings settings,

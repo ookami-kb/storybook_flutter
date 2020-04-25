@@ -33,18 +33,18 @@ import 'package:storybook_flutter/src/story.dart';
 ///   );
 /// ```
 class Storybook extends StatelessWidget {
-  Storybook({Key key, this.children = const []}) : super(key: key);
+  const Storybook({Key key, this.children = const []}) : super(key: key);
 
   /// Stories in the storybook.
   final List<Story> children;
 
   @override
   Widget build(BuildContext context) => MaterialApp(
-        onGenerateRoute: (settings) => MaterialPageRoute(
+        onGenerateRoute: (settings) => MaterialPageRoute<void>(
           settings: settings,
           maintainState: false,
           builder: (context) =>
-              HomeScreen(children: children, settings: settings),
+              HomeScreen(settings: settings, children: children),
         ),
       );
 }

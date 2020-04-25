@@ -5,7 +5,7 @@ import 'package:storybook_flutter/src/route.dart';
 import 'package:storybook_flutter/src/story.dart';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({Key key, this.children, this.settings}) : super(key: key);
+  const HomeScreen({Key key, this.children, this.settings}) : super(key: key);
 
   final List<Story> children;
   final RouteSettings settings;
@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
             : Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  Container(child: _buildContents(), width: 200),
+                  Container(width: 200, child: _buildContents()),
                   Expanded(child: _buildBody()),
                 ],
               ),
@@ -69,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
     return Container(
       color: Colors.white,
-      child: Center(child: story ?? Text('Select story')),
+      child: Center(child: story ?? const Text('Select story')),
     );
   }
 
