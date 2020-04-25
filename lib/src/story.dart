@@ -8,8 +8,9 @@ class Story extends StatelessWidget {
   const Story({
     Key key,
     @required this.name,
-    @required this.child,
-  }) : super(key: key);
+    @required Widget child,
+  })  : this._child = child,
+        super(key: key);
 
   /// A unique name to identify this story.
   ///
@@ -17,7 +18,7 @@ class Story extends StatelessWidget {
   final String name;
 
   /// Widget to be displayed in the story. It will be centered on the page.
-  final Widget child;
+  final Widget _child;
 
   String get path => ReCase(name).paramCase;
 
@@ -25,7 +26,7 @@ class Story extends StatelessWidget {
   Widget build(BuildContext context) => Padding(
         padding: EdgeInsets.all(16),
         child: Center(
-          child: child,
+          child: _child,
         ),
       );
 }
