@@ -12,12 +12,29 @@ abstract class Knob<T> {
   Widget build();
 }
 
+/// Provides helper methods for creating knobs: control elements
+/// that can be used in stories to dynamically update its properties.
+///
+/// It's injected into a story builder, so you can use it there:
+///
+/// ```dart
+///  Story(
+///    name: 'Flat button',
+///    builder: (_, k) => MaterialButton(
+///      onPressed: k.boolean('Enabled', initial: true) ? () {} : null,
+///      child: Text(k.text('Text', initial: 'Flat button')),
+///    ),
+///  )
+///  ```
 abstract class KnobsBuilder {
+  /// Creates checkbox with [label] and [initial] value.
   bool boolean(String label, {bool initial = false});
 
+  /// Creates text input field with [label] and [initial] value.
   String text(String label, {String initial = ''});
 
-  T options<T>(String label, {T initial, List<Option<T>> options});
+  /// Creates select field with [label], [initial] value and list of [options].
+  T options<T>(String label, {T initial, List<Option<T>> options = const []});
 }
 
 class Knobs extends ChangeNotifier implements KnobsBuilder {
@@ -32,7 +49,7 @@ class Knobs extends ChangeNotifier implements KnobsBuilder {
       _addKnob(StringKnob(label, initial));
 
   @override
-  T options<T>(String label, {T initial, List<Option<T>> options}) =>
+  T options<T>(String label, {T initial, List<Option<T>> options = const []}) =>
       _addKnob(SelectKnob(label, initial, options));
 
   T _addKnob<T>(Knob<T> value) =>

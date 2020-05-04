@@ -15,7 +15,7 @@ class SelectKnob<T> extends Knob<T> {
       );
 }
 
-/// Option for select field.
+/// Option for select knob.
 class Option<T> {
   const Option(this.text, this.value);
 

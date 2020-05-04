@@ -1,3 +1,6 @@
+## 0.0.6
+- Exported KnobsBuilder, updated documentation.
+
 ## 0.0.5
 - Added knobs.
 
