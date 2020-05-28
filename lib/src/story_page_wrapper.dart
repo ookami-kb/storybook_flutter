@@ -18,28 +18,26 @@ class StoryPageWrapper extends StatelessWidget {
       (element) => element.path == path,
       orElse: () => null,
     );
+
+    final contents = _Contents(
+      onTap: (story) => _onStoryTap(context, story),
+      children: stories,
+    );
+
     return Scaffold(
-      drawer: _shouldDisplayDrawer(context)
-          ? Drawer(child: _buildContents(context, stories))
-          : null,
+      drawer: _shouldDisplayDrawer(context) ? Drawer(child: contents) : null,
       appBar: AppBar(title: Text(story?.name ?? 'Storybook')),
       body: _shouldDisplayDrawer(context)
           ? _buildStory(context, story)
           : Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                Container(width: 200, child: _buildContents(context, stories)),
+                Container(width: 200, child: contents),
                 Expanded(child: _buildStory(context, story)),
               ],
             ),
     );
   }
-
-  _Contents _buildContents(BuildContext context, List<Story> stories) =>
-      _Contents(
-        onTap: (story) => _onStoryTap(context, story),
-        children: stories,
-      );
 
   Widget _buildStory(BuildContext context, Story story) => Container(
         color: Colors.white,
