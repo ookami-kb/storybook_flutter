@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:storybook_flutter/src/homescreen.dart';
+import 'package:provider/provider.dart';
+import 'package:storybook_flutter/src/route.dart';
 import 'package:storybook_flutter/src/story.dart';
+import 'package:storybook_flutter/src/story_page_wrapper.dart';
 
 /// A collection of stories.
 ///
@@ -39,12 +41,15 @@ class Storybook extends StatelessWidget {
   final List<Story> children;
 
   @override
-  Widget build(BuildContext context) => MaterialApp(
-        onGenerateRoute: (settings) => MaterialPageRoute<void>(
-          settings: settings,
-          maintainState: false,
-          builder: (context) =>
-              HomeScreen(settings: settings, children: children),
+  Widget build(BuildContext context) => Provider.value(
+        value: children,
+        child: MaterialApp(
+          onGenerateRoute: (settings) => StoryRoute(
+            settings: settings,
+            builder: (_) => StoryPageWrapper(
+              path: settings.name.replaceFirst('/stories/', ''),
+            ),
+          ),
         ),
       );
 }

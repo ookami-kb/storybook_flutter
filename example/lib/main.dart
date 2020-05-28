@@ -7,13 +7,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Storybook(
         children: [
-  Story(
-    name: 'Flat button',
-    builder: (_, k) => MaterialButton(
-      onPressed: k.boolean('Enabled', initial: true) ? () {} : null,
-      child: Text(k.text('Text', initial: 'Flat button')),
-    ),
-  ),
+          Story(
+            name: 'Flat button',
+            builder: (_, k) => MaterialButton(
+              onPressed: k.boolean('Enabled', initial: true) ? () {} : null,
+              child: Text(k.text('Text', initial: 'Flat button')),
+            ),
+          ),
           Story(
             name: 'Raised button',
             builder: (_, k) => RaisedButton(

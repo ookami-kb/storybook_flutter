@@ -26,5 +26,5 @@ class StoryRoute extends PopupRoute<void> {
       builder(context);
 
   @override
-  Duration get transitionDuration => const Duration(milliseconds: 300);
+  Duration get transitionDuration => const Duration();
 }
