@@ -7,9 +7,9 @@ environment:
   sdk: ">=2.6.0 <3.0.0"
 
 dependencies:
-  provider: '>=4.0.0 <5.0.0'
-  recase: '>=3.0.0 <4.0.0'
-  rxdart: '>=0.24.0 <1.0.0'
+  provider: ">=4.0.0 <5.0.0"
+  recase: "^2.0.1"
+  rxdart: ">=0.24.0 <1.0.0"
   flutter:
     sdk: flutter
 
