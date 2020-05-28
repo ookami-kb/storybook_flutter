@@ -12,8 +12,8 @@ class Story extends StatefulWidget {
   const Story({
     Key key,
     @required this.name,
-    @required this.builder,
-  })  :
+    @required StoryBuilder builder,
+  })  : _builder = builder,
         super(key: key);
 
   Story.simple({
@@ -28,7 +28,7 @@ class Story extends StatefulWidget {
   final String name;
 
   /// Widget to be displayed in the story. It will be centered on the page.
-  final StoryBuilder builder;
+  final StoryBuilder _builder;
 
   String get path => ReCase(name).paramCase;
 
@@ -53,7 +53,7 @@ class _StoryState extends State<Story> {
                   child: Builder(
                     builder: (_) => Consumer<Knobs>(
                       builder: (context, _, __) =>
-                          widget.builder(context, _knobs),
+                          widget._builder(context, _knobs),
                     ),
                   ),
                 ),
