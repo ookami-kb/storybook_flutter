@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:storybook_flutter/src/breakpoint.dart';
@@ -21,9 +22,11 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      navigatorKey.currentState.pushReplacementNamed(widget.settings.name);
-    });
+    if (kIsWeb) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        navigatorKey.currentState.pushReplacementNamed(widget.settings.name);
+      });
+    }
   }
 
   bool get _shouldDisplayDrawer =>
