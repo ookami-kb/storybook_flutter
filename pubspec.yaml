@@ -1,6 +1,6 @@
 name: storybook_flutter
 description: A storybook for Flutter widgets. Live preview of isolated widgets for faster development and showcase.
-version: 0.0.6
+version: 0.1.0
 homepage: https://github.com/ookami-kb/storybook_flutter
 
 environment:

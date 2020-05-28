@@ -1,3 +1,8 @@
+## 0.1.0
+- Fixed routing to support hot reloading for stories.
+- Reduced dependencies constraints for recase.
+- Added support for theme overriding.
+
 ## 0.0.6
 - Exported KnobsBuilder, updated documentation.
 
