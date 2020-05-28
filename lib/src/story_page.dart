@@ -1,39 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:storybook_flutter/src/breakpoint.dart';
 import 'package:storybook_flutter/src/story.dart';
 
-final _scaffoldKey = GlobalKey();
-
-class StoryPage extends StatelessWidget {
-  const StoryPage({Key key, this.story, this.stories}) : super(key: key);
+class StoryPageWrapper extends StatelessWidget {
+  const StoryPageWrapper({Key key, this.path}) : super(key: key);
 
   bool _shouldDisplayDrawer(BuildContext context) =>
       MediaQuery.of(context).breakpoint == Breakpoint.small;
 
-  final Story story;
-  final List<Story> stories;
+  final String path;
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-//        key: _scaffoldKey,
-        drawer: _shouldDisplayDrawer(context)
-            ? Drawer(child: _buildContents(context))
-            : null,
-        appBar: AppBar(
-          title: Text(story?.name ?? 'Storybook'),
-        ),
-        body: _shouldDisplayDrawer(context)
-            ? _buildStory(context, story)
-            : Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Container(width: 200, child: _buildContents(context)),
-                  Expanded(child: _buildStory(context, story)),
-                ],
-              ),
-      );
+  Widget build(BuildContext context) {
+    final stories = Provider.of<List<Story>>(context);
+    final story = stories.firstWhere(
+      (element) => element.path == path,
+      orElse: () => null,
+    );
+    return Scaffold(
+      drawer: _shouldDisplayDrawer(context)
+          ? Drawer(child: _buildContents(context, stories))
+          : null,
+      appBar: AppBar(title: Text(story?.name ?? 'Storybook')),
+      body: _shouldDisplayDrawer(context)
+          ? _buildStory(context, story)
+          : Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Container(width: 200, child: _buildContents(context, stories)),
+                Expanded(child: _buildStory(context, story)),
+              ],
+            ),
+    );
+  }
 
-  _Contents _buildContents(BuildContext context) => _Contents(
+  _Contents _buildContents(BuildContext context, List<Story> stories) =>
+      _Contents(
         onTap: (story) => _onStoryTap(context, story),
         children: stories,
       );

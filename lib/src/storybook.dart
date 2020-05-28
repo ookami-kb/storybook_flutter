@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:storybook_flutter/src/route.dart';
 import 'package:storybook_flutter/src/story.dart';
 import 'package:storybook_flutter/src/story_page.dart';
@@ -40,18 +41,15 @@ class Storybook extends StatelessWidget {
   final List<Story> children;
 
   @override
-  Widget build(BuildContext context) => MaterialApp(
-        onGenerateRoute: (settings) => StoryRoute(
-          settings: settings,
-          builder: (context) => StoryPage(
-            story: _getElement(settings),
-            stories: children,
+  Widget build(BuildContext context) => Provider.value(
+        value: children,
+        child: MaterialApp(
+          onGenerateRoute: (settings) => StoryRoute(
+            settings: settings,
+            builder: (_) => StoryPageWrapper(
+              path: settings.name.replaceFirst('/stories/', ''),
+            ),
           ),
         ),
-      );
-
-  Story _getElement(RouteSettings settings) => children.firstWhere(
-        (element) => '/stories/${element.path}' == settings.name,
-        orElse: () => null,
       );
 }
