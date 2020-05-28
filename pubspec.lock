@@ -115,7 +115,7 @@ packages:
       name: provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.5"
+    version: "4.1.2"
   quiver:
     dependency: transitive
     description:
@@ -136,7 +136,7 @@ packages:
       name: rxdart
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.24.0"
+    version: "0.24.1"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -206,5 +206,5 @@ packages:
     source: hosted
     version: "3.6.1"
 sdks:
-  dart: ">=2.6.0 <3.0.0"
-  flutter: ">=1.12.1"
+  dart: ">=2.7.0 <3.0.0"
+  flutter: ">=1.16.0"
