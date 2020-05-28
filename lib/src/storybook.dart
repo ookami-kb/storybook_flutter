@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:storybook_flutter/src/route.dart';
 import 'package:storybook_flutter/src/story.dart';
-import 'package:storybook_flutter/src/story_page.dart';
+import 'package:storybook_flutter/src/story_page_wrapper.dart';
 
 /// A collection of stories.
 ///

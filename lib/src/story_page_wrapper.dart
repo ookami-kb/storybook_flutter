@@ -48,7 +48,7 @@ class StoryPageWrapper extends StatelessWidget {
 
   void _onStoryTap(BuildContext context, Story story) {
     if (_shouldDisplayDrawer(context)) Navigator.of(context).pop();
-    Navigator.pushReplacementNamed(context, '/stories/${story.path}');
+    Navigator.pushNamed(context, '/stories/${story.path}');
   }
 }
 
