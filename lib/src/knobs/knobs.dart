@@ -60,7 +60,6 @@ class Knobs extends ChangeNotifier implements KnobsBuilder {
       (_knobs.putIfAbsent(value.label, () => value) as Knob<T>).value;
 
   void update<T>(String label, T value) {
-    print('$label changed to $value');
     _knobs[label].value = value;
     notifyListeners();
   }
