@@ -35,7 +35,7 @@ abstract class KnobsBuilder {
   String text(String label, {String initial = ''});
 
   double slider(String label,
-      {double initial = 0, double max = 100, double min = 0});
+      {double initial = 0, double max = 1, double min = 0});
 
   /// Creates select field with [label], [initial] value and list of [options].
   T options<T>(String label, {T initial, List<Option<T>> options = const []});
