@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
                   Option('Green', Colors.teal),
                 ],
               ),
-              elevation: k.slider('Elevation'),
+              elevation: k.slider('Elevation', initial: 0, max: 20),
               textColor: Colors.white,
               child: Text(k.text('Text', initial: 'Raised button')),
             ),
