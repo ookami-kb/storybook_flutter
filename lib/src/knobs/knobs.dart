@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:storybook_flutter/src/knobs/bool_knob.dart';
 import 'package:storybook_flutter/src/knobs/select_knob.dart';
+import 'package:storybook_flutter/src/knobs/slider_knob.dart';
 import 'package:storybook_flutter/src/knobs/string_knob.dart';
 
 abstract class Knob<T> {
@@ -33,6 +34,9 @@ abstract class KnobsBuilder {
   /// Creates text input field with [label] and [initial] value.
   String text(String label, {String initial = ''});
 
+  double slider(String label,
+      {double initial = 0, double max = 1, double min = 0});
+
   /// Creates select field with [label], [initial] value and list of [options].
   T options<T>(String label, {T initial, List<Option<T>> options = const []});
 }
@@ -63,4 +67,9 @@ class Knobs extends ChangeNotifier implements KnobsBuilder {
   T get<T>(String label) => _knobs[label].value as T;
 
   List<Knob> all() => _knobs.values.toList();
+
+  @override
+  double slider(String label,
+          {double initial = 0, double max = 1, double min = 0}) =>
+      _addKnob(SliderKnob(label, value: initial, max: max, min: min));
 }
