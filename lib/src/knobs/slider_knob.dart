@@ -23,16 +23,13 @@ class SliderKnobWidget extends StatelessWidget {
   final double value;
 
   @override
-  Widget build(BuildContext context) => Column(
-        children: [
-          Text(label, style: const TextStyle(fontSize: 20)),
-          Text(value.toStringAsFixed(0)),
-          Slider(
-            value: value,
-            onChanged: (v) => context.knobs.update(label, v),
-            max: max,
-            min: min,
-          ),
-        ],
+  Widget build(BuildContext context) => ListTile(
+        subtitle: Slider(
+          value: value,
+          onChanged: (v) => context.knobs.update(label, v),
+          max: max,
+          min: min,
+        ),
+        title: Text('$label (${value.toStringAsFixed(2)})'),
       );
 }
