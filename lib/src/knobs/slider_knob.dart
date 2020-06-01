@@ -14,8 +14,13 @@ class SliderKnob extends Knob<double> {
 }
 
 class SliderKnobWidget extends StatelessWidget {
-  const SliderKnobWidget({Key key, this.label, this.value, this.min, this.max})
-      : super(key: key);
+  const SliderKnobWidget({
+    Key key,
+    this.label,
+    this.value,
+    this.min,
+    this.max,
+  }) : super(key: key);
 
   final String label;
   final double min;

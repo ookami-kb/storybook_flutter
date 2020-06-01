@@ -1,3 +1,6 @@
+## 0.1.1
+- Added slider knob
+
 ## 0.1.0
 - Fixed routing to support hot reloading for stories.
 - Reduced dependencies constraints for recase.
