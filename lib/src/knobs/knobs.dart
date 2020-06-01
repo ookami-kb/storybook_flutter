@@ -70,6 +70,6 @@ class Knobs extends ChangeNotifier implements KnobsBuilder {
 
   @override
   double slider(String label,
-          {double initial = 0, double max = 100, double min = 0}) =>
+          {double initial = 0, double max = 1, double min = 0}) =>
       _addKnob(SliderKnob(label, value: initial, max: max, min: min));
 }
