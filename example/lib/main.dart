@@ -8,6 +8,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) => Storybook(
         children: [
           Story(
+            section: 'Button',
             name: 'Flat button',
             builder: (_, k) => MaterialButton(
               onPressed: k.boolean('Enabled', initial: true) ? () {} : null,
@@ -15,6 +16,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
           Story(
+            section: 'Button',
             name: 'Raised button',
             builder: (_, k) => RaisedButton(
               onPressed: k.boolean('Enabled', initial: true) ? () {} : null,

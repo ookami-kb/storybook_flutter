@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:storybook_flutter/src/breakpoint.dart';
+import 'package:storybook_flutter/src/iterables.dart';
 import 'package:storybook_flutter/src/story.dart';
 
 class StoryPageWrapper extends StatelessWidget {
@@ -61,11 +62,22 @@ class _Contents extends StatelessWidget {
   final void Function(Story) onTap;
 
   @override
-  Widget build(BuildContext context) =>
-      ListView(children: children.map(_buildStoryTile).toList());
+  Widget build(BuildContext context) {
+    final grouped = children.groupBy((s) => s.section);
+    final sections = grouped.keys
+        .where((k) => k.isNotEmpty)
+        .map((k) => _buildSection(k, grouped[k]));
+    final stories = (grouped[''] ?? []).map(_buildStoryTile);
+    return ListView(children: [...sections, ...stories]);
+  }
 
   Widget _buildStoryTile(Story story) => ListTile(
         title: Text(story.name),
         onTap: () => onTap(story),
+      );
+
+  Widget _buildSection(String title, Iterable<Story> stories) => ExpansionTile(
+        title: Text(title),
+        children: stories.map(_buildStoryTile).toList(),
       );
 }

@@ -13,6 +13,7 @@ class Story extends StatefulWidget {
     Key key,
     @required this.name,
     @required StoryBuilder builder,
+    this.section = ''
   })  : _builder = builder,
         super(key: key);
 
@@ -20,12 +21,15 @@ class Story extends StatefulWidget {
     Key key,
     @required String name,
     @required Widget child,
-  }) : this(key: key, name: name, builder: (_, __) => child);
+    String section = ''
+  }) : this(key: key, name: name, builder: (_, __) => child, section: section);
 
   /// A unique name to identify this story.
   ///
   /// It's used to generate list item in Contents.
   final String name;
+
+  final String section;
 
   /// Widget to be displayed in the story. It will be centered on the page.
   final StoryBuilder _builder;
