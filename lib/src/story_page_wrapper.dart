@@ -22,6 +22,7 @@ class StoryPageWrapper extends StatelessWidget {
 
     final contents = _Contents(
       onTap: (story) => _onStoryTap(context, story),
+      current: story,
       children: stories,
     );
 
@@ -56,9 +57,11 @@ class _Contents extends StatelessWidget {
     Key key,
     @required this.onTap,
     @required this.children,
+    this.current,
   }) : super(key: key);
 
   final List<Story> children;
+  final Story current;
   final void Function(Story) onTap;
 
   @override
@@ -74,10 +77,12 @@ class _Contents extends StatelessWidget {
   Widget _buildStoryTile(Story story) => ListTile(
         title: Text(story.name),
         onTap: () => onTap(story),
+        selected: story == current,
       );
 
   Widget _buildSection(String title, Iterable<Story> stories) => ExpansionTile(
         title: Text(title),
+        initiallyExpanded: stories.contains(current),
         children: stories.map(_buildStoryTile).toList(),
       );
 }
