@@ -29,6 +29,9 @@ class Story extends StatefulWidget {
   /// It's used to generate list item in Contents.
   final String name;
 
+  /// Section title.
+  ///
+  /// Stories will be grouped by sections.
   final String section;
 
   /// Widget to be displayed in the story. It will be centered on the page.
