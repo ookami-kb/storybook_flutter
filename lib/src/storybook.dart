@@ -39,6 +39,7 @@ class Storybook extends StatelessWidget {
     Key key,
     this.children = const [],
     this.theme,
+    this.localizationDelegates
   }) : super(key: key);
 
   /// Theme override
@@ -47,11 +48,15 @@ class Storybook extends StatelessWidget {
   /// Stories in the storybook.
   final List<Story> children;
 
+  /// Localizations Delegates override
+  final List<LocalizationsDelegate> localizationDelegates;
+
   @override
   Widget build(BuildContext context) => Provider.value(
         value: children,
         child: MaterialApp(
           theme: theme ?? Theme.of(context),
+          localizationsDelegates: localizationDelegates,
           onGenerateRoute: (settings) => StoryRoute(
             settings: settings,
             builder: (_) => StoryPageWrapper(
