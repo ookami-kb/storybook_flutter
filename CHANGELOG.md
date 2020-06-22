@@ -1,8 +1,11 @@
+## 0.1.3
+- Added localizationDelegates parameter to Storybook.
+
 ## 0.1.2
 - Added sections.
 
 ## 0.1.1
-- Added slider knob
+- Added slider knob.
 
 ## 0.1.0
 - Fixed routing to support hot reloading for stories.
