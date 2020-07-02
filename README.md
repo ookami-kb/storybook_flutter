@@ -15,6 +15,8 @@ class MyApp extends StatelessWidget {
         children: [
           Story(
             name: 'Flat button',
+            padding: EdgeInsets.all(5), // optional padding customization
+            background: Colors.red, // optional background color customization
             builder: (_, k) => MaterialButton(
               onPressed: k.boolean('Enabled', initial: true) ? () {} : null,
               child: Text(k.text('Text', initial: 'Flat button')),

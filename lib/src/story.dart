@@ -13,7 +13,9 @@ class Story extends StatefulWidget {
     Key key,
     @required this.name,
     @required StoryBuilder builder,
-    this.section = ''
+    this.section = '',
+    this.background = Colors.white,
+    this.padding = const EdgeInsets.all(16)
   })  : _builder = builder,
         super(key: key);
 
@@ -21,8 +23,16 @@ class Story extends StatefulWidget {
     Key key,
     @required String name,
     @required Widget child,
-    String section = ''
-  }) : this(key: key, name: name, builder: (_, __) => child, section: section);
+    String section = '',
+    Color background = Colors.white,
+    EdgeInsets padding = const EdgeInsets.all(16)
+  }) : this(
+    key: key, 
+    name: name, 
+    background: background, 
+    padding: padding, 
+    builder: (_, __) => child, section: section,
+  );
 
   /// A unique name to identify this story.
   ///
@@ -36,6 +46,12 @@ class Story extends StatefulWidget {
 
   /// Widget to be displayed in the story. It will be centered on the page.
   final StoryBuilder _builder;
+
+  // the background color of the storyboard  
+  final Color background;
+  
+  // the padding of the storyboard
+  final EdgeInsets padding;
 
   String get path => ReCase(name).paramCase;
 
@@ -54,8 +70,9 @@ class _StoryState extends State<Story> {
         child: Row(
           children: [
             Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
+              child: Container(
+                color: widget.background,
+                padding: widget.padding,
                 child: Center(
                   child: Builder(
                     builder: (_) => Consumer<Knobs>(
