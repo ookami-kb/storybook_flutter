@@ -39,7 +39,7 @@ class Storybook extends StatelessWidget {
     Key key,
     this.children = const [],
     this.theme,
-    this.localizationDelegates
+    this.localizationDelegates,
   }) : super(key: key);
 
   /// Theme override
