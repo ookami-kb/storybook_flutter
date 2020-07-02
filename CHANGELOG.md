@@ -1,3 +1,7 @@
+## 0.1.4
+- Added Story::background property
+- Added Story::padding property
+
 ## 0.1.3
 - Added localizationDelegates parameter to Storybook.
 
