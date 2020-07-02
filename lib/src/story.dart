@@ -15,7 +15,7 @@ class Story extends StatefulWidget {
     @required StoryBuilder builder,
     this.section = '',
     this.background = Colors.white,
-    this.padding = const EdgeInsets.all(16)
+    this.padding = const EdgeInsets.all(16),
   })  : _builder = builder,
         super(key: key);
 
@@ -25,14 +25,15 @@ class Story extends StatefulWidget {
     @required Widget child,
     String section = '',
     Color background = Colors.white,
-    EdgeInsets padding = const EdgeInsets.all(16)
+    EdgeInsets padding = const EdgeInsets.all(16),
   }) : this(
-    key: key, 
-    name: name, 
-    background: background, 
-    padding: padding, 
-    builder: (_, __) => child, section: section,
-  );
+          key: key,
+          name: name,
+          background: background,
+          padding: padding,
+          builder: (_, __) => child,
+          section: section,
+        );
 
   /// A unique name to identify this story.
   ///
@@ -47,10 +48,10 @@ class Story extends StatefulWidget {
   /// Widget to be displayed in the story. It will be centered on the page.
   final StoryBuilder _builder;
 
-  // the background color of the storyboard  
+  /// Background color of the story.
   final Color background;
-  
-  // the padding of the storyboard
+
+  /// Padding of the story.
   final EdgeInsets padding;
 
   String get path => ReCase(name).paramCase;
