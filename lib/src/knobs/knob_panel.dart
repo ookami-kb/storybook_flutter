@@ -10,7 +10,7 @@ class KnobPanel extends StatelessWidget {
         builder: (context, knobs, _) => knobs.all().isEmpty
             ? Container()
             : Container(
-                color: Theme.of(context).canvasColor,
+                color: Theme.of(context).cardColor,
                 width: 200,
                 child: ListView(
                   children: knobs.all().map((v) => v.build()).toList(),

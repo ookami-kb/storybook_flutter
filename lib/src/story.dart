@@ -14,7 +14,7 @@ class Story extends StatefulWidget {
     @required this.name,
     @required StoryBuilder builder,
     this.section = '',
-    this.background = Colors.white,
+    this.background,
     this.padding = const EdgeInsets.all(16),
   })  : _builder = builder,
         super(key: key);
@@ -24,7 +24,7 @@ class Story extends StatefulWidget {
     @required String name,
     @required Widget child,
     String section = '',
-    Color background = Colors.white,
+    Color background,
     EdgeInsets padding = const EdgeInsets.all(16),
   }) : this(
           key: key,

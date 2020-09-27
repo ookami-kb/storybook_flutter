@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:storybook_flutter/src/route.dart';
 import 'package:storybook_flutter/src/story.dart';
 import 'package:storybook_flutter/src/story_page_wrapper.dart';
+import 'package:storybook_flutter/src/theme_mode_provider.dart';
 
 /// A collection of stories.
 ///
@@ -39,11 +40,19 @@ class Storybook extends StatelessWidget {
     Key key,
     this.children = const [],
     this.theme,
+    this.darkTheme,
+    this.themeMode = ThemeMode.system,
     this.localizationDelegates,
   }) : super(key: key);
 
-  /// Theme override
+  /// Theme override for the light theme.
   final ThemeData theme;
+
+  /// Theme override for the dark theme.
+  final ThemeData darkTheme;
+
+  /// The theme mode the indicates whether to use light or dark theme.
+  final ThemeMode themeMode;
 
   /// Stories in the storybook.
   final List<Story> children;
@@ -52,17 +61,24 @@ class Storybook extends StatelessWidget {
   final List<LocalizationsDelegate> localizationDelegates;
 
   @override
-  Widget build(BuildContext context) => Provider.value(
-        value: children,
-        child: MaterialApp(
-          theme: theme ?? Theme.of(context),
-          localizationsDelegates: localizationDelegates,
-          onGenerateRoute: (settings) => StoryRoute(
-            settings: settings,
-            builder: (_) => StoryPageWrapper(
-              path: settings.name.replaceFirst('/stories/', ''),
-            ),
-          ),
-        ),
+  Widget build(BuildContext context) => MultiProvider(
+        providers: [
+          Provider.value(value: children),
+          ChangeNotifierProvider(create: (_) => ThemeModeProvider(themeMode))
+        ],
+        child: Builder(
+            builder: (context) => MaterialApp(
+                  themeMode: Provider.of<ThemeModeProvider>(context).current,
+                  theme: theme ?? ThemeData(brightness: Brightness.light),
+                  darkTheme:
+                      darkTheme ?? ThemeData(brightness: Brightness.dark),
+                  localizationsDelegates: localizationDelegates,
+                  onGenerateRoute: (settings) => StoryRoute(
+                    settings: settings,
+                    builder: (_) => StoryPageWrapper(
+                      path: settings.name.replaceFirst('/stories/', ''),
+                    ),
+                  ),
+                )),
       );
 }
