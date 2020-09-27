@@ -1,3 +1,5 @@
+![Pub Version](https://img.shields.io/pub/v/storybook_flutter)
+
 # storybook_flutter
 
 A cross-platform storybook for showcasing widgets.
