@@ -7,14 +7,8 @@ class ThemeModeProvider extends ChangeNotifier {
 
   ThemeMode get current => _current;
 
-  void toggleThemeMode() {
-    if (_current == ThemeMode.system) {
-      _current = ThemeMode.light;
-    } else if (_current == ThemeMode.light) {
-      _current = ThemeMode.dark;
-    } else {
-      _current = ThemeMode.system;
-    }
+  void toggle() {
+    _current = ThemeMode.values[(_current.index + 1) % ThemeMode.values.length];
     notifyListeners();
   }
 }

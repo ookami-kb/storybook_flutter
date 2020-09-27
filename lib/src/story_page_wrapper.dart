@@ -3,10 +3,12 @@ import 'package:provider/provider.dart';
 import 'package:storybook_flutter/src/breakpoint.dart';
 import 'package:storybook_flutter/src/iterables.dart';
 import 'package:storybook_flutter/src/story.dart';
-import 'package:storybook_flutter/src/theme_mode_provider.dart';
+import 'package:storybook_flutter/src/theme_switcher.dart';
 
 class StoryPageWrapper extends StatelessWidget {
   const StoryPageWrapper({Key key, this.path}) : super(key: key);
+
+  final String path;
 
   bool _shouldDisplayDrawer(BuildContext context) =>
       MediaQuery.of(context).breakpoint == Breakpoint.small;
@@ -25,23 +27,11 @@ class StoryPageWrapper extends StatelessWidget {
       children: stories,
     );
 
-    final themeModeProvider = Provider.of<ThemeModeProvider>(context);
-    const themeIcon = {
-      ThemeMode.system: Icon(Icons.brightness_auto),
-      ThemeMode.light: Icon(Icons.brightness_high),
-      ThemeMode.dark: Icon(Icons.brightness_3),
-    };
-
     return Scaffold(
       drawer: _shouldDisplayDrawer(context) ? Drawer(child: contents) : null,
       appBar: AppBar(
         title: Text(story?.name ?? 'Storybook'),
-        actions: [
-          IconButton(
-            icon: themeIcon[themeModeProvider.current],
-            onPressed: themeModeProvider.toggleThemeMode,
-          )
-        ],
+        actions: [ThemeSwitcher()],
       ),
       body: _shouldDisplayDrawer(context)
           ? _buildStory(context, story)
@@ -58,8 +48,6 @@ class StoryPageWrapper extends StatelessWidget {
             ),
     );
   }
-
-  final String path;
 
   Widget _buildStory(BuildContext context, Story story) =>
       Center(child: story ?? const Text('Select story'));

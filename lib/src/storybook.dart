@@ -51,7 +51,7 @@ class Storybook extends StatelessWidget {
   /// Theme override for the dark theme.
   final ThemeData darkTheme;
 
-  /// The theme mode the indicates whether to use light or dark theme.
+  /// Indicates theme mode to use: light, dark or system.
   final ThemeMode themeMode;
 
   /// Stories in the storybook.
@@ -67,18 +67,18 @@ class Storybook extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => ThemeModeProvider(themeMode))
         ],
         child: Builder(
-            builder: (context) => MaterialApp(
-                  themeMode: Provider.of<ThemeModeProvider>(context).current,
-                  theme: theme ?? ThemeData(brightness: Brightness.light),
-                  darkTheme:
-                      darkTheme ?? ThemeData(brightness: Brightness.dark),
-                  localizationsDelegates: localizationDelegates,
-                  onGenerateRoute: (settings) => StoryRoute(
-                    settings: settings,
-                    builder: (_) => StoryPageWrapper(
-                      path: settings.name.replaceFirst('/stories/', ''),
-                    ),
-                  ),
-                )),
+          builder: (context) => MaterialApp(
+            themeMode: Provider.of<ThemeModeProvider>(context).current,
+            theme: theme ?? ThemeData(brightness: Brightness.light),
+            darkTheme: darkTheme ?? ThemeData(brightness: Brightness.dark),
+            localizationsDelegates: localizationDelegates,
+            onGenerateRoute: (settings) => StoryRoute(
+              settings: settings,
+              builder: (_) => StoryPageWrapper(
+                path: settings.name.replaceFirst('/stories/', ''),
+              ),
+            ),
+          ),
+        ),
       );
 }
