@@ -3,14 +3,15 @@ import 'package:provider/provider.dart';
 import 'package:storybook_flutter/src/breakpoint.dart';
 import 'package:storybook_flutter/src/iterables.dart';
 import 'package:storybook_flutter/src/story.dart';
+import 'package:storybook_flutter/src/theme_switcher.dart';
 
 class StoryPageWrapper extends StatelessWidget {
   const StoryPageWrapper({Key key, this.path}) : super(key: key);
 
+  final String path;
+
   bool _shouldDisplayDrawer(BuildContext context) =>
       MediaQuery.of(context).breakpoint == Breakpoint.small;
-
-  final String path;
 
   @override
   Widget build(BuildContext context) {
@@ -28,23 +29,28 @@ class StoryPageWrapper extends StatelessWidget {
 
     return Scaffold(
       drawer: _shouldDisplayDrawer(context) ? Drawer(child: contents) : null,
-      appBar: AppBar(title: Text(story?.name ?? 'Storybook')),
+      appBar: AppBar(
+        title: Text(story?.name ?? 'Storybook'),
+        actions: [ThemeSwitcher()],
+      ),
       body: _shouldDisplayDrawer(context)
           ? _buildStory(context, story)
           : Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                Container(width: 200, child: contents),
+                Container(
+                  width: 200,
+                  color: Theme.of(context).cardColor,
+                  child: contents,
+                ),
                 Expanded(child: _buildStory(context, story)),
               ],
             ),
     );
   }
 
-  Widget _buildStory(BuildContext context, Story story) => Container(
-        color: Colors.white,
-        child: Center(child: story ?? const Text('Select story')),
-      );
+  Widget _buildStory(BuildContext context, Story story) =>
+      Center(child: story ?? const Text('Select story'));
 
   void _onStoryTap(BuildContext context, Story story) {
     if (_shouldDisplayDrawer(context)) Navigator.of(context).pop();
