@@ -1,4 +1,4 @@
-![Pub Version](https://img.shields.io/pub/v/storybook_flutter)
+[![Pub Version](https://img.shields.io/pub/v/storybook_flutter)](https://pub.dev/packages/storybook_flutter)
 
 # storybook_flutter
 
