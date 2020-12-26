@@ -10,7 +10,8 @@ class BoolKnob extends Knob<bool> {
 }
 
 class BooleanKnobWidget extends StatelessWidget {
-  const BooleanKnobWidget({Key key, this.label, this.value}) : super(key: key);
+  const BooleanKnobWidget({Key? key, required this.label, required this.value})
+      : super(key: key);
 
   final String label;
   final bool value;

@@ -42,7 +42,7 @@ abstract class KnobsBuilder {
   });
 
   /// Creates select field with [label], [initial] value and list of [options].
-  T options<T>(String label, {T initial, List<Option<T>> options = const []});
+  T? options<T>(String label, {T? initial, List<Option<T>> options = const []});
 }
 
 class Knobs extends ChangeNotifier implements KnobsBuilder {
@@ -50,25 +50,26 @@ class Knobs extends ChangeNotifier implements KnobsBuilder {
 
   @override
   bool boolean(String label, {bool initial = false}) =>
-      _addKnob(BoolKnob(label, initial));
+      _addKnob(BoolKnob(label, initial))!;
 
   @override
   String text(String label, {String initial = ''}) =>
-      _addKnob(StringKnob(label, initial));
+      _addKnob(StringKnob(label, initial))!;
 
   @override
-  T options<T>(String label, {T initial, List<Option<T>> options = const []}) =>
+  T? options<T>(String label,
+          {T? initial, List<Option<T>> options = const []}) =>
       _addKnob(SelectKnob(label, initial, options));
 
-  T _addKnob<T>(Knob<T> value) =>
-      (_knobs.putIfAbsent(value.label, () => value) as Knob<T>).value;
+  T? _addKnob<T>(Knob<T?> value) =>
+      (_knobs.putIfAbsent(value.label, () => value) as Knob<T?>).value;
 
   void update<T>(String label, T value) {
-    _knobs[label].value = value;
+    _knobs[label]!.value = value;
     notifyListeners();
   }
 
-  T get<T>(String label) => _knobs[label].value as T;
+  T? get<T>(String label) => _knobs[label]!.value as T;
 
   List<Knob> all() => _knobs.values.toList();
 
@@ -79,5 +80,5 @@ class Knobs extends ChangeNotifier implements KnobsBuilder {
     double max = 1,
     double min = 0,
   }) =>
-      _addKnob(SliderKnob(label, value: initial, max: max, min: min));
+      _addKnob(SliderKnob(label, value: initial, max: max, min: min))!;
 }

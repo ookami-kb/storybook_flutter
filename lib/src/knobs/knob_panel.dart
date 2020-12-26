@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:storybook_flutter/src/knobs/knobs.dart';
 
 class KnobPanel extends StatelessWidget {
-  const KnobPanel({Key key}) : super(key: key);
+  const KnobPanel({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) => Consumer<Knobs>(

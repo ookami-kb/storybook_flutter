@@ -37,7 +37,7 @@ import 'package:storybook_flutter/src/theme_mode_provider.dart';
 /// ```
 class Storybook extends StatelessWidget {
   const Storybook({
-    Key key,
+    Key? key,
     this.children = const [],
     this.theme,
     this.darkTheme,
@@ -46,10 +46,10 @@ class Storybook extends StatelessWidget {
   }) : super(key: key);
 
   /// Theme override for the light theme.
-  final ThemeData theme;
+  final ThemeData? theme;
 
   /// Theme override for the dark theme.
-  final ThemeData darkTheme;
+  final ThemeData? darkTheme;
 
   /// Indicates theme mode to use: light, dark or system.
   final ThemeMode themeMode;
@@ -58,7 +58,7 @@ class Storybook extends StatelessWidget {
   final List<Story> children;
 
   /// Localizations Delegates override
-  final List<LocalizationsDelegate> localizationDelegates;
+  final List<LocalizationsDelegate>? localizationDelegates;
 
   @override
   Widget build(BuildContext context) => MultiProvider(
@@ -75,7 +75,7 @@ class Storybook extends StatelessWidget {
             onGenerateRoute: (settings) => StoryRoute(
               settings: settings,
               builder: (_) => StoryPageWrapper(
-                path: settings.name.replaceFirst('/stories/', ''),
+                path: settings.name!.replaceFirst('/stories/', ''),
               ),
             ),
           ),
