@@ -3,7 +3,8 @@ import 'package:storybook_flutter/src/knobs/knobs.dart';
 import 'package:storybook_flutter/src/knobs/utils.dart';
 
 class SliderKnob extends Knob<double> {
-  SliderKnob(String label, {double value, this.max, this.min})
+  SliderKnob(String label,
+      {required double value, required this.max, required this.min})
       : super(label, value);
   final double max;
   final double min;
@@ -15,11 +16,11 @@ class SliderKnob extends Knob<double> {
 
 class SliderKnobWidget extends StatelessWidget {
   const SliderKnobWidget({
-    Key key,
-    this.label,
-    this.value,
-    this.min,
-    this.max,
+    Key? key,
+    required this.label,
+    required this.value,
+    required this.min,
+    required this.max,
   }) : super(key: key);
 
   final String label;

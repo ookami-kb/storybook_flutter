@@ -10,9 +10,9 @@ import 'package:storybook_flutter/src/knobs/knobs.dart';
 /// It's better to use it to demonstrate a single widget (e.g. Button).
 class Story extends StatefulWidget {
   const Story({
-    Key key,
-    @required this.name,
-    @required StoryBuilder builder,
+    Key? key,
+    required this.name,
+    required StoryBuilder builder,
     this.section = '',
     this.background,
     this.padding = const EdgeInsets.all(16),
@@ -20,11 +20,11 @@ class Story extends StatefulWidget {
         super(key: key);
 
   Story.simple({
-    Key key,
-    @required String name,
-    @required Widget child,
+    Key? key,
+    required String name,
+    required Widget child,
     String section = '',
-    Color background,
+    Color? background,
     EdgeInsets padding = const EdgeInsets.all(16),
   }) : this(
           key: key,
@@ -49,7 +49,7 @@ class Story extends StatefulWidget {
   final StoryBuilder _builder;
 
   /// Background color of the story.
-  final Color background;
+  final Color? background;
 
   /// Padding of the story.
   final EdgeInsets padding;

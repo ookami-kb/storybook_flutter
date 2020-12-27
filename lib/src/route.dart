@@ -2,20 +2,20 @@ import 'package:flutter/widgets.dart';
 
 class StoryRoute extends PopupRoute<void> {
   StoryRoute({
-    @required this.builder,
-    RouteSettings settings,
+    required this.builder,
+    required RouteSettings settings,
   }) : super(settings: settings);
 
   final WidgetBuilder builder;
 
   @override
-  Color get barrierColor => null;
+  Color? get barrierColor => null;
 
   @override
   bool get barrierDismissible => false;
 
   @override
-  String get barrierLabel => null;
+  String? get barrierLabel => null;
 
   @override
   Widget buildPage(

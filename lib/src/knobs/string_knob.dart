@@ -10,7 +10,8 @@ class StringKnob extends Knob<String> {
 }
 
 class StringKnobWidget extends StatelessWidget {
-  const StringKnobWidget({Key key, this.label, this.value}) : super(key: key);
+  const StringKnobWidget({Key? key, required this.label, required this.value})
+      : super(key: key);
 
   final String label;
   final String value;

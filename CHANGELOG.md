@@ -1,3 +1,7 @@
+## 0.2.0
+
+- Migrate to null-safety.
+
 ## 0.1.5
 - Added a button to the app bar to switch between light and dark mode.
 - Removed the default value for the background color of a story.

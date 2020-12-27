@@ -25,10 +25,10 @@ class Option<T> {
 
 class SelectKnobWidget<T> extends StatelessWidget {
   const SelectKnobWidget({
-    Key key,
-    this.label,
-    this.values,
-    this.value,
+    Key? key,
+    required this.label,
+    required this.values,
+    required this.value,
   }) : super(key: key);
 
   final String label;
