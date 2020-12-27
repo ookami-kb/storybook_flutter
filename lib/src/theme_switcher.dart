@@ -15,7 +15,6 @@ class ThemeSwitcher extends StatelessWidget {
 }
 
 extension on ThemeMode {
-  // ignore: missing_return
   Icon get icon {
     switch (this) {
       case ThemeMode.system:
