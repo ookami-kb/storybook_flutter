@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
               ),
               mouseCursor: k.options(
                 'Mouse Cursor',
+                initial: null,
                 options: const [
                   Option('Basic', SystemMouseCursors.basic),
                   Option('Click', SystemMouseCursors.click),

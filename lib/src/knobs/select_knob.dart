@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:storybook_flutter/src/knobs/knobs.dart';
 import 'package:storybook_flutter/src/knobs/utils.dart';
 
-class SelectKnob<T> extends Knob<T?> {
-  SelectKnob(String label, T? value, this.options) : super(label, value);
+class SelectKnob<T> extends Knob<T> {
+  SelectKnob(String label, T value, this.options) : super(label, value);
 
   final List<Option<T>> options;
 
@@ -28,12 +28,12 @@ class SelectKnobWidget<T> extends StatelessWidget {
     Key? key,
     required this.label,
     required this.values,
-    this.value,
+    required this.value,
   }) : super(key: key);
 
   final String label;
   final List<Option<T>> values;
-  final T? value;
+  final T value;
 
   @override
   Widget build(BuildContext context) => ListTile(
