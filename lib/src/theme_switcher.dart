@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:storybook_flutter/src/theme_mode_provider.dart';
 
 class ThemeSwitcher extends StatelessWidget {
+  const ThemeSwitcher({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final themeModeProvider = Provider.of<ThemeModeProvider>(context);

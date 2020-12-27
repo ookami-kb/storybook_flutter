@@ -30,7 +30,7 @@ class StoryPageWrapper extends StatelessWidget {
       drawer: _shouldDisplayDrawer(context) ? Drawer(child: contents) : null,
       appBar: AppBar(
         title: Text(story?.name ?? 'Storybook'),
-        actions: [ThemeSwitcher()],
+        actions: const [ThemeSwitcher()],
       ),
       body: _shouldDisplayDrawer(context)
           ? _buildStory(context, story)
