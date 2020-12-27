@@ -29,37 +29,43 @@ abstract class Knob<T> {
 ///  ```
 abstract class KnobsBuilder {
   /// Creates checkbox with [label] and [initial] value.
-  bool boolean(String label, {bool initial = false});
+  bool boolean({required String label, bool initial = false});
 
   /// Creates text input field with [label] and [initial] value.
-  String text(String label, {String initial = ''});
+  String text({required String label, String initial = ''});
 
-  double slider(
-    String label, {
+  double slider({
+    required String label,
     double initial = 0,
     double max = 1,
     double min = 0,
   });
 
   /// Creates select field with [label], [initial] value and list of [options].
-  T options<T>(String label,
-      {required T initial, List<Option<T>> options = const []});
+  T options<T>({
+    required String label,
+    required T initial,
+    List<Option<T>> options = const [],
+  });
 }
 
 class Knobs extends ChangeNotifier implements KnobsBuilder {
   final Map<String, Knob> _knobs = <String, Knob>{};
 
   @override
-  bool boolean(String label, {bool initial = false}) =>
-      _addKnob(BoolKnob(label, initial))!;
+  bool boolean({required String label, bool initial = false}) =>
+      _addKnob(BoolKnob(label, initial));
 
   @override
-  String text(String label, {String initial = ''}) =>
-      _addKnob(StringKnob(label, initial))!;
+  String text({required String label, String initial = ''}) =>
+      _addKnob(StringKnob(label, initial));
 
   @override
-  T options<T>(String label,
-          {required T initial, List<Option<T>> options = const []}) =>
+  T options<T>({
+    required String label,
+    required T initial,
+    List<Option<T>> options = const [],
+  }) =>
       _addKnob(SelectKnob(label, initial, options));
 
   T _addKnob<T>(Knob<T> value) =>
@@ -75,8 +81,8 @@ class Knobs extends ChangeNotifier implements KnobsBuilder {
   List<Knob> all() => _knobs.values.toList();
 
   @override
-  double slider(
-    String label, {
+  double slider({
+    required String label,
     double initial = 0,
     double max = 1,
     double min = 0,

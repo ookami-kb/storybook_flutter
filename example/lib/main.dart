@@ -12,17 +12,19 @@ class MyApp extends StatelessWidget {
             section: 'Button',
             name: 'Flat button',
             builder: (_, k) => MaterialButton(
-              onPressed: k.boolean('Enabled', initial: true) ? () {} : null,
-              child: Text(k.text('Text', initial: 'Flat button')),
+              onPressed:
+                  k.boolean(label: 'Enabled', initial: true) ? () {} : null,
+              child: Text(k.text(label: 'Text', initial: 'Flat button')),
             ),
           ),
           Story(
             section: 'Button',
             name: 'Raised button',
             builder: (_, k) => RaisedButton(
-              onPressed: k.boolean('Enabled', initial: true) ? () {} : null,
+              onPressed:
+                  k.boolean(label: 'Enabled', initial: true) ? () {} : null,
               color: k.options(
-                'Color',
+                label: 'Color',
                 initial: Colors.deepOrange,
                 options: const [
                   Option('Red', Colors.deepOrange),
@@ -30,7 +32,7 @@ class MyApp extends StatelessWidget {
                 ],
               ),
               mouseCursor: k.options(
-                'Mouse Cursor',
+                label: 'Mouse Cursor',
                 initial: null,
                 options: const [
                   Option('Basic', SystemMouseCursors.basic),
@@ -38,9 +40,9 @@ class MyApp extends StatelessWidget {
                   Option('Forbidden', SystemMouseCursors.forbidden),
                 ],
               ),
-              elevation: k.slider('Elevation', initial: 0, max: 20),
+              elevation: k.slider(label: 'Elevation', initial: 0, max: 20),
               textColor: Colors.white,
-              child: Text(k.text('Text', initial: 'Raised button')),
+              child: Text(k.text(label: 'Text', initial: 'Raised button')),
             ),
           ),
           Story.simple(

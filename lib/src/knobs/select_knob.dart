@@ -42,12 +42,10 @@ class SelectKnobWidget<T> extends StatelessWidget {
           isExpanded: true,
           value: value,
           items: values
-              .map(
-                (e) => DropdownMenuItem<T>(
-                  value: e.value,
-                  child: Text(e.text),
-                ),
-              )
+              .map((e) => DropdownMenuItem<T>(
+                    value: e.value,
+                    child: Text(e.text),
+                  ))
               .toList(),
           onChanged: (v) => context.knobs.update(label, v),
         ),
