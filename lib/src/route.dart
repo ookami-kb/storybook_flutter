@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 class StoryRoute extends PopupRoute<void> {
   StoryRoute({
     required this.builder,
-    required RouteSettings settings,
+    RouteSettings? settings,
   }) : super(settings: settings);
 
   final WidgetBuilder builder;

@@ -16,9 +16,15 @@ class StoryPageWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final stories = Provider.of<List<Story>>(context);
+    final storyPath = path?.split('/') ?? [];
     final story = stories.firstWhereOrNull(
-      (element) => element.path == path,
+      (element) => element.path == storyPath.firstOrNull,
     );
+    final isFullPage = storyPath.length > 1 && storyPath[1] == 'full';
+
+    if (isFullPage) {
+      return Scaffold(body: _buildStory(context, story));
+    }
 
     final contents = _Contents(
       onTap: (story) => _onStoryTap(context, story),
@@ -53,7 +59,7 @@ class StoryPageWrapper extends StatelessWidget {
 
   void _onStoryTap(BuildContext context, Story story) {
     if (_shouldDisplayDrawer(context)) Navigator.of(context).pop();
-    Navigator.pushNamed(context, '/stories/${story.path}');
+    Navigator.pushReplacementNamed(context, '/stories/${story.path}');
   }
 }
 

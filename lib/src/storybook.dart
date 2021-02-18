@@ -72,13 +72,22 @@ class Storybook extends StatelessWidget {
             theme: theme ?? ThemeData(brightness: Brightness.light),
             darkTheme: darkTheme ?? ThemeData(brightness: Brightness.dark),
             localizationsDelegates: localizationDelegates,
+            onGenerateInitialRoutes: (name) => [
+              StoryRoute(
+                builder: (_) => StoryPageWrapper(path: name.toStoryPath()),
+              ),
+            ],
             onGenerateRoute: (settings) => StoryRoute(
               settings: settings,
               builder: (_) => StoryPageWrapper(
-                path: settings.name!.replaceFirst('/stories/', ''),
+                path: settings.name!.toStoryPath(),
               ),
             ),
           ),
         ),
       );
+}
+
+extension on String {
+  String toStoryPath() => replaceFirst('/stories/', '');
 }
