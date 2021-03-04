@@ -1,10 +1,7 @@
-## 0.2.0-nullsafety.1
+## 0.2.0
 
 - :cop: Update dependencies
 - :zap: Add full page view
-
-## 0.2.0-nullsafety.0
-
 - Migrate to null-safety.
 
 ## 0.1.5
