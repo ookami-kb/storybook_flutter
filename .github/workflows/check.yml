@@ -15,4 +15,3 @@ jobs:
         name: Ensure proper formatting
       - run: flutter analyze
         name: Run static analysis
-      - run: flutter test
