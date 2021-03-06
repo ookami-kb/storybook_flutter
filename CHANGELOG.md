@@ -1,3 +1,8 @@
+## 0.2.1
+
+ - **FEAT**: Test feature.
+ - **CI**: Add CI job.
+
 ## 0.2.0
 
 - :cop: Update dependencies
