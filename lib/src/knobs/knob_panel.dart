@@ -9,12 +9,16 @@ class KnobPanel extends StatelessWidget {
   Widget build(BuildContext context) => Consumer<Knobs>(
         builder: (context, knobs, _) => knobs.all().isEmpty
             ? Container()
-            : Container(
-                color: Theme.of(context).cardColor,
-                width: 200,
-                child: ListView(
-                  children: knobs.all().map((v) => v.build()).toList(),
-                ),
+            : OrientationBuilder(
+                builder: (BuildContext context, Orientation orientation) {
+                  return Container(
+                    color: Theme.of(context).cardColor,
+                    width: orientation == Orientation.portrait ? null : 200,
+                    child: ListView(
+                      children: knobs.all().map((v) => v.build()).toList(),
+                    ),
+                  );
+                },
               ),
       );
 }

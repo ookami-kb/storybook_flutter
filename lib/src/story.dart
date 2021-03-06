@@ -68,24 +68,41 @@ class _StoryState extends State<Story> {
   @override
   Widget build(BuildContext context) => ChangeNotifierProvider.value(
         value: _knobs,
-        child: Row(
-          children: [
-            Expanded(
-              child: Container(
-                color: widget.background,
-                padding: widget.padding,
-                child: Center(
-                  child: Builder(
-                    builder: (_) => Consumer<Knobs>(
-                      builder: (context, _, __) =>
-                          widget._builder(context, _knobs),
-                    ),
+        child: OrientationBuilder(
+          builder: (BuildContext context, Orientation orientation) {
+            final storyWidget = Container(
+              color: widget.background,
+              padding: widget.padding,
+              child: Center(
+                child: Builder(
+                  builder: (_) => Consumer<Knobs>(
+                    builder: (context, _, __) =>
+                        widget._builder(context, _knobs),
                   ),
                 ),
               ),
-            ),
-            const KnobPanel(),
-          ],
+            );
+
+            if (orientation == Orientation.portrait) {
+              return Column(
+                children: [
+                  storyWidget,
+                  const Expanded(
+                    child: KnobPanel(),
+                  ),
+                ],
+              );
+            } else {
+              return Row(
+                children: [
+                  Expanded(
+                    child: storyWidget,
+                  ),
+                  const KnobPanel(),
+                ],
+              );
+            }
+          },
         ),
       );
 }
