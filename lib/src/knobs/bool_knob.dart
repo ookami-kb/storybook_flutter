@@ -3,6 +3,7 @@ import 'package:storybook_flutter/src/knobs/knobs.dart';
 import 'package:storybook_flutter/src/knobs/utils.dart';
 
 class BoolKnob extends Knob<bool> {
+  // ignore: avoid_positional_boolean_parameters
   BoolKnob(String label, bool value) : super(label, value);
 
   @override

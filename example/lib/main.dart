@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
           Story(
             section: 'Button',
             name: 'Raised button',
+            // ignore: deprecated_member_use
             builder: (_, k) => RaisedButton(
               onPressed:
                   k.boolean(label: 'Enabled', initial: true) ? () {} : null,
