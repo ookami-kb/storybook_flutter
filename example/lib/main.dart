@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:storybook_flutter/storybook_flutter.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) => Storybook(
         children: [
@@ -20,6 +22,7 @@ class MyApp extends StatelessWidget {
           Story(
             section: 'Button',
             name: 'Raised button',
+            // ignore: deprecated_member_use
             builder: (_, k) => RaisedButton(
               onPressed:
                   k.boolean(label: 'Enabled', initial: true) ? () {} : null,
