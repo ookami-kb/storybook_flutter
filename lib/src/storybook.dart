@@ -6,6 +6,12 @@ import 'package:storybook_flutter/src/story.dart';
 import 'package:storybook_flutter/src/story_page_wrapper.dart';
 import 'package:storybook_flutter/src/theme_mode_provider.dart';
 
+typedef StoryWrapperBuilder = Widget Function(
+  BuildContext context,
+  Story story,
+  Widget child,
+);
+
 /// A collection of stories.
 ///
 /// It generates Contents in navigation drawer based on stories names.
@@ -43,6 +49,7 @@ class Storybook extends StatelessWidget {
     this.darkTheme,
     this.themeMode = ThemeMode.system,
     this.localizationDelegates,
+    this.storyWrapperBuilder,
   }) : super(key: key);
 
   /// Theme override for the light theme.
@@ -60,11 +67,29 @@ class Storybook extends StatelessWidget {
   /// Localizations Delegates override
   final List<LocalizationsDelegate>? localizationDelegates;
 
+  /// Optional parameter to override story wrapper.
+  ///
+  /// {@template storybook_flutter.default_story_wrapper}
+  /// By default each story is wrapped into:
+  /// ```dart
+  /// Container(
+  ///   color: story.background,
+  ///   padding: story.padding,
+  ///   child: Center(child: child),
+  /// )
+  /// ```
+  /// {@endtemplate}
+  ///
+  /// You can also override individual story wrapper by using
+  /// [Story.wrapperBuilder].
+  final StoryWrapperBuilder? storyWrapperBuilder;
+
   @override
   Widget build(BuildContext context) => MultiProvider(
         providers: [
           Provider.value(value: children),
-          ChangeNotifierProvider(create: (_) => ThemeModeProvider(themeMode))
+          ChangeNotifierProvider(create: (_) => ThemeModeProvider(themeMode)),
+          Provider<StoryWrapperBuilder?>.value(value: storyWrapperBuilder),
         ],
         child: Builder(
           builder: (context) => MaterialApp(

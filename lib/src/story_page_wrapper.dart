@@ -55,7 +55,7 @@ class StoryPageWrapper extends StatelessWidget {
   }
 
   Widget _buildStory(BuildContext context, Story? story) =>
-      Center(child: story ?? const Text('Select story'));
+      story ?? const Center(child: Text('Select story'));
 
   void _onStoryTap(BuildContext context, Story story) {
     if (_shouldDisplayDrawer(context)) Navigator.of(context).pop();

@@ -9,6 +9,25 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Storybook(
+        storyWrapperBuilder: (_, story, child) => Stack(
+          children: [
+            Container(
+              padding: story.padding,
+              color: story.background,
+              child: Center(child: child),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: Align(
+                alignment: Alignment.topRight,
+                child: Text(
+                  story.name,
+                  style: const TextStyle(fontStyle: FontStyle.italic),
+                ),
+              ),
+            ),
+          ],
+        ),
         children: [
           Story(
             section: 'Button',
