@@ -38,7 +38,11 @@ class SelectKnobWidget<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ListTile(
         title: DropdownButtonFormField<T>(
-          decoration: InputDecoration(labelText: label),
+          decoration: InputDecoration(
+            isDense: true,
+            labelText: label,
+            border: const OutlineInputBorder(),
+          ),
           isExpanded: true,
           value: value,
           items: values

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:storybook_flutter/src/route.dart';
+import 'package:storybook_flutter/src/control_panel/provider.dart';
 import 'package:storybook_flutter/src/story.dart';
 import 'package:storybook_flutter/src/story_page_wrapper.dart';
 import 'package:storybook_flutter/src/theme_mode_provider.dart';
@@ -90,19 +90,21 @@ class Storybook extends StatelessWidget {
           Provider.value(value: children),
           ChangeNotifierProvider(create: (_) => ThemeModeProvider(themeMode)),
           Provider<StoryWrapperBuilder?>.value(value: storyWrapperBuilder),
+          ChangeNotifierProvider(create: (_) => ControlPanelProvider()),
         ],
         child: Builder(
           builder: (context) => MaterialApp(
+            debugShowCheckedModeBanner: false,
             themeMode: Provider.of<ThemeModeProvider>(context).current,
             theme: theme ?? ThemeData(brightness: Brightness.light),
             darkTheme: darkTheme ?? ThemeData(brightness: Brightness.dark),
             localizationsDelegates: localizationDelegates,
             onGenerateInitialRoutes: (name) => [
-              StoryRoute(
+              MaterialPageRoute<void>(
                 builder: (_) => StoryPageWrapper(path: name.toStoryPath()),
               ),
             ],
-            onGenerateRoute: (settings) => StoryRoute(
+            onGenerateRoute: (settings) => MaterialPageRoute<void>(
               settings: settings,
               builder: (_) => StoryPageWrapper(
                 path: settings.name!.toStoryPath(),

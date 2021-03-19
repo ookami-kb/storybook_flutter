@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:storybook_flutter/src/breakpoint.dart';
 import 'package:storybook_flutter/src/story.dart';
-import 'package:storybook_flutter/src/theme_switcher.dart';
+
+enum StoryMode { normal, fullScreen }
 
 class StoryPageWrapper extends StatelessWidget {
   const StoryPageWrapper({Key? key, this.path}) : super(key: key);
@@ -23,34 +24,60 @@ class StoryPageWrapper extends StatelessWidget {
     final isFullPage = storyPath.length > 1 && storyPath[1] == 'full';
 
     if (isFullPage) {
-      return Scaffold(body: _buildStory(context, story));
+      return Provider.value(
+        value: StoryMode.fullScreen,
+        child: Builder(
+          builder: (context) => Scaffold(body: _buildStory(context, story)),
+        ),
+      );
     }
 
-    final contents = _Contents(
-      onTap: (story) => _onStoryTap(context, story),
-      current: story,
-      children: stories,
-    );
+    return MultiProvider(
+      providers: [
+        Provider.value(value: story),
+      ],
+      builder: (context, _) {
+        final contents = _Contents(
+          onTap: (story) => _onStoryTap(context, story),
+          current: story,
+          children: stories,
+        );
 
-    return Scaffold(
-      drawer: _shouldDisplayDrawer(context) ? Drawer(child: contents) : null,
-      appBar: AppBar(
-        title: Text(story?.name ?? 'Storybook'),
-        actions: const [ThemeSwitcher()],
-      ),
-      body: _shouldDisplayDrawer(context)
-          ? _buildStory(context, story)
-          : Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Container(
-                  width: 200,
-                  color: Theme.of(context).cardColor,
-                  child: contents,
-                ),
-                Expanded(child: _buildStory(context, story)),
-              ],
+        return Hero(
+          tag: 'StoryPageWrapper',
+          child: Scaffold(
+            drawer:
+                _shouldDisplayDrawer(context) ? Drawer(child: contents) : null,
+            appBar: AppBar(title: Text(story?.name ?? 'Storybook')),
+            body: Provider.value(
+              value: StoryMode.normal,
+              child: _shouldDisplayDrawer(context)
+                  ? _buildStory(context, story)
+                  : Row(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border(
+                              right: BorderSide(
+                                color: Theme.of(context).dividerColor,
+                              ),
+                            ),
+                            color: Theme.of(context).cardColor,
+                          ),
+                          width: 200,
+                          child: ListTileTheme(
+                            style: ListTileStyle.drawer,
+                            child: contents,
+                          ),
+                        ),
+                        Expanded(child: _buildStory(context, story)),
+                      ],
+                    ),
             ),
+          ),
+        );
+      },
     );
   }
 
