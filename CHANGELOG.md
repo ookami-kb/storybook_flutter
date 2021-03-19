@@ -1,3 +1,10 @@
+## 0.3.0
+
+> Note: This release has breaking changes.
+
+ - **CI**: Add CI job (#20).
+ - **BREAKING** **FEAT**: Major theme upgrade.
+
 ## 0.2.1
 
 - **FEAT**: Add StoryWrapperBuilder.
