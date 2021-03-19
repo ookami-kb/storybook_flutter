@@ -1,0 +1,15 @@
+name: storybook_flutter
+
+packages:
+  - "**"
+
+scripts:
+  format: flutter format --set-exit-if-changed -n .
+  pub_get: melos exec -- "flutter pub get"
+  analyze: flutter analyze .
+
+  check_master:
+    run: |
+      melos run format \
+        && melos run pub_get \
+        && melos run analyze

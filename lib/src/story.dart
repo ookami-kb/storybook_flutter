@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:recase/recase.dart';
 import 'package:storybook_flutter/src/knobs/knob_panel.dart';
 import 'package:storybook_flutter/src/knobs/knobs.dart';
+import 'package:storybook_flutter/src/storybook.dart';
 
 /// Single story (page) in storybook.
 ///
@@ -16,6 +17,7 @@ class Story extends StatefulWidget {
     this.section = '',
     this.background,
     this.padding = const EdgeInsets.all(16),
+    this.wrapperBuilder,
   })  : _builder = builder,
         super(key: key);
 
@@ -26,6 +28,7 @@ class Story extends StatefulWidget {
     String section = '',
     Color? background,
     EdgeInsets padding = const EdgeInsets.all(16),
+    StoryWrapperBuilder? wrapperBuilder,
   }) : this(
           key: key,
           name: name,
@@ -33,6 +36,7 @@ class Story extends StatefulWidget {
           padding: padding,
           builder: (_, __) => child,
           section: section,
+          wrapperBuilder: wrapperBuilder,
         );
 
   /// A unique name to identify this story.
@@ -47,6 +51,14 @@ class Story extends StatefulWidget {
 
   /// Widget to be displayed in the story. It will be centered on the page.
   final StoryBuilder _builder;
+
+  /// Optional parameter to override story wrapper.
+  ///
+  /// {@macro storybook_flutter.default_story_wrapper}
+  ///
+  /// You can also override wrapper for all stories  by using
+  /// [Storybook.storyWrapperBuilder].
+  final StoryWrapperBuilder? wrapperBuilder;
 
   /// Background color of the story.
   final Color? background;
@@ -66,26 +78,37 @@ class _StoryState extends State<Story> {
   final Knobs _knobs = Knobs();
 
   @override
-  Widget build(BuildContext context) => ChangeNotifierProvider.value(
-        value: _knobs,
-        child: Row(
-          children: [
-            Expanded(
-              child: Container(
-                color: widget.background,
-                padding: widget.padding,
-                child: Center(
-                  child: Builder(
-                    builder: (_) => Consumer<Knobs>(
-                      builder: (context, _, __) =>
-                          widget._builder(context, _knobs),
-                    ),
-                  ),
-                ),
-              ),
+  Widget build(BuildContext context) {
+    final StoryWrapperBuilder effectiveWrapper = widget.wrapperBuilder ??
+        context.watch<StoryWrapperBuilder?>() ??
+        _defaultWrapperBuilder;
+
+    return ChangeNotifierProvider.value(
+      value: _knobs,
+      child: Row(
+        children: [
+          Expanded(
+            child: Consumer<Knobs>(
+              builder: (context, knobs, __) {
+                final content = effectiveWrapper(
+                  context,
+                  widget,
+                  widget._builder(context, knobs),
+                );
+                return content;
+              },
             ),
-            const KnobPanel(),
-          ],
-        ),
-      );
+          ),
+          const KnobPanel(),
+        ],
+      ),
+    );
+  }
 }
+
+final StoryWrapperBuilder _defaultWrapperBuilder =
+    (_, story, child) => Container(
+          color: story.background,
+          padding: story.padding,
+          child: Center(child: child),
+        );

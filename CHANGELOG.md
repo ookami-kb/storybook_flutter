@@ -1,3 +1,8 @@
+## 0.2.1
+
+- **FEAT**: Add StoryWrapperBuilder.
+- **CI**: Add melos.
+
 ## 0.2.0
 
 - :cop: Update dependencies
