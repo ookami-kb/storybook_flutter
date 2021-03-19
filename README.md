@@ -2,9 +2,7 @@
 
 # storybook_flutter
 
-A cross-platform storybook for showcasing widgets.
-
-It works in Web as well, though as Flutter support for Web is still in beta, rendering can have some issues.
+A cross-platform storybook for showcasing widgets. It should work in all platforms supported by Flutter.
 
 ![](https://github.com/ookami-kb/storybook_flutter/raw/master/meta/preview.png)
 

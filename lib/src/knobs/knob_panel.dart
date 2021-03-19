@@ -7,14 +7,25 @@ class KnobPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Consumer<Knobs>(
-        builder: (context, knobs, _) => knobs.all().isEmpty
-            ? Container()
-            : Container(
-                color: Theme.of(context).cardColor,
-                width: 200,
-                child: ListView(
-                  children: knobs.all().map((v) => v.build()).toList(),
-                ),
+        builder: (context, knobs, _) {
+          final items = knobs.all();
+
+          return Container(
+            decoration: BoxDecoration(
+              border: Border(
+                left: BorderSide(color: Theme.of(context).dividerColor),
               ),
+              color: Theme.of(context).cardColor,
+            ),
+            child: items.isEmpty
+                ? const Center(child: Text('No knobs'))
+                : ListView.separated(
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: 8),
+                    itemCount: items.length,
+                    itemBuilder: (context, index) => items[index].build(),
+                  ),
+          );
+        },
       );
 }

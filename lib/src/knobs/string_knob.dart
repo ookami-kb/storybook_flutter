@@ -19,7 +19,11 @@ class StringKnobWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ListTile(
         title: TextFormField(
-          decoration: InputDecoration(labelText: label),
+          decoration: InputDecoration(
+            isDense: true,
+            labelText: label,
+            border: const OutlineInputBorder(),
+          ),
           initialValue: value,
           onChanged: (v) => context.knobs.update(label, v),
         ),
