@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:storybook_flutter/src/knobs/knobs.dart';
 import 'package:storybook_flutter/src/knobs/utils.dart';
@@ -37,21 +38,25 @@ class SelectKnobWidget<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ListTile(
-        title: DropdownButtonFormField<T>(
+        title: DropdownButtonFormField<Option<T>>(
           decoration: InputDecoration(
             isDense: true,
             labelText: label,
             border: const OutlineInputBorder(),
           ),
           isExpanded: true,
-          value: value,
+          value: values.firstWhereOrNull((e) => e.value == value),
           items: values
-              .map((e) => DropdownMenuItem<T>(
-                    value: e.value,
+              .map((e) => DropdownMenuItem<Option<T>>(
+                    value: e,
                     child: Text(e.text),
                   ))
               .toList(),
-          onChanged: (v) => context.knobs.update(label, v),
+          onChanged: (v) {
+            if (v != null) {
+              context.knobs.update<T>(label, v.value);
+            }
+          },
         ),
       );
 }
