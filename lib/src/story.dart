@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:recase/recase.dart';
 import 'package:storybook_flutter/src/control_panel/widgets/control_panel.dart';
 import 'package:storybook_flutter/src/knobs/knobs.dart';
-import 'package:storybook_flutter/src/story_page_wrapper.dart';
+import 'package:storybook_flutter/src/story_provider.dart';
 import 'package:storybook_flutter/src/storybook.dart';
 
 /// Single story (page) in storybook.
@@ -83,7 +83,6 @@ class _StoryState extends State<Story> {
     final StoryWrapperBuilder effectiveWrapper = widget.wrapperBuilder ??
         context.watch<StoryWrapperBuilder?>() ??
         _defaultWrapperBuilder;
-    final mode = context.watch<StoryMode>();
 
     return ChangeNotifierProvider.value(
       value: _knobs,
@@ -97,7 +96,8 @@ class _StoryState extends State<Story> {
                 widget._builder(context, knobs),
               ),
             ),
-            if (mode == StoryMode.normal) const ControlPanel(),
+            if (!context.watch<StoryProvider>().isFullPage)
+              const ControlPanel(),
           ],
         ),
       ),

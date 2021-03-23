@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:storybook_flutter/src/control_panel/provider.dart';
+import 'package:storybook_flutter/src/route.dart';
 import 'package:storybook_flutter/src/story.dart';
 import 'package:storybook_flutter/src/story_page_wrapper.dart';
+import 'package:storybook_flutter/src/story_provider.dart';
 import 'package:storybook_flutter/src/theme_mode_provider.dart';
 
 typedef StoryWrapperBuilder = Widget Function(
@@ -100,21 +102,30 @@ class Storybook extends StatelessWidget {
             darkTheme: darkTheme ?? ThemeData(brightness: Brightness.dark),
             localizationsDelegates: localizationDelegates,
             onGenerateInitialRoutes: (name) => [
-              MaterialPageRoute<void>(
-                builder: (_) => StoryPageWrapper(path: name.toStoryPath()),
+              StoryRoute(
+                builder: (_) => Provider(
+                  create: (_) => StoryProvider.fromPath(name, context.read()),
+                  child: const StoryPageWrapper(),
+                ),
               ),
             ],
-            onGenerateRoute: (settings) => MaterialPageRoute<void>(
-              settings: settings,
-              builder: (_) => StoryPageWrapper(
-                path: settings.name!.toStoryPath(),
-              ),
-            ),
+            onGenerateRoute: (settings) {
+              final WidgetBuilder builder = (_) => Provider(
+                    create: (_) =>
+                        StoryProvider.fromPath(settings.name, context.read()),
+                    child: const StoryPageWrapper(),
+                  );
+              return settings.name?.endsWith('/full') == true
+                  ? MaterialPageRoute<void>(
+                      settings: settings,
+                      builder: builder,
+                    )
+                  : StoryRoute(
+                      settings: settings,
+                      builder: builder,
+                    );
+            },
           ),
         ),
       );
-}
-
-extension on String {
-  String toStoryPath() => replaceFirst('/stories/', '');
 }
