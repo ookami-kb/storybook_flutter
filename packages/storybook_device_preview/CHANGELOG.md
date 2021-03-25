@@ -1,3 +1,7 @@
+## 0.1.1+2
+
+ - **DOCS**: Update LICENSE.
+
 ## 0.1.1+1
 
  - **DOCS**: Update description.
