@@ -4,14 +4,43 @@ import 'package:provider/provider.dart';
 import 'package:storybook_flutter/src/story.dart';
 import 'package:storybook_flutter/src/story_provider.dart';
 
-class Contents extends StatefulWidget {
-  const Contents({Key? key}) : super(key: key);
+class Contents extends StatelessWidget {
+  const Contents({
+    Key? key,
+    this.onStorySelected,
+  }) : super(key: key);
+
+  final ValueSetter<Story>? onStorySelected;
+
+  @override
+  Widget build(BuildContext context) => _Contents(
+        onStorySelected: (story) {
+          context.read<StoryProvider>().updateStory(story);
+          onStorySelected?.call(story);
+        },
+      );
+}
+
+class NavigatorContents extends StatelessWidget {
+  const NavigatorContents({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) => _Contents(
+        onStorySelected: (story) => Navigator.of(context, rootNavigator: true)
+            .pushReplacementNamed('/stories/${story.path}'),
+      );
+}
+
+class _Contents extends StatefulWidget {
+  const _Contents({Key? key, required this.onStorySelected}) : super(key: key);
+
+  final ValueSetter<Story> onStorySelected;
 
   @override
   _ContentsState createState() => _ContentsState();
 }
 
-class _ContentsState extends State<Contents> {
+class _ContentsState extends State<_Contents> {
   @override
   Widget build(BuildContext context) {
     final grouped = context.watch<List<Story>>().groupListsBy((s) => s.section);
@@ -28,7 +57,8 @@ class _ContentsState extends State<Contents> {
   Widget _buildStoryTile(Story story) => ListTile(
         title: Text(story.name),
         onTap: () {
-          Navigator.pushReplacementNamed(context, '/stories/${story.path}');
+          final onStorySelected = widget.onStorySelected;
+          onStorySelected(story);
         },
         selected: story == context.watch<StoryProvider>().currentStory,
       );

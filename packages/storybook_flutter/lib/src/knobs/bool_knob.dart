@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:storybook_flutter/src/knobs/knobs.dart';
-import 'package:storybook_flutter/src/knobs/utils.dart';
+import 'package:storybook_flutter/src/story_provider.dart';
 
 class BoolKnob extends Knob<bool> {
   // ignore: avoid_positional_boolean_parameters
@@ -21,6 +22,6 @@ class BooleanKnobWidget extends StatelessWidget {
   Widget build(BuildContext context) => CheckboxListTile(
         title: Text(label),
         value: value,
-        onChanged: (v) => context.knobs.update(label, v),
+        onChanged: (v) => context.read<StoryProvider>().update(label, v),
       );
 }

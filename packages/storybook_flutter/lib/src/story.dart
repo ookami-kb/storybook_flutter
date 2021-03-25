@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:recase/recase.dart';
-import 'package:storybook_flutter/src/control_panel/widgets/control_panel.dart';
 import 'package:storybook_flutter/src/knobs/knobs.dart';
 import 'package:storybook_flutter/src/story_provider.dart';
 import 'package:storybook_flutter/src/storybook.dart';
@@ -76,31 +75,16 @@ class Story extends StatefulWidget {
 typedef StoryBuilder = Widget Function(BuildContext context, KnobsBuilder kb);
 
 class _StoryState extends State<Story> {
-  final Knobs _knobs = Knobs();
-
   @override
   Widget build(BuildContext context) {
     final StoryWrapperBuilder effectiveWrapper = widget.wrapperBuilder ??
         context.watch<StoryWrapperBuilder?>() ??
         _defaultWrapperBuilder;
 
-    return ChangeNotifierProvider.value(
-      value: _knobs,
-      child: Consumer<Knobs>(
-        builder: (context, knobs, _) => Row(
-          children: [
-            Expanded(
-              child: effectiveWrapper(
-                context,
-                widget,
-                widget._builder(context, knobs),
-              ),
-            ),
-            if (!context.watch<StoryProvider>().isFullPage)
-              const ControlPanel(),
-          ],
-        ),
-      ),
+    return effectiveWrapper(
+      context,
+      widget,
+      widget._builder(context, context.watch<StoryProvider>()),
     );
   }
 }

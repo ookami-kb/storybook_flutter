@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:storybook_flutter/src/knobs/knobs.dart';
+import 'package:storybook_flutter/src/story_provider.dart';
 
 class KnobPanel extends StatelessWidget {
   const KnobPanel({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => Consumer<Knobs>(
+  Widget build(BuildContext context) => Consumer<StoryProvider>(
         builder: (context, knobs, _) {
           final items = knobs.all();
 

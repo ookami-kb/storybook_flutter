@@ -101,31 +101,26 @@ class Storybook extends StatelessWidget {
             theme: theme ?? ThemeData(brightness: Brightness.light),
             darkTheme: darkTheme ?? ThemeData(brightness: Brightness.dark),
             localizationsDelegates: localizationDelegates,
-            onGenerateInitialRoutes: (name) => [
-              StoryRoute(
-                builder: (_) => Provider(
-                  create: (_) => StoryProvider.fromPath(name, context.read()),
-                  child: const StoryPageWrapper(),
-                ),
-              ),
-            ],
-            onGenerateRoute: (settings) {
-              final WidgetBuilder builder = (_) => Provider(
-                    create: (_) =>
-                        StoryProvider.fromPath(settings.name, context.read()),
-                    child: const StoryPageWrapper(),
-                  );
-              return settings.name?.endsWith('/full') == true
-                  ? MaterialPageRoute<void>(
-                      settings: settings,
-                      builder: builder,
-                    )
-                  : StoryRoute(
-                      settings: settings,
-                      builder: builder,
-                    );
-            },
+            onGenerateInitialRoutes: (name) => [_generateRoute(context, name)],
+            onGenerateRoute: (settings) =>
+                _generateRoute(context, settings.name, settings: settings),
           ),
         ),
       );
 }
+
+ModalRoute<void> _generateRoute(
+  BuildContext context,
+  String? name, {
+  RouteSettings? settings,
+}) {
+  final WidgetBuilder builder = (_) => ChangeNotifierProvider(
+        create: (_) => StoryProvider.fromPath(name, context.read()),
+        child: const StoryPageWrapper(),
+      );
+  return name?.endsWith('/full') == true
+      ? MaterialPageRoute<void>(settings: settings, builder: builder)
+      : StoryRoute(settings: settings, builder: builder);
+}
+
+

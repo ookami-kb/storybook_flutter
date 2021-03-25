@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:storybook_flutter/src/breakpoint.dart';
 import 'package:storybook_flutter/src/contents.dart';
+import 'package:storybook_flutter/src/control_panel/widgets/control_panel.dart';
 import 'package:storybook_flutter/src/current_story.dart';
 import 'package:storybook_flutter/src/story_provider.dart';
 
@@ -23,7 +24,7 @@ class StoryPageWrapper extends StatelessWidget {
 
     return Scaffold(
       drawer: _shouldDisplayDrawer(context)
-          ? const Drawer(child: Contents())
+          ? const Drawer(child: NavigatorContents())
           : null,
       appBar: AppBar(title: Text(story?.name ?? 'Storybook')),
       body: _shouldDisplayDrawer(context)
@@ -41,9 +42,10 @@ class StoryPageWrapper extends StatelessWidget {
                     color: Theme.of(context).cardColor,
                   ),
                   width: 200,
-                  child: const Contents(),
+                  child: const NavigatorContents(),
                 ),
                 const Expanded(child: CurrentStory()),
+                if (!isFullPage) const ControlPanel(),
               ],
             ),
     );

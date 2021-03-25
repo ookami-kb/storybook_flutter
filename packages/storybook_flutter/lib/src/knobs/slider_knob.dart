@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:storybook_flutter/src/knobs/knobs.dart';
-import 'package:storybook_flutter/src/knobs/utils.dart';
+import 'package:storybook_flutter/src/story_provider.dart';
 
 class SliderKnob extends Knob<double> {
   SliderKnob(
@@ -35,7 +36,7 @@ class SliderKnobWidget extends StatelessWidget {
   Widget build(BuildContext context) => ListTile(
         subtitle: Slider(
           value: value,
-          onChanged: (v) => context.knobs.update(label, v),
+          onChanged: (v) => context.read<StoryProvider>().update(label, v),
           max: max,
           min: min,
         ),
