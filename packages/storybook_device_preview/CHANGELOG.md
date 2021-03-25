@@ -1,3 +1,7 @@
+## 0.1.2
+
+ - **FEAT**: Export storybook_flutter package.
+
 ## 0.1.1+3
 
  - Update a dependency to the latest release.
