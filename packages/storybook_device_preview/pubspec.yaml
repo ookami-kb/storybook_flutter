@@ -1,6 +1,6 @@
 name: storybook_device_preview
 description: A plugin for device_preview package that allows to embed storybook_flutter.
-version: 0.1.1+2
+version: 0.1.1+3
 homepage: https://github.com/ookami-kb/storybook_flutter
 
 environment:
@@ -11,7 +11,7 @@ dependencies:
   device_preview: ^0.7.1
   flutter:
     sdk: flutter
-  storybook_flutter: ^0.4.1
+  storybook_flutter: ^0.4.1+1
 dev_dependencies:
   flutter_test:
     sdk: flutter

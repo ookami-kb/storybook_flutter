@@ -13,7 +13,7 @@ dependencies:
     sdk: flutter
   storybook_device_preview:
     path: ..
-  storybook_flutter: ^0.4.1
+  storybook_flutter: ^0.4.1+1
 dev_dependencies:
   flutter_test:
     sdk: flutter

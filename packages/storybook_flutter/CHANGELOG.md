@@ -1,3 +1,8 @@
+## 0.4.1+1
+
+ - **STYLE**: Fix formatting.
+ - **DOCS**: Update README.md.
+
 ## 0.4.1
 
  - **FEAT**: Add storybook_device_preview.
