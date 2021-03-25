@@ -1,4 +1,4 @@
-name: storybook_flutter
+name: storybook
 
 packages:
   - "packages/**"
