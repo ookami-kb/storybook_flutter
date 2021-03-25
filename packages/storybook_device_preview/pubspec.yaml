@@ -1,5 +1,5 @@
 name: storybook_device_preview
-description: A new Flutter project.
+description: A plugin for device_preview package that allows to embed storybook_flutter.
 version: 0.1.1
 homepage: https://github.com/ookami-kb/storybook_flutter
 
