@@ -1,3 +1,9 @@
+## 0.4.1
+
+ - **FEAT**: Add storybook_device_preview.
+ - **CHORE**: Update dependencies.
+ - **CHORE**: Restructure.
+
 ## 0.4.0
 
  - Bump "storybook_flutter" to `0.4.0`.
