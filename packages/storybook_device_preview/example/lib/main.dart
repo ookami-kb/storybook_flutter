@@ -2,7 +2,6 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:storybook_device_preview/storybook_device_preview.dart';
-import 'package:storybook_flutter/storybook_flutter.dart';
 
 void main() => runApp(const MyApp());
 

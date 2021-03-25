@@ -2,6 +2,8 @@ import 'package:device_preview/plugins.dart';
 import 'package:flutter/material.dart';
 import 'package:storybook_flutter/storybook_flutter.dart';
 
+export 'package:storybook_flutter/storybook_flutter.dart';
+
 class ContentsPlugin extends DevicePreviewPlugin {
   const ContentsPlugin()
       : super(
