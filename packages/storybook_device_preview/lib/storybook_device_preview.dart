@@ -37,3 +37,5 @@ class KnobsPlugin extends DevicePreviewPlugin {
   ) =>
       const KnobPanel();
 }
+
+const storybookPlugins = [ContentsPlugin(), KnobsPlugin()];

@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) => CustomStorybook(
         builder: (context) => DevicePreview(
-          plugins: const [ContentsPlugin(), KnobsPlugin()],
+          plugins: storybookPlugins,
           builder: (context) => MaterialApp(
             builder: DevicePreview.appBuilder,
             locale: DevicePreview.locale(context),
