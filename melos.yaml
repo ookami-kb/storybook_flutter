@@ -1,7 +1,7 @@
-name: storybook_flutter
+name: storybook
 
 packages:
-  - "**"
+  - "packages/**"
 
 scripts:
   format: flutter format --set-exit-if-changed -n .
