@@ -122,5 +122,3 @@ ModalRoute<void> _generateRoute(
       ? MaterialPageRoute<void>(settings: settings, builder: builder)
       : StoryRoute(settings: settings, builder: builder);
 }
-
-
