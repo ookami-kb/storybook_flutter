@@ -1,3 +1,7 @@
+## 0.1.1+1
+
+ - **DOCS**: Update description.
+
 ## 0.1.1
 
  - **FEAT**: Add storybookPlugins.
