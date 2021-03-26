@@ -1,3 +1,7 @@
+## 0.4.1+2
+
+ - **FIX**: Fix knobs reload for CustomStorybook.
+
 ## 0.4.1+1
 
  - **STYLE**: Fix formatting.
