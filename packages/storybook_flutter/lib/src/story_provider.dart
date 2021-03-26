@@ -32,6 +32,7 @@ class StoryProvider extends ChangeNotifier implements KnobsBuilder {
 
   void updateStory(Story? story) {
     _currentStory = story;
+    _knobs.clear();
     notifyListeners();
   }
 
