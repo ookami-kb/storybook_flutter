@@ -1,14 +1,22 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
-
-enum ControlPanelOption { knobs }
+import 'package:flutter/material.dart';
+import 'package:storybook_flutter/src/knobs/knobs_plugin.dart';
+import 'package:storybook_flutter/src/plugins/plugin.dart';
 
 class ControlPanelProvider extends ChangeNotifier {
-  ControlPanelOption? _option = ControlPanelOption.knobs;
+  ControlPanelProvider(this.plugins);
 
-  ControlPanelOption? get option => _option;
+  final List<Plugin> plugins;
 
-  void toggle(ControlPanelOption option) {
-    _option = _option == option ? null : option;
+  Plugin? _plugin = KnobsPlugin();
+
+  Plugin? get plugin => _plugin;
+
+  void toggle(Type? pluginType) {
+    _plugin = _plugin?.runtimeType == pluginType
+        ? null
+        : plugins.firstWhereOrNull((p) => p.runtimeType == pluginType);
     notifyListeners();
   }
 }
