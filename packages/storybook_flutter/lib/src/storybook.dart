@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:storybook_flutter/src/control_panel/provider.dart';
+import 'package:storybook_flutter/src/knobs/knobs_plugin.dart';
+import 'package:storybook_flutter/src/plugins/plugin.dart';
+import 'package:storybook_flutter/src/plugins/plugin_settings_notifier.dart';
 import 'package:storybook_flutter/src/route.dart';
 import 'package:storybook_flutter/src/story.dart';
 import 'package:storybook_flutter/src/story_page_wrapper.dart';
@@ -44,7 +47,7 @@ typedef StoryWrapperBuilder = Widget Function(
 ///   );
 /// ```
 class Storybook extends StatelessWidget {
-  const Storybook({
+  Storybook({
     Key? key,
     this.children = const [],
     this.theme,
@@ -52,7 +55,9 @@ class Storybook extends StatelessWidget {
     this.themeMode = ThemeMode.system,
     this.localizationDelegates,
     this.storyWrapperBuilder,
-  }) : super(key: key);
+    Iterable<Plugin>? plugins,
+  })  : plugins = plugins ?? allPlugins,
+        super(key: key);
 
   /// Theme override for the light theme.
   final ThemeData? theme;
@@ -68,6 +73,9 @@ class Storybook extends StatelessWidget {
 
   /// Localizations Delegates override
   final List<LocalizationsDelegate>? localizationDelegates;
+
+  /// Optional list of plugins.
+  final Iterable<Plugin> plugins;
 
   /// Optional parameter to override story wrapper.
   ///
@@ -92,7 +100,10 @@ class Storybook extends StatelessWidget {
           Provider.value(value: children),
           ChangeNotifierProvider(create: (_) => ThemeModeProvider(themeMode)),
           Provider<StoryWrapperBuilder?>.value(value: storyWrapperBuilder),
-          ChangeNotifierProvider(create: (_) => ControlPanelProvider()),
+          ChangeNotifierProvider(
+            create: (_) => ControlPanelProvider([KnobsPlugin(), ...plugins]),
+          ),
+          ChangeNotifierProvider(create: (_) => PluginSettingsNotifier()),
         ],
         child: Builder(
           builder: (context) => MaterialApp(

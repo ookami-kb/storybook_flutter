@@ -9,11 +9,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Storybook(
+        plugins: [
+          DeviceFramePlugin(
+            initialData: DeviceFrameData(device: Devices.macos.iMacPro),
+          )
+        ],
         storyWrapperBuilder: (_, story, child) => Stack(
           children: [
             Container(
               padding: story.padding,
-              color: story.background,
+              color: Theme.of(context).canvasColor,
               child: Center(child: child),
             ),
             Padding(
@@ -79,3 +84,41 @@ class MyApp extends StatelessWidget {
         ],
       );
 }
+
+class FramePlugin extends Plugin<bool> {
+  FramePlugin()
+      : super(
+          storyBuilder: _storyBuilder,
+          icon: Icons.crop_square,
+          settingsBuilder: _settingsBuilder,
+        );
+}
+
+Widget _storyBuilder(
+  BuildContext context,
+  Story story,
+  Widget child,
+  bool? data,
+) =>
+    data != false ? _frame(child) : child;
+
+Widget _frame(Widget child) => Container(
+      margin: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        border: Border.all(width: 8),
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: child,
+    );
+
+Widget _settingsBuilder(
+  BuildContext context,
+  Story? story,
+  bool? data,
+  void Function(bool?) update,
+) =>
+    CheckboxListTile(
+      title: const Text('Show frame'),
+      value: data ?? true,
+      onChanged: update,
+    );

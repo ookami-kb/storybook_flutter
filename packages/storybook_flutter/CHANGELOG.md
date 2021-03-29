@@ -1,3 +1,9 @@
+## 0.5.0-dev.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **FEAT**: Add plugins.
+
 ## 0.4.1+2
 
  - **FIX**: Fix knobs reload for CustomStorybook.

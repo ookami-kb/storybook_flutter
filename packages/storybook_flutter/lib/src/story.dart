@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:recase/recase.dart';
+import 'package:storybook_flutter/src/control_panel/provider.dart';
 import 'package:storybook_flutter/src/knobs/knobs.dart';
+import 'package:storybook_flutter/src/plugins/plugin_settings_notifier.dart';
 import 'package:storybook_flutter/src/story_provider.dart';
 import 'package:storybook_flutter/src/storybook.dart';
 
@@ -81,11 +83,23 @@ class _StoryState extends State<Story> {
         context.watch<StoryWrapperBuilder?>() ??
         _defaultWrapperBuilder;
 
-    return effectiveWrapper(
+    Widget child = effectiveWrapper(
       context,
       widget,
       widget._builder(context, context.watch<StoryProvider>()),
     );
+    for (final plugin in context.watch<ControlPanelProvider>().plugins) {
+      child = plugin.storyBuilder(
+        context,
+        widget,
+        child,
+        context
+            .watch<PluginSettingsNotifier>()
+            .get<dynamic>(plugin.runtimeType),
+      );
+    }
+
+    return child;
   }
 }
 
