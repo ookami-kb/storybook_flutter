@@ -9,12 +9,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Storybook(
-        plugins: [
-          DeviceFramePlugin(
-            initialData: DeviceFrameData(device: Devices.macos.iMacPro),
-          )
-        ],
-        storyWrapperBuilder: (_, story, child) => Stack(
+        storyWrapperBuilder: (context, story, child) => Stack(
           children: [
             Container(
               padding: story.padding,
@@ -35,7 +30,7 @@ class MyApp extends StatelessWidget {
         ),
         children: [
           Story(
-            section: 'Button',
+            section: 'Buttons',
             name: 'Flat button',
             builder: (_, k) => MaterialButton(
               onPressed:
@@ -44,7 +39,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
           Story(
-            section: 'Button',
+            section: 'Buttons',
             name: 'Raised button',
             // ignore: deprecated_member_use
             builder: (_, k) => RaisedButton(
@@ -84,41 +79,3 @@ class MyApp extends StatelessWidget {
         ],
       );
 }
-
-class FramePlugin extends Plugin<bool> {
-  FramePlugin()
-      : super(
-          storyBuilder: _storyBuilder,
-          icon: Icons.crop_square,
-          settingsBuilder: _settingsBuilder,
-        );
-}
-
-Widget _storyBuilder(
-  BuildContext context,
-  Story story,
-  Widget child,
-  bool? data,
-) =>
-    data != false ? _frame(child) : child;
-
-Widget _frame(Widget child) => Container(
-      margin: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        border: Border.all(width: 8),
-        borderRadius: BorderRadius.circular(4),
-      ),
-      child: child,
-    );
-
-Widget _settingsBuilder(
-  BuildContext context,
-  Story? story,
-  bool? data,
-  void Function(bool?) update,
-) =>
-    CheckboxListTile(
-      title: const Text('Show frame'),
-      value: data ?? true,
-      onChanged: update,
-    );
