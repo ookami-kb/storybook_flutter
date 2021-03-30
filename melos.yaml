@@ -13,3 +13,5 @@ scripts:
       melos run format \
         && melos run pub_get \
         && melos run analyze
+
+  build:docs: melos exec --scope="storybook_flutter" -- "sh MELOS_ROOT_PATH/tool/build_docs.sh"
