@@ -1,4 +1,7 @@
 site_name: Storybook Flutter
+repo_url: https://github.com/ookami-kb/storybook_flutter/
+edit_uri: blob/master/meta/docs/docs/
+site_author: Kirill Bubochkin
 theme:
   name: readthedocs
   highlightjs: true
@@ -6,3 +9,6 @@ theme:
     - yaml
     - dart
     - shell
+
+markdown_extensions:
+  - admonition

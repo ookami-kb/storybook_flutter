@@ -1,12 +1,13 @@
 [![Pub Version](https://img.shields.io/pub/v/storybook_flutter)](https://pub.dev/packages/storybook_flutter)
 
-# storybook_flutter
+# Storybook Flutter
 
 A cross-platform storybook for showcasing widgets. It should work in all platforms supported by Flutter.
 
-![](https://github.com/ookami-kb/storybook_flutter/raw/master/meta/preview.png)
+- [Demo version](https://ookami-kb.github.io/storybook_flutter/)
+- [Documentation](https://storybook-flutter.readthedocs.io/en/latest/)
 
-Demo version available [here](https://ookami-kb.github.io/storybook_flutter/).
+![](https://github.com/ookami-kb/storybook_flutter/raw/master/meta/preview.png)
 
 ## Getting Started
 
