@@ -5,7 +5,7 @@
 A cross-platform storybook for showcasing widgets. It should work in all platforms supported by Flutter.
 
 - [Demo version](https://ookami-kb.github.io/storybook_flutter/)
-- [Documentation](https://storybook-flutter.readthedocs.io/en/latest/)
+- [Documentation](https://ookamikb.gitbook.io/flutter-storybook/)
 
 ![](https://github.com/ookami-kb/storybook_flutter/raw/master/meta/preview.png)
 
