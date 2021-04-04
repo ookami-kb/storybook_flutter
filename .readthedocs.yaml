@@ -1,4 +1,0 @@
-version: 2
-
-mkdocs:
-  configuration: meta/docs/mkdocs.yml
