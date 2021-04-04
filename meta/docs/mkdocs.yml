@@ -1,0 +1,8 @@
+site_name: Storybook Flutter
+theme:
+  name: readthedocs
+  highlightjs: true
+  hljs_languages:
+    - yaml
+    - dart
+    - shell
