@@ -8,10 +8,17 @@ scripts:
   pub_get: melos exec -- "flutter pub get"
   analyze: flutter analyze .
 
+  test:
+    run: melos exec -c 1 --fail-fast -- "flutter test --no-pub"
+    select-package:
+      dir-exists:
+        - test
+
   check_master:
     run: |
       melos run format \
         && melos run pub_get \
-        && melos run analyze
+        && melos run analyze \
+        && melos run test --no-select
 
   build:docs: melos exec --scope="storybook_flutter" -- "sh MELOS_ROOT_PATH/tool/build_docs.sh"
