@@ -21,7 +21,10 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   freezed: ^0.14.1+1
+  golden_toolkit: ^0.9.0
   mews_pedantic: ^0.2.0
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/

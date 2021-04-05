@@ -56,6 +56,7 @@ class Storybook extends StatelessWidget {
     this.localizationDelegates,
     this.storyWrapperBuilder,
     Iterable<Plugin>? plugins,
+    this.initialRoute = '/',
   })  : plugins = plugins ?? allPlugins,
         super(key: key);
 
@@ -94,6 +95,8 @@ class Storybook extends StatelessWidget {
   /// [Story.wrapperBuilder].
   final StoryWrapperBuilder? storyWrapperBuilder;
 
+  final String initialRoute;
+
   @override
   Widget build(BuildContext context) => MultiProvider(
         providers: [
@@ -112,6 +115,7 @@ class Storybook extends StatelessWidget {
             theme: theme ?? ThemeData(brightness: Brightness.light),
             darkTheme: darkTheme ?? ThemeData(brightness: Brightness.dark),
             localizationsDelegates: localizationDelegates,
+            initialRoute: initialRoute,
             onGenerateInitialRoutes: (name) => [_generateRoute(context, name)],
             onGenerateRoute: (settings) =>
                 _generateRoute(context, settings.name, settings: settings),
