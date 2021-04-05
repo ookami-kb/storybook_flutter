@@ -1,3 +1,11 @@
+## 0.5.0-dev.1
+
+ - **FIX**: Fix responsive layout.
+ - **DOCS**: Update docs link.
+ - **DOCS**: Update docs.
+ - **DOCS**: Update demo.
+ - **DOCS**: Add demo page.
+
 ## 0.5.0-dev.0
 
 > Note: This release has breaking changes.
