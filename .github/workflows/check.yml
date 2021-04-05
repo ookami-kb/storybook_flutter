@@ -13,3 +13,8 @@ jobs:
       - run: echo "$HOME/.pub-cache/bin" >> $GITHUB_PATH
       - run: dart pub global activate melos
       - run: melos run check_master
+      - name: Store failure artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: golden-test-failure
+          path: "**/test/failures/"
