@@ -9,45 +9,44 @@ import 'package:storybook_flutter/src/story_provider.dart';
 class StoryPageWrapper extends StatelessWidget {
   const StoryPageWrapper({Key? key}) : super(key: key);
 
-  bool _shouldDisplayDrawer(BuildContext context) =>
-      MediaQuery.of(context).breakpoint == Breakpoint.small;
-
   @override
   Widget build(BuildContext context) {
     final data = context.watch<StoryProvider>();
     final story = data.currentStory;
     final isFullPage = data.isFullPage;
 
-    if (isFullPage) {
-      return const Scaffold(body: CurrentStory());
-    }
+    if (isFullPage) return const Scaffold(body: CurrentStory());
+
+    final shouldDisplayDrawer =
+        MediaQuery.of(context).breakpoint == Breakpoint.small;
+    final direction = shouldDisplayDrawer ? Axis.vertical : Axis.horizontal;
+
+    final children = [
+      const Expanded(child: CurrentStory()),
+      if (!isFullPage) ControlPanel(direction: direction),
+    ];
+    final theme = Theme.of(context);
 
     return Scaffold(
-      drawer: _shouldDisplayDrawer(context)
-          ? const Drawer(child: NavigatorContents())
-          : null,
+      drawer:
+          shouldDisplayDrawer ? const Drawer(child: NavigatorContents()) : null,
       appBar: AppBar(title: Text(story?.name ?? 'Storybook')),
-      body: _shouldDisplayDrawer(context)
-          ? const CurrentStory()
-          : Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border(
-                      right: BorderSide(
-                        color: Theme.of(context).dividerColor,
-                      ),
-                    ),
-                    color: Theme.of(context).cardColor,
-                  ),
-                  width: 200,
-                  child: const NavigatorContents(),
-                ),
-                const Expanded(child: CurrentStory()),
-                if (!isFullPage) const ControlPanel(),
-              ],
+      body: Flex(
+        direction: direction,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          if (!shouldDisplayDrawer)
+            Container(
+              decoration: BoxDecoration(
+                border: Border(right: BorderSide(color: theme.dividerColor)),
+                color: theme.cardColor,
+              ),
+              width: 200,
+              child: const NavigatorContents(),
             ),
+          ...children,
+        ],
+      ),
     );
   }
 }

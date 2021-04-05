@@ -13,6 +13,7 @@ class KnobPanel extends StatelessWidget {
           return items.isEmpty
               ? const Center(child: Text('No knobs'))
               : ListView.separated(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
                   separatorBuilder: (context, index) =>
                       const SizedBox(height: 8),
                   itemCount: items.length,
