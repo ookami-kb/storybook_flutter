@@ -1,4 +1,3 @@
-import 'package:dfunc/dfunc.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:storybook_flutter/src/control_panel/provider.dart';
@@ -75,7 +74,7 @@ class ControlPanel extends StatelessWidget {
             child: SizedBox(
               width: isHorizontal ? _contentSize : null,
               height: isHorizontal ? null : _contentSize,
-              child: plugin?.let(buildPluginSettings) ?? Container(),
+              child: plugin == null ? Container() : buildPluginSettings(plugin),
             ),
           ),
           Align(

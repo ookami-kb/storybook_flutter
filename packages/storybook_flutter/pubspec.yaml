@@ -9,7 +9,6 @@ environment:
 dependencies:
   collection: ^1.15.0
   device_frame: ^0.4.0
-  dfunc: ^0.6.2
   flutter:
     sdk: flutter
   freezed_annotation: ^0.14.1
