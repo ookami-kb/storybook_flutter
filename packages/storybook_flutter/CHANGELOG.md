@@ -1,3 +1,8 @@
+## 0.5.0+1
+
+ - **REFACTOR**: Remove dfunc dependency.
+ - **REFACTOR**: Update dependencies.
+
 ## 0.5.0
 
  - Graduate package to a stable release. See pre-releases prior to this version for changelog entries.

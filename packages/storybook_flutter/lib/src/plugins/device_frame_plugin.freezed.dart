@@ -34,9 +34,7 @@ const $DeviceFrameData = _$DeviceFrameDataTearOff();
 /// @nodoc
 mixin _$DeviceFrameData {
   bool get isFrameVisible => throw _privateConstructorUsedError;
-
   DeviceInfo? get device => throw _privateConstructorUsedError;
-
   Orientation get orientation => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -49,7 +47,6 @@ abstract class $DeviceFrameDataCopyWith<$Res> {
   factory $DeviceFrameDataCopyWith(
           DeviceFrameData value, $Res Function(DeviceFrameData) then) =
       _$DeviceFrameDataCopyWithImpl<$Res>;
-
   $Res call({bool isFrameVisible, DeviceInfo? device, Orientation orientation});
 
   $DeviceInfoCopyWith<$Res>? get device;
@@ -61,7 +58,6 @@ class _$DeviceFrameDataCopyWithImpl<$Res>
   _$DeviceFrameDataCopyWithImpl(this._value, this._then);
 
   final DeviceFrameData _value;
-
   // ignore: unused_field
   final $Res Function(DeviceFrameData) _then;
 
@@ -105,7 +101,6 @@ abstract class _$DeviceFrameDataCopyWith<$Res>
   factory _$DeviceFrameDataCopyWith(
           _DeviceFrameData value, $Res Function(_DeviceFrameData) then) =
       __$DeviceFrameDataCopyWithImpl<$Res>;
-
   @override
   $Res call({bool isFrameVisible, DeviceInfo? device, Orientation orientation});
 
@@ -148,7 +143,10 @@ class __$DeviceFrameDataCopyWithImpl<$Res>
 }
 
 /// @nodoc
-class _$_DeviceFrameData implements _DeviceFrameData {
+
+class _$_DeviceFrameData
+    with DiagnosticableTreeMixin
+    implements _DeviceFrameData {
   const _$_DeviceFrameData(
       {this.isFrameVisible = true,
       this.device,
@@ -164,8 +162,18 @@ class _$_DeviceFrameData implements _DeviceFrameData {
   final Orientation orientation;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'DeviceFrameData(isFrameVisible: $isFrameVisible, device: $device, orientation: $orientation)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'DeviceFrameData'))
+      ..add(DiagnosticsProperty('isFrameVisible', isFrameVisible))
+      ..add(DiagnosticsProperty('device', device))
+      ..add(DiagnosticsProperty('orientation', orientation));
   }
 
   @override
@@ -203,13 +211,10 @@ abstract class _DeviceFrameData implements DeviceFrameData {
 
   @override
   bool get isFrameVisible => throw _privateConstructorUsedError;
-
   @override
   DeviceInfo? get device => throw _privateConstructorUsedError;
-
   @override
   Orientation get orientation => throw _privateConstructorUsedError;
-
   @override
   @JsonKey(ignore: true)
   _$DeviceFrameDataCopyWith<_DeviceFrameData> get copyWith =>
