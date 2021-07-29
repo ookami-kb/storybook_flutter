@@ -57,6 +57,9 @@ class Storybook extends StatelessWidget {
     this.storyWrapperBuilder,
     Iterable<Plugin>? plugins,
     this.initialRoute = '/',
+    List<NavigatorObserver> this.navigatorObservers =
+        const <NavigatorObserver>[],
+    this.builder,
   })  : plugins = plugins ?? allPlugins,
         super(key: key);
 
@@ -77,6 +80,16 @@ class Storybook extends StatelessWidget {
 
   /// Optional list of plugins.
   final Iterable<Plugin> plugins;
+
+  /// {@macro flutter.widgets.widgetsApp.navigatorObservers}
+  final List<NavigatorObserver> navigatorObservers;
+
+  /// {@macro flutter.widgets.widgetsApp.builder}
+  ///
+  /// Material specific features such as [showDialog] and [showMenu], and widgets
+  /// such as [Tooltip], [PopupMenuButton], also require a [Navigator] to properly
+  /// function.
+  final TransitionBuilder? builder;
 
   /// Optional parameter to override story wrapper.
   ///
@@ -119,6 +132,8 @@ class Storybook extends StatelessWidget {
             onGenerateInitialRoutes: (name) => [_generateRoute(context, name)],
             onGenerateRoute: (settings) =>
                 _generateRoute(context, settings.name, settings: settings),
+            builder: builder,
+            navigatorObservers: navigatorObservers,
           ),
         ),
       );
