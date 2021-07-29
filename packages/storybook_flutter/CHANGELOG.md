@@ -1,3 +1,7 @@
+## 0.5.1
+
+ - **FEAT**: Expose builder and navigatorObservers.
+
 ## 0.5.0+1
 
  - **REFACTOR**: Remove dfunc dependency.
