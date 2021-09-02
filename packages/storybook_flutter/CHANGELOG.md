@@ -1,3 +1,9 @@
+## 0.7.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **FEAT**: Bump provider to 6.0.0 (#41).
+
 ## 0.6.0
 
 > Note: This release has breaking changes.
