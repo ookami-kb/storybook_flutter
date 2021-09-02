@@ -57,8 +57,7 @@ class Storybook extends StatelessWidget {
     this.storyWrapperBuilder,
     Iterable<Plugin>? plugins,
     this.initialRoute = '/',
-    List<NavigatorObserver> this.navigatorObservers =
-        const <NavigatorObserver>[],
+    this.navigatorObservers = const <NavigatorObserver>[],
     this.builder,
   })  : plugins = plugins ?? allPlugins,
         super(key: key);
