@@ -31,11 +31,21 @@ abstract class KnobsBuilder {
   /// Creates text input field with [label] and [initial] value.
   String text({required String label, String initial = ''});
 
+  /// Creates slider knob with `double` value.
   double slider({
     required String label,
     double initial = 0,
     double max = 1,
     double min = 0,
+  });
+
+  /// Creates slider knob with `int` value.
+  int sliderInt({
+    required String label,
+    int initial = 0,
+    int max = 100,
+    int min = 0,
+    int divisions = 100,
   });
 
   /// Creates select field with [label], [initial] value and list of [options].

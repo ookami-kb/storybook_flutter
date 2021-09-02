@@ -67,6 +67,10 @@ class MyApp extends StatelessWidget {
               child: Text(k.text(label: 'Text', initial: 'Raised button')),
             ),
           ),
+          Story(
+            name: 'Counter',
+            builder: (_, k) => Text('${k.sliderInt(label: 'Value')}'),
+          ),
           Story.simple(
             name: 'Input field',
             child: const TextField(
