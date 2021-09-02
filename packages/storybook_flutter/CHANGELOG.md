@@ -1,3 +1,9 @@
+## 0.6.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **FEAT**: Add sliderInt (#40).
+
 ## 0.5.1
 
  - **FEAT**: Expose builder and navigatorObservers.
