@@ -74,4 +74,21 @@ class StoryProvider extends ChangeNotifier implements KnobsBuilder {
     double min = 0,
   }) =>
       _addKnob(SliderKnob(label, value: initial, max: max, min: min));
+
+  @override
+  int sliderInt({
+    required String label,
+    int initial = 0,
+    int max = 100,
+    int min = 0,
+    int divisions = 100,
+  }) =>
+      _addKnob(SliderKnob(
+        label,
+        value: initial.toDouble(),
+        max: max.toDouble(),
+        min: min.toDouble(),
+        divisions: divisions,
+        formatValue: (v) => v.toInt().toString(),
+      )).toInt();
 }
