@@ -1,6 +1,6 @@
 name: storybook_flutter
 description: A storybook for Flutter widgets. Live preview of isolated widgets for faster development and showcase.
-version: 0.7.0
+version: 0.7.0+1
 homepage: https://github.com/ookami-kb/storybook_flutter
 
 environment:
@@ -12,7 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   freezed_annotation: ^0.14.1
-  provider: ^6.0.0
+  provider: '>=5.0.0 <7.0.0'
   recase: ^4.0.0
 
 dev_dependencies:

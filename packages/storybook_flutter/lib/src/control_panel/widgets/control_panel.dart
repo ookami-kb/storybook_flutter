@@ -23,7 +23,10 @@ class ControlPanel extends StatelessWidget {
     final isHorizontal = direction == Axis.horizontal;
 
     Widget buildIcon(Plugin p) => IconButton(
-          icon: Icon(p.icon, color: plugin == p ? theme.accentColor : null),
+          icon: Icon(
+            p.icon,
+            color: plugin == p ? theme.colorScheme.secondary : null,
+          ),
           onPressed: () =>
               context.read<ControlPanelProvider>().toggle(p.runtimeType),
         );

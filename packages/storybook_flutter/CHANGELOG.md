@@ -1,3 +1,7 @@
+## 0.7.0+1
+
+ - **FIX**: Fix list views in macOS.
+
 ## 0.7.0
 
 > Note: This release has breaking changes.

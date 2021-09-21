@@ -50,7 +50,10 @@ class _ContentsState extends State<_Contents> {
     final stories = (grouped[''] ?? []).map(_buildStoryTile);
     return ListTileTheme(
       style: ListTileStyle.drawer,
-      child: ListView(children: [...sections, ...stories]),
+      child: ListView(
+        primary: false,
+        children: [...sections, ...stories],
+      ),
     );
   }
 
