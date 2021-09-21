@@ -67,6 +67,7 @@ Widget _settingsBuilder(
       .toList();
 
   return ListView.separated(
+    primary: false,
     separatorBuilder: (context, i) => i == 1
         ? Container(
             height: 1,
