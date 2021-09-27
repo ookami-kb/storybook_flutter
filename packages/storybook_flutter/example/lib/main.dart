@@ -4,11 +4,19 @@ import 'package:storybook_flutter/storybook_flutter.dart';
 
 void main() => runApp(const MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final messangerKey = GlobalKey<ScaffoldMessengerState>();
+
+  @override
   Widget build(BuildContext context) => Storybook(
+        messangerKey: messangerKey,
         storyWrapperBuilder: (context, story, child) => Stack(
           children: [
             Container(
@@ -80,6 +88,26 @@ class MyApp extends StatelessWidget {
               ),
             ),
           ),
+          Story.simple(
+              name: 'SnackBar',
+              child: Scaffold(
+                body: GestureDetector(
+                  onTap: () {
+                    messangerKey.currentState!.showSnackBar(
+                        const SnackBar(content: Text('Yay! A SnackBar!')));
+                  },
+                  child: Center(
+                    child: Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Colors.green,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: const Text('My Button'),
+                    ),
+                  ),
+                ),
+              )),
         ],
       );
 }
