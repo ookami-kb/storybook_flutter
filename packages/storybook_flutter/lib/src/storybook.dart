@@ -57,10 +57,13 @@ class Storybook extends StatelessWidget {
     this.storyWrapperBuilder,
     Iterable<Plugin>? plugins,
     this.initialRoute = '/',
+    this.scaffoldMessengerKey,
     this.navigatorObservers = const <NavigatorObserver>[],
     this.builder,
   })  : plugins = plugins ?? allPlugins,
         super(key: key);
+
+  final GlobalKey<ScaffoldMessengerState>? scaffoldMessengerKey;
 
   /// Theme override for the light theme.
   final ThemeData? theme;
@@ -122,6 +125,7 @@ class Storybook extends StatelessWidget {
         ],
         child: Builder(
           builder: (context) => MaterialApp(
+            scaffoldMessengerKey: scaffoldMessengerKey,
             debugShowCheckedModeBanner: false,
             themeMode: Provider.of<ThemeModeProvider>(context).current,
             theme: theme ?? ThemeData(brightness: Brightness.light),
