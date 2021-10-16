@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:storybook_flutter/src/knobs/knob_panel.dart';
 import 'package:storybook_flutter/src/plugins/plugin.dart';
-import 'package:storybook_flutter/storybook_flutter.dart';
+import 'package:storybook_flutter/src/story.dart';
 
 class KnobsPlugin extends Plugin<Object> {
   KnobsPlugin()
