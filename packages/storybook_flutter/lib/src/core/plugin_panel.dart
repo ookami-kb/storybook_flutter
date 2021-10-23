@@ -35,7 +35,13 @@ class _PluginPanelState extends State<PluginPanel> {
                 child: SizedBox(
                   height: 300,
                   width: 200,
-                  child: childBuilder(context),
+                  child: MaterialApp(
+                    useInheritedMediaQuery: true,
+                    debugShowCheckedModeBanner: false,
+                    theme: ThemeData.light(),
+                    darkTheme: ThemeData.dark(),
+                    home: childBuilder(context),
+                  ),
                 ),
               ),
             ),

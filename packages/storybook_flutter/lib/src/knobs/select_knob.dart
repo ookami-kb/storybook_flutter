@@ -1,8 +1,8 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:storybook_flutter/src/core/plugins/knobs.dart';
 import 'package:storybook_flutter/src/knobs/knobs.dart';
-import 'package:storybook_flutter/src/story_provider.dart';
 
 class SelectKnob<T> extends Knob<T> {
   SelectKnob(String label, T value, this.options) : super(label, value);
@@ -55,7 +55,7 @@ class SelectKnobWidget<T> extends StatelessWidget {
               .toList(),
           onChanged: (v) {
             if (v != null) {
-              context.read<StoryProvider>().update<T>(label, v.value);
+              context.read<KnobsNotifier>().update<T>(label, v.value);
             }
           },
         ),

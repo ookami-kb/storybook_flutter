@@ -3,6 +3,7 @@ library storybook_flutter;
 export 'package:device_frame/device_frame.dart';
 
 export 'src/contents.dart' show Contents;
+export 'src/core/plugins/knobs.dart';
 export 'src/core/story.dart';
 export 'src/core/storybook.dart';
 export 'src/custom_storybook.dart';
