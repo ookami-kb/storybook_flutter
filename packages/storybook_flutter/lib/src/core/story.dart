@@ -3,12 +3,12 @@ import 'package:flutter/widgets.dart';
 class Story {
   Story({
     required this.name,
-    this.section,
+    this.section = '',
     required this.builder,
   });
 
   final String name;
-  final String? section;
+  final String section;
   final WidgetBuilder builder;
 }
 

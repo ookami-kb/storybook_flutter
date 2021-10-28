@@ -40,7 +40,7 @@ class _PluginPanelState extends State<PluginPanel> {
                     debugShowCheckedModeBanner: false,
                     theme: ThemeData.light(),
                     darkTheme: ThemeData.dark(),
-                    home: childBuilder(context),
+                    home: Scaffold(body: childBuilder(context)),
                   ),
                 ),
               ),

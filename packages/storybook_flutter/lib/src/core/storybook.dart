@@ -4,6 +4,7 @@ import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 import 'package:storybook_flutter/src/core/plugin.dart';
 import 'package:storybook_flutter/src/core/plugin_panel.dart';
+import 'package:storybook_flutter/src/core/plugins/contents.dart';
 import 'package:storybook_flutter/src/core/plugins/device_frame.dart';
 import 'package:storybook_flutter/src/core/plugins/knobs.dart';
 import 'package:storybook_flutter/src/core/plugins/theme_mode.dart';
@@ -24,6 +25,7 @@ class Storybook extends StatelessWidget {
     Key? key,
     required this.stories,
     this.plugins = const [
+      contentsPlugin,
       knobsPlugin,
       themeModePlugin,
       deviceFramePlugin,
@@ -48,6 +50,9 @@ class Storybook extends StatelessWidget {
                     ? null
                     : stories.firstWhere((s) => s.name == initialStory),
               ),
+            ),
+            ChangeNotifierProvider(
+              create: (_) => StoriesNotifier(stories),
             ),
             ...plugins
                 .where((p) => p.wrapperBuilder != null)
@@ -108,7 +113,10 @@ class CurrentStory extends StatelessWidget {
   Widget build(BuildContext context) {
     final story = context.watch<StoryNotifier>().value;
     if (story == null) {
-      return const Center(child: Text('Select story'));
+      return const Directionality(
+        textDirection: TextDirection.ltr,
+        child: Material(child: Center(child: Text('Select story'))),
+      );
     }
 
     final plugins = context.watch<List<Plugin>>();
@@ -123,4 +131,8 @@ class CurrentStory extends StatelessWidget {
         ? child
         : Nested(children: pluginBuilders, child: child);
   }
+}
+
+class StoriesNotifier extends ValueNotifier<List<Story>> {
+  StoriesNotifier(List<Story> value) : super(value);
 }

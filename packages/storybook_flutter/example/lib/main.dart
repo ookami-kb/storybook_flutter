@@ -8,10 +8,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Storybook(
-        initialStory: 'name',
         stories: [
           Story(
-            name: 'name',
+            name: 'Button',
             builder: (context) => TextButton(
               onPressed: () => showDialog<void>(
                 context: context,
@@ -21,6 +20,12 @@ class MyApp extends StatelessWidget {
                 ),
               ),
               child: const Text('Press me'),
+            ),
+          ),
+          Story(
+            name: 'Text',
+            builder: (context) => Text(
+              context.knobs.text(label: 'Text', initial: 'Simple text story'),
             ),
           ),
         ],

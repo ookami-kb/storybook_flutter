@@ -89,7 +89,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     final story = _storyNotifier.value;
     if (story == null) return [];
 
-    return _knobs[story.name]!.values.toList();
+    return _knobs[story.name]?.values.toList() ?? [];
   }
 
   @override
