@@ -1,5 +1,6 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'device_frame_plugin.dart';
 
@@ -179,23 +180,18 @@ class _$_DeviceFrameData
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _DeviceFrameData &&
+        (other.runtimeType == runtimeType &&
+            other is _DeviceFrameData &&
             (identical(other.isFrameVisible, isFrameVisible) ||
-                const DeepCollectionEquality()
-                    .equals(other.isFrameVisible, isFrameVisible)) &&
-            (identical(other.device, device) ||
-                const DeepCollectionEquality().equals(other.device, device)) &&
+                other.isFrameVisible == isFrameVisible) &&
+            (identical(other.device, device) || other.device == device) &&
             (identical(other.orientation, orientation) ||
-                const DeepCollectionEquality()
-                    .equals(other.orientation, orientation)));
+                other.orientation == orientation));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(isFrameVisible) ^
-      const DeepCollectionEquality().hash(device) ^
-      const DeepCollectionEquality().hash(orientation);
+      Object.hash(runtimeType, isFrameVisible, device, orientation);
 
   @JsonKey(ignore: true)
   @override
@@ -210,11 +206,11 @@ abstract class _DeviceFrameData implements DeviceFrameData {
       Orientation orientation}) = _$_DeviceFrameData;
 
   @override
-  bool get isFrameVisible => throw _privateConstructorUsedError;
+  bool get isFrameVisible;
   @override
-  DeviceInfo? get device => throw _privateConstructorUsedError;
+  DeviceInfo? get device;
   @override
-  Orientation get orientation => throw _privateConstructorUsedError;
+  Orientation get orientation;
   @override
   @JsonKey(ignore: true)
   _$DeviceFrameDataCopyWith<_DeviceFrameData> get copyWith =>
