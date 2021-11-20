@@ -1,3 +1,13 @@
+## 0.8.0
+
+> Note: This release has breaking changes.
+
+ - **TEST**: Update golden test images.
+ - **FIX**: Remove deprecated accentColor.
+ - **FEAT**: Add scaffoldMessengerKey to Storybook (#46).
+ - **CHORE**: Update license (#49).
+ - **BREAKING** **CHORE**: Update dependencies.
+
 ## 0.7.0+1
 
  - **FIX**: Fix list views in macOS.
