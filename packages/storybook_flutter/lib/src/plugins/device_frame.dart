@@ -23,13 +23,16 @@ Widget _buildStoryWrapper(BuildContext context, Widget? child) {
 
   final result = d.device == null
       ? child!
-      : Padding(
-          padding: const EdgeInsets.all(16),
-          child: DeviceFrame(
-            device: d.device!,
-            isFrameVisible: d.isFrameVisible,
-            orientation: d.orientation,
-            screen: child!,
+      : SafeArea(
+          bottom: false,
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: DeviceFrame(
+              device: d.device!,
+              isFrameVisible: d.isFrameVisible,
+              orientation: d.orientation,
+              screen: child!,
+            ),
           ),
         );
 

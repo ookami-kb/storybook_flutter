@@ -6,47 +6,47 @@ class PluginPanel extends StatefulWidget {
   const PluginPanel({
     Key? key,
     required this.plugins,
+    required this.layerLink,
+    required this.overlayKey,
   }) : super(key: key);
 
   final List<Plugin> plugins;
+  final LayerLink layerLink;
+  final GlobalKey<OverlayState> overlayKey;
 
   @override
   State<PluginPanel> createState() => _PluginPanelState();
 }
 
-final overlayKey = GlobalKey<OverlayState>();
-
 class _PluginPanelState extends State<PluginPanel> {
   PluginOverlay? _overlay;
 
   OverlayEntry _createEntry(WidgetBuilder childBuilder) => OverlayEntry(
-        builder: (context) => Stack(
-          children: [
-            Positioned(
-              bottom: 50,
-              left: 0,
-              child: Dialog(
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(8),
-                    topRight: Radius.circular(8),
-                  ),
-                ),
-                insetPadding: EdgeInsets.zero,
-                child: SizedBox(
-                  height: 300,
-                  width: 200,
-                  child: MaterialApp(
-                    useInheritedMediaQuery: true,
-                    debugShowCheckedModeBanner: false,
-                    theme: ThemeData.light(),
-                    darkTheme: ThemeData.dark(),
-                    home: Scaffold(body: childBuilder(context)),
-                  ),
+        builder: (context) => Positioned(
+          height: 350,
+          width: 250,
+          child: CompositedTransformFollower(
+            link: widget.layerLink,
+            targetAnchor: Alignment.topLeft,
+            followerAnchor: Alignment.bottomLeft,
+            showWhenUnlinked: false,
+            child: Dialog(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(8),
+                  topRight: Radius.circular(8),
                 ),
               ),
+              insetPadding: EdgeInsets.zero,
+              child: MaterialApp(
+                useInheritedMediaQuery: true,
+                debugShowCheckedModeBanner: false,
+                theme: ThemeData.light(),
+                darkTheme: ThemeData.dark(),
+                home: Scaffold(body: childBuilder(context)),
+              ),
             ),
-          ],
+          ),
         ),
       );
 
@@ -59,7 +59,7 @@ class _PluginPanelState extends State<PluginPanel> {
         plugin: p,
         entry: _createEntry((context) => p.panelBuilder!(context)),
       );
-      overlayKey.currentState!.insert(_overlay!.entry);
+      widget.overlayKey.currentState!.insert(_overlay!.entry);
     }
 
     if (_overlay != null) {

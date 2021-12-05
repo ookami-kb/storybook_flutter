@@ -15,12 +15,13 @@ Widget _materialWrapper(BuildContext context, Widget? child) => MaterialApp(
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
       debugShowCheckedModeBanner: false,
+      useInheritedMediaQuery: true,
       home: Scaffold(
         body: Center(child: child),
       ),
     );
 
-class Storybook extends StatelessWidget {
+class Storybook extends StatefulWidget {
   const Storybook({
     Key? key,
     required this.stories,
@@ -40,21 +41,30 @@ class Storybook extends StatelessWidget {
   final TransitionBuilder wrapperBuilder;
 
   @override
+  State<Storybook> createState() => _StorybookState();
+}
+
+class _StorybookState extends State<Storybook> {
+  final _overlayKey = GlobalKey<OverlayState>();
+  final _layerLink = LayerLink();
+
+  @override
   Widget build(BuildContext context) => MediaQuery.fromWindow(
         child: Nested(
           children: [
-            Provider.value(value: plugins),
+            Provider.value(value: widget.plugins),
             ChangeNotifierProvider(
               create: (_) => StoryNotifier(
-                initialStory == null
+                widget.initialStory == null
                     ? null
-                    : stories.firstWhere((s) => s.name == initialStory),
+                    : widget.stories
+                        .firstWhere((s) => s.name == widget.initialStory),
               ),
             ),
             ChangeNotifierProvider(
-              create: (_) => StoriesNotifier(stories),
+              create: (_) => StoriesNotifier(widget.stories),
             ),
-            ...plugins
+            ...widget.plugins
                 .where((p) => p.wrapperBuilder != null)
                 .map((p) => SingleChildBuilder(builder: p.wrapperBuilder!))
           ],
@@ -62,39 +72,53 @@ class Storybook extends StatelessWidget {
             builder: (context) => Stack(
               alignment: Alignment.topCenter,
               children: [
-                MaterialApp(
-                  useInheritedMediaQuery: true,
-                  debugShowCheckedModeBanner: false,
-                  theme: ThemeData.light(),
-                  darkTheme: ThemeData.dark(),
-                  home: Column(
-                    children: [
-                      const Spacer(),
-                      Container(
-                        decoration: const BoxDecoration(
-                          border: Border(
-                            top: BorderSide(color: Colors.black, width: 1),
+                Column(
+                  children: [
+                    Expanded(
+                      child: CurrentStory(
+                        wrapperBuilder: widget.wrapperBuilder,
+                      ),
+                    ),
+                    Container(
+                      color: Colors.red,
+                      child: SafeArea(
+                        top: false,
+                        child: SizedBox(
+                          height: 50,
+                          child: CompositedTransformTarget(
+                            link: _layerLink,
+                            child: MaterialApp(
+                              useInheritedMediaQuery: true,
+                              debugShowCheckedModeBanner: false,
+                              theme: ThemeData.light(),
+                              darkTheme: ThemeData.dark(),
+                              home: Container(
+                                decoration: const BoxDecoration(
+                                  border: Border(
+                                    top: BorderSide(
+                                      color: Colors.black,
+                                      width: 1,
+                                    ),
+                                  ),
+                                ),
+                                child: Material(
+                                  child: PluginPanel(
+                                    plugins: widget.plugins,
+                                    overlayKey: _overlayKey,
+                                    layerLink: _layerLink,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
                         ),
-                        height: 50,
-                        width: double.infinity,
-                        child: Material(
-                          child: PluginPanel(plugins: plugins),
-                        ),
                       ),
-                    ],
-                  ),
-                ),
-                Positioned(
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 50,
-                  child: CurrentStory(wrapperBuilder: wrapperBuilder),
+                    ),
+                  ],
                 ),
                 Directionality(
                   textDirection: TextDirection.ltr,
-                  child: Overlay(key: overlayKey),
+                  child: Overlay(key: _overlayKey),
                 ),
               ],
             ),

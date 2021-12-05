@@ -28,6 +28,15 @@ class MyApp extends StatelessWidget {
               context.knobs.text(label: 'Text', initial: 'Simple text story'),
             ),
           ),
+          Story(
+            name: 'Scaffold',
+            builder: (context) => Scaffold(
+              appBar: AppBar(
+                title: const Text('Storybook'),
+              ),
+              body: const Center(child: Text('Hello World!')),
+            ),
+          )
         ],
       );
 }

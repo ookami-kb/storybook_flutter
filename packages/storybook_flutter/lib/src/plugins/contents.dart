@@ -53,6 +53,7 @@ class _ContentsState extends State<_Contents> {
     return ListTileTheme(
       style: ListTileStyle.drawer,
       child: ListView(
+        padding: EdgeInsets.zero,
         primary: false,
         children: [...sections, ...stories],
       ),
