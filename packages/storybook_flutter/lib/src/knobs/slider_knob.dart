@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:storybook_flutter/src/knobs/knobs.dart';
-import 'package:storybook_flutter/src/story_provider.dart';
+
+import '../plugins/knobs.dart';
+import 'knobs.dart';
 
 typedef FormatDouble = String Function(double value);
 
@@ -52,7 +53,7 @@ class SliderKnobWidget extends StatelessWidget {
   Widget build(BuildContext context) => ListTile(
         subtitle: Slider(
           value: value,
-          onChanged: (v) => context.read<StoryProvider>().update(label, v),
+          onChanged: (v) => context.read<KnobsNotifier>().update(label, v),
           max: max,
           min: min,
           divisions: divisions,
