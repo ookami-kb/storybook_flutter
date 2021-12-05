@@ -180,23 +180,21 @@ class _$_DeviceFrameData
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _DeviceFrameData &&
-            (identical(other.isFrameVisible, isFrameVisible) ||
-                const DeepCollectionEquality()
-                    .equals(other.isFrameVisible, isFrameVisible)) &&
-            (identical(other.device, device) ||
-                const DeepCollectionEquality().equals(other.device, device)) &&
-            (identical(other.orientation, orientation) ||
-                const DeepCollectionEquality()
-                    .equals(other.orientation, orientation)));
+        (other.runtimeType == runtimeType &&
+            other is _DeviceFrameData &&
+            const DeepCollectionEquality()
+                .equals(other.isFrameVisible, isFrameVisible) &&
+            const DeepCollectionEquality().equals(other.device, device) &&
+            const DeepCollectionEquality()
+                .equals(other.orientation, orientation));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(isFrameVisible) ^
-      const DeepCollectionEquality().hash(device) ^
-      const DeepCollectionEquality().hash(orientation);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(isFrameVisible),
+      const DeepCollectionEquality().hash(device),
+      const DeepCollectionEquality().hash(orientation));
 
   @JsonKey(ignore: true)
   @override
@@ -211,11 +209,11 @@ abstract class _DeviceFrameData implements DeviceFrameData {
       Orientation orientation}) = _$_DeviceFrameData;
 
   @override
-  bool get isFrameVisible => throw _privateConstructorUsedError;
+  bool get isFrameVisible;
   @override
-  DeviceInfo? get device => throw _privateConstructorUsedError;
+  DeviceInfo? get device;
   @override
-  Orientation get orientation => throw _privateConstructorUsedError;
+  Orientation get orientation;
   @override
   @JsonKey(ignore: true)
   _$DeviceFrameDataCopyWith<_DeviceFrameData> get copyWith =>

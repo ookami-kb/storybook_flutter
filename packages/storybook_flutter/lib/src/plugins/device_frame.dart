@@ -69,9 +69,13 @@ Widget _buildPanel(BuildContext context) {
       context.read<DeviceFrameDataNotifier>().value = data;
 
   final devices = Devices.all
-      .sortedBy((d) => d.name)
       .map(
         (device) => ListTile(
+          leading: CircleAvatar(
+            child: Icon(
+              device.identifier.type.icon(device.identifier.platform),
+            ),
+          ),
           title: Text(
             device.name,
             maxLines: 1,
@@ -79,7 +83,7 @@ Widget _buildPanel(BuildContext context) {
           ),
           subtitle: Text(
             '${device.screenSize.width.toInt()}×'
-            '${device.screenSize.height.toInt()}',
+            '${device.screenSize.height.toInt()} (${describeEnum(device.identifier.platform)})',
           ),
           trailing: d.device == device ? const Icon(Icons.check) : null,
           onTap: () => update(d.copyWith(device: device)),
@@ -88,6 +92,7 @@ Widget _buildPanel(BuildContext context) {
       .toList();
 
   return ListView.separated(
+    padding: EdgeInsets.zero,
     primary: false,
     separatorBuilder: (context, i) => i == 1
         ? Container(height: 1, color: Theme.of(context).dividerColor)
@@ -123,4 +128,31 @@ Widget _buildPanel(BuildContext context) {
     },
     itemCount: devices.length + 3,
   );
+}
+
+extension on DeviceType {
+  IconData icon(TargetPlatform platform) {
+    switch (this) {
+      case DeviceType.phone:
+        return platform == TargetPlatform.android
+            ? Icons.phone_android
+            : Icons.phone_iphone;
+      case DeviceType.tablet:
+        return platform == TargetPlatform.android
+            ? Icons.tablet_android
+            : Icons.tablet_mac;
+      case DeviceType.desktop:
+        return platform == TargetPlatform.macOS
+            ? Icons.desktop_mac
+            : Icons.desktop_windows;
+      case DeviceType.tv:
+        return Icons.tv;
+      case DeviceType.laptop:
+        return platform == TargetPlatform.macOS
+            ? Icons.laptop_mac
+            : Icons.laptop_windows;
+      case DeviceType.unknown:
+        return Icons.device_unknown;
+    }
+  }
 }

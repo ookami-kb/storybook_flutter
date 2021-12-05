@@ -6,8 +6,8 @@ import '../knobs/knobs.dart';
 import '../knobs/select_knob.dart';
 import '../knobs/slider_knob.dart';
 import '../knobs/string_knob.dart';
-import 'plugin.dart';
 import '../story.dart';
+import 'plugin.dart';
 
 const knobsPlugin = Plugin(
   icon: _buildIcon,

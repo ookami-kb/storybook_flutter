@@ -2,9 +2,9 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'plugin.dart';
 import '../story.dart';
 import '../storybook.dart';
+import 'plugin.dart';
 
 const contentsPlugin = Plugin(
   panelBuilder: _buildPanel,
