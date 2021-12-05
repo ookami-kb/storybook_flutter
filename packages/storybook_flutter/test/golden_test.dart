@@ -3,20 +3,19 @@ import 'package:golden_toolkit/golden_toolkit.dart';
 import 'package:storybook_flutter/storybook_flutter.dart';
 
 Widget simpleStorybook(String initialRoute) => Storybook(
-      initialRoute: initialRoute,
-      children: [
-        Story.simple(
+      stories: [
+        Story(
           name: 'Button',
-          child: TextButton(
+          builder: (_) => TextButton(
             onPressed: () {},
             child: const Text('Push me'),
           ),
         ),
         Story(
           name: 'Customizable Button',
-          builder: (context, k) => TextButton(
+          builder: (context) => TextButton(
             onPressed: () {},
-            child: Text(k.text(label: 'Text', initial: 'Push me')),
+            child: Text(context.knobs.text(label: 'Text', initial: 'Push me')),
           ),
         )
       ],
