@@ -1,8 +1,9 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:storybook_flutter/src/core/plugins/knobs.dart';
-import 'package:storybook_flutter/src/knobs/knobs.dart';
+
+import '../plugins/knobs.dart';
+import 'knobs.dart';
 
 class SelectKnob<T> extends Knob<T> {
   SelectKnob(String label, T value, this.options) : super(label, value);

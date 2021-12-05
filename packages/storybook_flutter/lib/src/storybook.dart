@@ -1,157 +1,138 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
-import 'package:storybook_flutter/src/control_panel/provider.dart';
-import 'package:storybook_flutter/src/knobs/knobs_plugin.dart';
-import 'package:storybook_flutter/src/plugins/plugin.dart';
-import 'package:storybook_flutter/src/plugins/plugin_settings_notifier.dart';
-import 'package:storybook_flutter/src/route.dart';
-import 'package:storybook_flutter/src/story.dart';
-import 'package:storybook_flutter/src/story_page_wrapper.dart';
-import 'package:storybook_flutter/src/story_provider.dart';
-import 'package:storybook_flutter/src/theme_mode_provider.dart';
 
-typedef StoryWrapperBuilder = Widget Function(
-  BuildContext context,
-  Story story,
-  Widget child,
-);
+import 'plugin.dart';
+import 'plugin_panel.dart';
+import 'plugins/contents.dart';
+import 'plugins/device_frame.dart';
+import 'plugins/knobs.dart';
+import 'plugins/theme_mode.dart';
+import 'story.dart';
 
-/// A collection of stories.
-///
-/// It generates Contents in navigation drawer based on stories names.
-///
-/// This example shows how to create a simple Storybook:
-///
-/// ```
-/// Widget build(BuildContext context) => Storybook(
-///     children: [
-///       Story(
-///         name: 'Flat button',
-///         child: MaterialButton(child: Text('Flat button'), onPressed: () {}),
-///       ),
-///       Story(
-///         name: 'Raised button',
-///         child: RaisedButton(child: Text('Raised button'), onPressed: () {}),
-///       ),
-///       Story(
-///         name: 'Input field',
-///         child: TextField(
-///           decoration: InputDecoration(
-///             border: OutlineInputBorder(),
-///             labelText: 'Input field',
-///           ),
-///         ),
-///       ),
-///     ],
-///   );
-/// ```
+Widget _materialWrapper(BuildContext context, Widget? child) => MaterialApp(
+      theme: ThemeData.light(),
+      darkTheme: ThemeData.dark(),
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        body: Center(child: child),
+      ),
+    );
+
 class Storybook extends StatelessWidget {
-  Storybook({
+  const Storybook({
     Key? key,
-    this.children = const [],
-    this.theme,
-    this.darkTheme,
-    this.themeMode = ThemeMode.system,
-    this.localizationDelegates,
-    this.storyWrapperBuilder,
-    Iterable<Plugin>? plugins,
-    this.initialRoute = '/',
-    this.scaffoldMessengerKey,
-    this.navigatorObservers = const <NavigatorObserver>[],
-    this.builder,
-  })  : plugins = plugins ?? allPlugins,
-        super(key: key);
+    required this.stories,
+    this.plugins = const [
+      contentsPlugin,
+      knobsPlugin,
+      themeModePlugin,
+      deviceFramePlugin,
+    ],
+    this.initialStory,
+    this.wrapperBuilder = _materialWrapper,
+  }) : super(key: key);
 
-  final GlobalKey<ScaffoldMessengerState>? scaffoldMessengerKey;
-
-  /// Theme override for the light theme.
-  final ThemeData? theme;
-
-  /// Theme override for the dark theme.
-  final ThemeData? darkTheme;
-
-  /// Indicates theme mode to use: light, dark or system.
-  final ThemeMode themeMode;
-
-  /// Stories in the storybook.
-  final List<Story> children;
-
-  /// Localizations Delegates override
-  final List<LocalizationsDelegate>? localizationDelegates;
-
-  /// Optional list of plugins.
-  final Iterable<Plugin> plugins;
-
-  /// {@macro flutter.widgets.widgetsApp.navigatorObservers}
-  final List<NavigatorObserver> navigatorObservers;
-
-  /// {@macro flutter.widgets.widgetsApp.builder}
-  ///
-  /// Material specific features such as [showDialog] and [showMenu], and widgets
-  /// such as [Tooltip], [PopupMenuButton], also require a [Navigator] to properly
-  /// function.
-  final TransitionBuilder? builder;
-
-  /// Optional parameter to override story wrapper.
-  ///
-  /// {@template storybook_flutter.default_story_wrapper}
-  /// By default each story is wrapped into:
-  /// ```dart
-  /// Container(
-  ///   color: story.background,
-  ///   padding: story.padding,
-  ///   child: Center(child: child),
-  /// )
-  /// ```
-  /// {@endtemplate}
-  ///
-  /// You can also override individual story wrapper by using
-  /// [Story.wrapperBuilder].
-  final StoryWrapperBuilder? storyWrapperBuilder;
-
-  final String initialRoute;
+  final List<Plugin> plugins;
+  final List<Story> stories;
+  final String? initialStory;
+  final TransitionBuilder wrapperBuilder;
 
   @override
-  Widget build(BuildContext context) => MultiProvider(
-        providers: [
-          Provider.value(value: children),
-          ChangeNotifierProvider(create: (_) => ThemeModeProvider(themeMode)),
-          Provider<StoryWrapperBuilder?>.value(value: storyWrapperBuilder),
-          ChangeNotifierProvider(
-            create: (_) => ControlPanelProvider([KnobsPlugin(), ...plugins]),
-          ),
-          ChangeNotifierProvider(create: (_) => PluginSettingsNotifier()),
-        ],
-        child: Builder(
-          builder: (context) => MaterialApp(
-            scaffoldMessengerKey: scaffoldMessengerKey,
-            debugShowCheckedModeBanner: false,
-            themeMode: Provider.of<ThemeModeProvider>(context).current,
-            theme: theme ?? ThemeData(brightness: Brightness.light),
-            darkTheme: darkTheme ?? ThemeData(brightness: Brightness.dark),
-            localizationsDelegates: localizationDelegates,
-            initialRoute: initialRoute,
-            onGenerateInitialRoutes: (name) => [_generateRoute(context, name)],
-            onGenerateRoute: (settings) =>
-                _generateRoute(context, settings.name, settings: settings),
-            builder: builder,
-            navigatorObservers: navigatorObservers,
+  Widget build(BuildContext context) => MediaQuery.fromWindow(
+        child: Nested(
+          children: [
+            Provider.value(value: plugins),
+            ChangeNotifierProvider(
+              create: (_) => StoryNotifier(
+                initialStory == null
+                    ? null
+                    : stories.firstWhere((s) => s.name == initialStory),
+              ),
+            ),
+            ChangeNotifierProvider(
+              create: (_) => StoriesNotifier(stories),
+            ),
+            ...plugins
+                .where((p) => p.wrapperBuilder != null)
+                .map((p) => SingleChildBuilder(builder: p.wrapperBuilder!))
+          ],
+          child: Builder(
+            builder: (context) => Stack(
+              alignment: Alignment.topCenter,
+              children: [
+                MaterialApp(
+                  useInheritedMediaQuery: true,
+                  debugShowCheckedModeBanner: false,
+                  theme: ThemeData.light(),
+                  darkTheme: ThemeData.dark(),
+                  home: Column(
+                    children: [
+                      const Spacer(),
+                      Container(
+                        decoration: const BoxDecoration(
+                          border: Border(
+                            top: BorderSide(color: Colors.black, width: 1),
+                          ),
+                        ),
+                        height: 50,
+                        width: double.infinity,
+                        child: Material(
+                          child: PluginPanel(plugins: plugins),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 50,
+                  child: CurrentStory(wrapperBuilder: wrapperBuilder),
+                ),
+                Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: Overlay(key: overlayKey),
+                ),
+              ],
+            ),
           ),
         ),
       );
 }
 
-ModalRoute<void> _generateRoute(
-  BuildContext context,
-  String? name, {
-  RouteSettings? settings,
-}) {
-  final WidgetBuilder builder = (_) => ChangeNotifierProvider(
-        create: (_) => StoryProvider.fromPath(name, context.read()),
-        child: const StoryPageWrapper(),
+class CurrentStory extends StatelessWidget {
+  const CurrentStory({Key? key, required this.wrapperBuilder})
+      : super(key: key);
+
+  final TransitionBuilder wrapperBuilder;
+
+  @override
+  Widget build(BuildContext context) {
+    final story = context.watch<StoryNotifier>().value;
+    if (story == null) {
+      return const Directionality(
+        textDirection: TextDirection.ltr,
+        child: Material(child: Center(child: Text('Select story'))),
       );
-  return name?.endsWith('/full') == true
-      ? MaterialPageRoute<void>(settings: settings, builder: builder)
-      : StoryRoute(settings: settings, builder: builder);
+    }
+
+    final plugins = context.watch<List<Plugin>>();
+    final pluginBuilders = plugins
+        .where((p) => p.storyBuilder != null)
+        .map((p) => SingleChildBuilder(builder: p.storyBuilder!))
+        .toList();
+
+    final child = wrapperBuilder(context, Builder(builder: story.builder));
+
+    return pluginBuilders.isEmpty
+        ? child
+        : Nested(children: pluginBuilders, child: child);
+  }
+}
+
+class StoriesNotifier extends ValueNotifier<List<Story>> {
+  StoriesNotifier(List<Story> value) : super(value);
 }

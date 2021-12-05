@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:storybook_flutter/src/core/plugins/knobs.dart';
-import 'package:storybook_flutter/src/knobs/knobs.dart';
+
+import '../plugins/knobs.dart';
+import 'knobs.dart';
 
 class BoolKnob extends Knob<bool> {
   // ignore: avoid_positional_boolean_parameters

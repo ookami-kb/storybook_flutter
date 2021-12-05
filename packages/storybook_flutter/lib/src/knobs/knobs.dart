@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
-import 'package:storybook_flutter/src/knobs/select_knob.dart';
+
+import 'select_knob.dart';
 
 abstract class Knob<T> {
   Knob(this.label, this.value);

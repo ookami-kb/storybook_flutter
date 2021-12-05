@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:storybook_flutter/src/core/plugin.dart';
+
+import 'plugin.dart';
 
 class PluginPanel extends StatefulWidget {
   const PluginPanel({

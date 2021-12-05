@@ -2,9 +2,12 @@ import 'package:collection/collection.dart';
 import 'package:device_frame/device_frame.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:provider/provider.dart';
-import 'package:storybook_flutter/src/core/plugin.dart';
-import 'package:storybook_flutter/src/plugins/device_frame_plugin.dart';
+
+import '../plugin.dart';
+
+part 'device_frame.freezed.dart';
 
 const deviceFramePlugin = Plugin(
   storyBuilder: _buildStoryWrapper,
@@ -31,6 +34,15 @@ Widget _buildStoryWrapper(BuildContext context, Widget? child) {
         );
 
   return Directionality(textDirection: TextDirection.ltr, child: result);
+}
+
+@freezed
+class DeviceFrameData with _$DeviceFrameData {
+  const factory DeviceFrameData({
+    @Default(true) bool isFrameVisible,
+    DeviceInfo? device,
+    @Default(Orientation.portrait) Orientation orientation,
+  }) = _DeviceFrameData;
 }
 
 class DeviceFrameDataNotifier extends ValueNotifier<DeviceFrameData> {

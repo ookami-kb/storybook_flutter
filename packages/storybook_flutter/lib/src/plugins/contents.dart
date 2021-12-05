@@ -1,9 +1,10 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:storybook_flutter/src/core/plugin.dart';
-import 'package:storybook_flutter/src/core/story.dart';
-import 'package:storybook_flutter/src/core/storybook.dart';
+
+import '../plugin.dart';
+import '../story.dart';
+import '../storybook.dart';
 
 const contentsPlugin = Plugin(
   panelBuilder: _buildPanel,

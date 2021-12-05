@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:storybook_flutter/src/core/plugin.dart';
-import 'package:storybook_flutter/src/core/story.dart';
-import 'package:storybook_flutter/src/knobs/bool_knob.dart';
-import 'package:storybook_flutter/src/knobs/knobs.dart';
-import 'package:storybook_flutter/src/knobs/select_knob.dart';
-import 'package:storybook_flutter/src/knobs/slider_knob.dart';
-import 'package:storybook_flutter/src/knobs/string_knob.dart';
+
+import '../knobs/bool_knob.dart';
+import '../knobs/knobs.dart';
+import '../knobs/select_knob.dart';
+import '../knobs/slider_knob.dart';
+import '../knobs/string_knob.dart';
+import '../plugin.dart';
+import '../story.dart';
 
 const knobsPlugin = Plugin(
   icon: _buildIcon,

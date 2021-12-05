@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:storybook_flutter/src/core/plugin.dart';
+
+import '../plugin.dart';
 
 const themeModePlugin = Plugin(
   icon: _buildIcon,
