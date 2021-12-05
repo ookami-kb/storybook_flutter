@@ -3,42 +3,39 @@ import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
-import 'plugin.dart';
-import 'plugin_panel.dart';
-import 'plugins/contents.dart';
-import 'plugins/device_frame.dart';
-import 'plugins/knobs.dart';
-import 'plugins/theme_mode.dart';
+import 'plugins/plugin.dart';
+import 'plugins/plugin_panel.dart';
 import 'story.dart';
 
-Widget _materialWrapper(BuildContext context, Widget? child) => MaterialApp(
+Widget materialWrapper(BuildContext context, Widget? child) => MaterialApp(
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
       debugShowCheckedModeBanner: false,
       useInheritedMediaQuery: true,
-      home: Scaffold(
-        body: Center(child: child),
-      ),
+      home: Scaffold(body: Center(child: child)),
+    );
+
+Widget cupertinoWrapper(BuildContext context, Widget? child) => CupertinoApp(
+      debugShowCheckedModeBanner: false,
+      useInheritedMediaQuery: true,
+      home: CupertinoPageScaffold(child: Center(child: child)),
     );
 
 class Storybook extends StatefulWidget {
   const Storybook({
     Key? key,
     required this.stories,
-    this.plugins = const [
-      contentsPlugin,
-      knobsPlugin,
-      themeModePlugin,
-      deviceFramePlugin,
-    ],
+    this.plugins = allPlugins,
     this.initialStory,
-    this.wrapperBuilder = _materialWrapper,
+    this.wrapperBuilder = materialWrapper,
+    this.showPanel = true,
   }) : super(key: key);
 
   final List<Plugin> plugins;
   final List<Story> stories;
   final String? initialStory;
   final TransitionBuilder wrapperBuilder;
+  final bool showPanel;
 
   @override
   State<Storybook> createState() => _StorybookState();
@@ -49,50 +46,48 @@ class _StorybookState extends State<Storybook> {
   final _layerLink = LayerLink();
 
   @override
-  Widget build(BuildContext context) => MediaQuery.fromWindow(
-        child: Nested(
-          children: [
-            Provider.value(value: widget.plugins),
-            ChangeNotifierProvider(
-              create: (_) => StoryNotifier(
-                widget.initialStory == null
-                    ? null
-                    : widget.stories
-                        .firstWhere((s) => s.name == widget.initialStory),
-              ),
+  Widget build(BuildContext context) {
+    final currentStory = CurrentStory(
+      wrapperBuilder: widget.wrapperBuilder,
+    );
+
+    return MediaQuery.fromWindow(
+      child: Nested(
+        children: [
+          Provider.value(value: widget.plugins),
+          ChangeNotifierProvider(
+            create: (_) => StoryNotifier(
+              widget.initialStory == null
+                  ? null
+                  : widget.stories
+                      .firstWhere((s) => s.name == widget.initialStory),
             ),
-            ChangeNotifierProvider(
-              create: (_) => StoriesNotifier(widget.stories),
-            ),
-            ...widget.plugins
-                .where((p) => p.wrapperBuilder != null)
-                .map((p) => SingleChildBuilder(builder: p.wrapperBuilder!))
-          ],
-          child: Builder(
-            builder: (context) => Stack(
-              alignment: Alignment.topCenter,
-              children: [
-                Column(
-                  children: [
-                    Expanded(
-                      child: CurrentStory(
-                        wrapperBuilder: widget.wrapperBuilder,
+          ),
+          ChangeNotifierProvider(
+            create: (_) => StoriesNotifier(widget.stories),
+          ),
+          ...widget.plugins
+              .where((p) => p.wrapperBuilder != null)
+              .map((p) => SingleChildBuilder(builder: p.wrapperBuilder!))
+        ],
+        child: widget.showPanel
+            ? Stack(
+                alignment: Alignment.topCenter,
+                children: [
+                  Column(
+                    children: [
+                      Expanded(
+                        child: currentStory,
                       ),
-                    ),
-                    Container(
-                      color: Colors.red,
-                      child: SafeArea(
-                        top: false,
-                        child: SizedBox(
-                          height: 50,
+                      Material(
+                        child: SafeArea(
+                          top: false,
                           child: CompositedTransformTarget(
                             link: _layerLink,
-                            child: MaterialApp(
-                              useInheritedMediaQuery: true,
-                              debugShowCheckedModeBanner: false,
-                              theme: ThemeData.light(),
-                              darkTheme: ThemeData.dark(),
-                              home: Container(
+                            child: Directionality(
+                              textDirection: TextDirection.ltr,
+                              child: Container(
+                                width: double.infinity,
                                 decoration: const BoxDecoration(
                                   border: Border(
                                     top: BorderSide(
@@ -101,30 +96,28 @@ class _StorybookState extends State<Storybook> {
                                     ),
                                   ),
                                 ),
-                                child: Material(
-                                  child: PluginPanel(
-                                    plugins: widget.plugins,
-                                    overlayKey: _overlayKey,
-                                    layerLink: _layerLink,
-                                  ),
+                                child: PluginPanel(
+                                  plugins: widget.plugins,
+                                  overlayKey: _overlayKey,
+                                  layerLink: _layerLink,
                                 ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                Directionality(
-                  textDirection: TextDirection.ltr,
-                  child: Overlay(key: _overlayKey),
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
+                    ],
+                  ),
+                  Directionality(
+                    textDirection: TextDirection.ltr,
+                    child: Overlay(key: _overlayKey),
+                  ),
+                ],
+              )
+            : currentStory,
+      ),
+    );
+  }
 }
 
 class CurrentStory extends StatelessWidget {

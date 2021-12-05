@@ -1,5 +1,22 @@
 import 'package:flutter/widgets.dart';
 
+import 'contents.dart';
+import 'device_frame.dart';
+import 'knobs.dart';
+import 'theme_mode.dart';
+
+export 'contents.dart';
+export 'device_frame.dart';
+export 'knobs.dart';
+export 'theme_mode.dart';
+
+const allPlugins = [
+  contentsPlugin,
+  knobsPlugin,
+  themeModePlugin,
+  deviceFramePlugin,
+];
+
 class Plugin {
   const Plugin({
     this.wrapperBuilder,

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:provider/provider.dart';
 
-import '../plugin.dart';
+import 'plugin.dart';
 
 part 'device_frame.freezed.dart';
 
@@ -23,15 +23,20 @@ Widget _buildStoryWrapper(BuildContext context, Widget? child) {
 
   final result = d.device == null
       ? child!
-      : SafeArea(
-          bottom: false,
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: DeviceFrame(
-              device: d.device!,
-              isFrameVisible: d.isFrameVisible,
-              orientation: d.orientation,
-              screen: child!,
+      : SizedBox(
+          width: double.infinity,
+          child: Material(
+            child: SafeArea(
+              bottom: false,
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: DeviceFrame(
+                  device: d.device!,
+                  isFrameVisible: d.isFrameVisible,
+                  orientation: d.orientation,
+                  screen: child!,
+                ),
+              ),
             ),
           ),
         );

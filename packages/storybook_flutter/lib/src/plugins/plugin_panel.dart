@@ -30,20 +30,23 @@ class _PluginPanelState extends State<PluginPanel> {
             targetAnchor: Alignment.topLeft,
             followerAnchor: Alignment.bottomLeft,
             showWhenUnlinked: false,
-            child: Dialog(
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(8),
-                  topRight: Radius.circular(8),
+            child: Localizations(
+              delegates: const [
+                DefaultMaterialLocalizations.delegate,
+                DefaultWidgetsLocalizations.delegate,
+              ],
+              locale: const Locale('en', 'US'),
+              child: Dialog(
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(8),
+                    topRight: Radius.circular(8),
+                  ),
                 ),
-              ),
-              insetPadding: EdgeInsets.zero,
-              child: MaterialApp(
-                useInheritedMediaQuery: true,
-                debugShowCheckedModeBanner: false,
-                theme: ThemeData.light(),
-                darkTheme: ThemeData.dark(),
-                home: Scaffold(body: childBuilder(context)),
+                insetPadding: EdgeInsets.zero,
+                child: Material(
+                  child: childBuilder(context),
+                ),
               ),
             ),
           ),
