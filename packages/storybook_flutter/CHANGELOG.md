@@ -1,3 +1,10 @@
+## 0.9.0-dev.1
+
+ - **FEAT**: Update plugins.
+ - **FEAT**: Update plugins.
+ - **DOCS**: Update example.
+ - **CHORE**: Update pubignore.
+
 ## 0.9.0-dev.0
 
 > Note: This release has breaking changes.
