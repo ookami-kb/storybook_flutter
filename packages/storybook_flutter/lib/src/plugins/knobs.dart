@@ -9,34 +9,79 @@ import '../knobs/string_knob.dart';
 import '../story.dart';
 import 'plugin.dart';
 
-const knobsPlugin = Plugin(
-  icon: _buildIcon,
-  panelBuilder: _buildPanel,
-  wrapperBuilder: _buildWrapper,
-);
+class KnobsPlugin extends Plugin {
+  KnobsPlugin({bool sidePanel = false})
+      : super(
+          icon: sidePanel ? null : _buildIcon,
+          panelBuilder: sidePanel ? null : _buildPanel,
+          wrapperBuilder: (context, child) => _buildWrapper(
+            context,
+            child,
+            sidePanel: sidePanel,
+          ),
+        );
+}
 
 Widget _buildIcon(BuildContext context) => const Icon(Icons.settings);
 
-Widget _buildPanel(BuildContext context) => Consumer<KnobsNotifier>(
-      builder: (context, knobs, _) {
-        final items = knobs.all();
+Widget _buildPanel(BuildContext context) {
+  final knobs = context.watch<KnobsNotifier>();
+  final items = knobs.all();
 
-        return items.isEmpty
-            ? const Center(child: Text('No knobs'))
-            : ListView.separated(
-                primary: false,
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                separatorBuilder: (context, index) => const SizedBox(height: 8),
-                itemCount: items.length,
-                itemBuilder: (context, index) => items[index].build(),
-              );
-      },
-    );
+  return items.isEmpty
+      ? const Center(child: Text('No knobs'))
+      : ListView.separated(
+          primary: false,
+          padding: const EdgeInsets.symmetric(vertical: 8),
+          separatorBuilder: (context, index) => const SizedBox(height: 8),
+          itemCount: items.length,
+          itemBuilder: (context, index) => items[index].build(),
+        );
+}
 
-Widget _buildWrapper(BuildContext context, Widget? child) =>
+Widget _buildWrapper(
+  BuildContext context,
+  Widget? child, {
+  required bool sidePanel,
+}) =>
     ChangeNotifierProvider(
       create: (context) => KnobsNotifier(context.read<StoryNotifier>()),
-      child: child,
+      child: sidePanel
+          ? Directionality(
+              textDirection: TextDirection.ltr,
+              child: Row(
+                children: [
+                  Expanded(child: child!),
+                  Container(
+                    decoration: const BoxDecoration(
+                      border: Border(
+                        left: BorderSide(color: Colors.black12),
+                      ),
+                    ),
+                    child: Material(
+                      child: SizedBox(
+                        width: 250,
+                        child: Overlay(
+                          initialEntries: [
+                            OverlayEntry(
+                              builder: (context) => Localizations(
+                                delegates: const [
+                                  DefaultMaterialLocalizations.delegate,
+                                  DefaultWidgetsLocalizations.delegate,
+                                ],
+                                locale: const Locale('en', 'US'),
+                                child: const Builder(builder: _buildPanel),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          : child,
     );
 
 extension Knobs on BuildContext {
@@ -44,10 +89,14 @@ extension Knobs on BuildContext {
 }
 
 class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
-  KnobsNotifier(this._storyNotifier);
+  KnobsNotifier(this._storyNotifier) {
+    _storyNotifier.addListener(_onStoryChanged);
+  }
 
   final StoryNotifier _storyNotifier;
   final Map<String, Map<String, Knob>> _knobs = <String, Map<String, Knob>>{};
+
+  void _onStoryChanged() => notifyListeners();
 
   @override
   bool boolean({required String label, bool initial = false}) =>
@@ -69,7 +118,11 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     final story = _storyNotifier.value!;
     final knobs = _knobs.putIfAbsent(story.name, () => <String, Knob>{});
 
-    return (knobs.putIfAbsent(value.label, () => value) as Knob<T>).value;
+    return (knobs.putIfAbsent(value.label, () {
+      Future.microtask(notifyListeners);
+      return value;
+    }) as Knob<T>)
+        .value;
   }
 
   void update<T>(String label, T value) {
@@ -118,4 +171,10 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
         divisions: divisions,
         formatValue: (v) => v.toInt().toString(),
       )).toInt();
+
+  @override
+  void dispose() {
+    _storyNotifier.removeListener(_onStoryChanged);
+    super.dispose();
+  }
 }

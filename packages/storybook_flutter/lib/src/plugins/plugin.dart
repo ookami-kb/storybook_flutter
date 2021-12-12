@@ -16,10 +16,12 @@ List<Plugin> initializePlugins({
   bool enableThemeMode = true,
   bool enableDeviceFrame = true,
   DeviceFrameData initialDeviceFrameData = const DeviceFrameData(),
+  bool contentsSidePanel = false,
+  bool knobsSidePanel = false,
 }) =>
     [
-      if (enableContents) contentsPlugin,
-      if (enableKnobs) knobsPlugin,
+      if (enableContents) ContentsPlugin(sidePanel: contentsSidePanel),
+      if (enableKnobs) KnobsPlugin(sidePanel: knobsSidePanel),
       if (enableThemeMode) themeModePlugin,
       if (enableDeviceFrame)
         DeviceFramePlugin(initialData: initialDeviceFrameData),

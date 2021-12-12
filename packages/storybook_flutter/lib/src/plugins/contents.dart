@@ -6,14 +6,39 @@ import '../story.dart';
 import '../storybook.dart';
 import 'plugin.dart';
 
-const contentsPlugin = Plugin(
-  panelBuilder: _buildPanel,
-  icon: _buildIcon,
-);
+class ContentsPlugin extends Plugin {
+  const ContentsPlugin({bool sidePanel = false})
+      : super(
+          icon: sidePanel ? null : _buildIcon,
+          panelBuilder: sidePanel ? null : _buildPanel,
+          wrapperBuilder: sidePanel ? _buildWrapper : null,
+        );
+}
 
 Widget _buildIcon(BuildContext _) => const Icon(Icons.list);
 
 Widget _buildPanel(BuildContext context) => const Contents();
+
+Widget _buildWrapper(BuildContext context, Widget? child) => Directionality(
+      textDirection: TextDirection.ltr,
+      child: Row(
+        children: [
+          Container(
+            decoration: const BoxDecoration(
+              border: Border(
+                right: BorderSide(color: Colors.black12),
+              ),
+            ),
+            child: const Material(
+              child: SizedBox(width: 250, child: Contents()),
+            ),
+          ),
+          Expanded(
+            child: ClipRect(clipBehavior: Clip.hardEdge, child: child!),
+          ),
+        ],
+      ),
+    );
 
 class Contents extends StatelessWidget {
   const Contents({

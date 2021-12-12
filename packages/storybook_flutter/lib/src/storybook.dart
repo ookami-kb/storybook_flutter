@@ -94,7 +94,7 @@ class _StorybookState extends State<Storybook> {
                                 decoration: const BoxDecoration(
                                   border: Border(
                                     top: BorderSide(
-                                      color: Colors.black,
+                                      color: Colors.black12,
                                       width: 1,
                                     ),
                                   ),

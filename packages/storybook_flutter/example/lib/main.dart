@@ -4,6 +4,8 @@ import 'package:storybook_flutter/storybook_flutter.dart';
 void main() => runApp(const MyApp());
 
 final _plugins = initializePlugins(
+  contentsSidePanel: true,
+  knobsSidePanel: true,
   initialDeviceFrameData: DeviceFrameData(
     device: Devices.ios.iPhone13,
   ),
