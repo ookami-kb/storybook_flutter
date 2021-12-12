@@ -46,7 +46,72 @@ class MyApp extends StatelessWidget {
               ),
               body: const Center(child: Text('Hello World!')),
             ),
-          )
+          ),
+          Story(
+            name: 'Counter',
+            builder: (context) => CounterPage(
+              title: context.knobs.text(label: 'Title', initial: 'Counter'),
+              enabled: context.knobs.boolean(label: 'Enabled', initial: true),
+            ),
+          ),
         ],
+      );
+}
+
+class CounterPage extends StatefulWidget {
+  const CounterPage({
+    Key? key,
+    required this.title,
+    this.enabled = true,
+  }) : super(key: key);
+
+  final String title;
+  final bool enabled;
+
+  @override
+  _CounterPageState createState() => _CounterPageState();
+}
+
+class _CounterPageState extends State<CounterPage> {
+  int _counter = 0;
+
+  void _incrementCounter() => setState(() => _counter++);
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          title: Text(widget.title),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.help),
+              onPressed: () => showAboutDialog(
+                context: context,
+                applicationName: 'Storybook',
+                applicationVersion: '0.0.1',
+                applicationIcon: const Icon(Icons.book),
+                applicationLegalese: 'MIT License',
+              ),
+            ),
+          ],
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text('You have pushed the button this many times:'),
+              Text(
+                '$_counter',
+                style: Theme.of(context).textTheme.headline4,
+              ),
+            ],
+          ),
+        ),
+        floatingActionButton: widget.enabled
+            ? FloatingActionButton(
+                onPressed: _incrementCounter,
+                tooltip: 'Increment',
+                child: const Icon(Icons.add),
+              )
+            : null,
       );
 }
