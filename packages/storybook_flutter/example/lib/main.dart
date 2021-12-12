@@ -3,11 +3,19 @@ import 'package:storybook_flutter/storybook_flutter.dart';
 
 void main() => runApp(const MyApp());
 
+final _plugins = initializePlugins(
+  initialDeviceFrameData: DeviceFrameData(
+    device: Devices.ios.iPhone13,
+  ),
+);
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) => Storybook(
+        initialStory: 'Scaffold',
+        plugins: _plugins,
         stories: [
           Story(
             name: 'Button',

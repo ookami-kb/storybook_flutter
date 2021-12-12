@@ -10,12 +10,22 @@ export 'device_frame.dart';
 export 'knobs.dart';
 export 'theme_mode.dart';
 
-const allPlugins = [
-  contentsPlugin,
-  knobsPlugin,
-  themeModePlugin,
-  deviceFramePlugin,
-];
+List<Plugin> initializePlugins({
+  bool enableContents = true,
+  bool enableKnobs = true,
+  bool enableThemeMode = true,
+  bool enableDeviceFrame = true,
+  DeviceFrameData initialDeviceFrameData = const DeviceFrameData(),
+}) =>
+    [
+      if (enableContents) contentsPlugin,
+      if (enableKnobs) knobsPlugin,
+      if (enableThemeMode) themeModePlugin,
+      if (enableDeviceFrame)
+        DeviceFramePlugin(initialData: initialDeviceFrameData),
+    ];
+
+typedef OnPluginButtonPressed = void Function(BuildContext);
 
 class Plugin {
   const Plugin({
@@ -30,5 +40,5 @@ class Plugin {
   final WidgetBuilder? panelBuilder;
   final TransitionBuilder? storyBuilder;
   final WidgetBuilder? icon;
-  final void Function(BuildContext)? onPressed;
+  final OnPluginButtonPressed? onPressed;
 }

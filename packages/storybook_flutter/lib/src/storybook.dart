@@ -21,15 +21,18 @@ Widget cupertinoWrapper(BuildContext context, Widget? child) => CupertinoApp(
       home: CupertinoPageScaffold(child: Center(child: child)),
     );
 
+final _defaultPlugins = initializePlugins();
+
 class Storybook extends StatefulWidget {
-  const Storybook({
+  Storybook({
     Key? key,
     required this.stories,
-    this.plugins = allPlugins,
+    List<Plugin>? plugins,
     this.initialStory,
     this.wrapperBuilder = materialWrapper,
     this.showPanel = true,
-  }) : super(key: key);
+  })  : plugins = plugins ?? _defaultPlugins,
+        super(key: key);
 
   final List<Plugin> plugins;
   final List<Story> stories;
