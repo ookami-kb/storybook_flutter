@@ -58,18 +58,22 @@ class _ContentsState extends State<_Contents> {
   }
 
   Widget _buildStoryTile(Story story) => ListTile(
+        selected: story == context.watch<StoryProvider>().currentStory,
         title: Text(story.name),
+        subtitle: story.description == null ? null : Text(story.description!),
         onTap: () {
           final onStorySelected = widget.onStorySelected;
           onStorySelected(story);
         },
-        selected: story == context.watch<StoryProvider>().currentStory,
       );
 
   Widget _buildSection(String title, Iterable<Story> stories) => ExpansionTile(
-        title: Text(title),
         initiallyExpanded:
             stories.contains(context.watch<StoryProvider>().currentStory),
+        title: Text(
+          title,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
         children: stories.map(_buildStoryTile).toList(),
       );
 }

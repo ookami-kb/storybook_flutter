@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:storybook_flutter/src/control_panel/provider.dart';
 import 'package:storybook_flutter/src/knobs/knobs_plugin.dart';

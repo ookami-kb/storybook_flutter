@@ -43,7 +43,7 @@ class StoryPageWrapper extends StatelessWidget {
                           Border(right: BorderSide(color: theme.dividerColor)),
                       color: theme.cardColor,
                     ),
-                    width: 200,
+                    width: 256,
                     child: const NavigatorContents(),
                   ),
                 ...children,

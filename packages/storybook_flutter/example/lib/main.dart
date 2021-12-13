@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:storybook_flutter/storybook_flutter.dart';
 
 void main() => runApp(const MyApp());
@@ -49,17 +48,32 @@ class MyApp extends StatelessWidget {
                 label: 'Color',
                 initial: Colors.deepOrange,
                 options: const [
-                  Option('Red', Colors.deepOrange),
-                  Option('Green', Colors.teal),
+                  Option(
+                    label: 'Red',
+                    value: Colors.deepOrange,
+                  ),
+                  Option(
+                    label: 'Green',
+                    value: Colors.teal,
+                  ),
                 ],
               ),
               mouseCursor: k.options(
                 label: 'Mouse Cursor',
                 initial: null,
                 options: const [
-                  Option('Basic', SystemMouseCursors.basic),
-                  Option('Click', SystemMouseCursors.click),
-                  Option('Forbidden', SystemMouseCursors.forbidden),
+                  Option(
+                    label: 'Basic',
+                    value: SystemMouseCursors.basic,
+                  ),
+                  Option(
+                    label: 'Click',
+                    value: SystemMouseCursors.click,
+                  ),
+                  Option(
+                    label: 'Forbidden',
+                    value: SystemMouseCursors.forbidden,
+                  ),
                 ],
               ),
               elevation: k.slider(label: 'Elevation', initial: 0, max: 20),

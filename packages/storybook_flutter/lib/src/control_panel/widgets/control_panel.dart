@@ -112,4 +112,4 @@ class ControlPanel extends StatelessWidget {
 }
 
 const double _iconPanelSize = 60;
-const double _contentSize = 200;
+const double _contentSize = 256;

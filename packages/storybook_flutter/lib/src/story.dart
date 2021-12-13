@@ -15,6 +15,7 @@ class Story extends StatefulWidget {
   const Story({
     Key? key,
     required this.name,
+    this.description,
     required StoryBuilder builder,
     this.section = '',
     this.background,
@@ -26,6 +27,7 @@ class Story extends StatefulWidget {
   Story.simple({
     Key? key,
     required String name,
+    String? description,
     required Widget child,
     String section = '',
     Color? background,
@@ -34,6 +36,7 @@ class Story extends StatefulWidget {
   }) : this(
           key: key,
           name: name,
+          description: description,
           background: background,
           padding: padding,
           builder: (_, __) => child,
@@ -45,6 +48,11 @@ class Story extends StatefulWidget {
   ///
   /// It's used to generate list item in Contents.
   final String name;
+
+  /// An optional short description of this story.
+  ///
+  /// Will be displayed below the [name] in the contents list.
+  final String? description;
 
   /// Section title.
   ///
