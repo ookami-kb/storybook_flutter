@@ -6,6 +6,7 @@
 - **FEAT**: Minor story section text style change.
 - **FEAT**: Widen story drawer and knobs section to 256px.
 - **CHORE**: Add docs to all knobs.
+- **FIX**: Fix bug where desktop users could not enter space in text knob fields.
 
 ## 0.8.0
 

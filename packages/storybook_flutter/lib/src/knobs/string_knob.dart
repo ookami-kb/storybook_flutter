@@ -51,21 +51,38 @@ class StringKnobWidget extends StatelessWidget {
   final String value;
 
   @override
-  Widget build(BuildContext context) => ListTile(
-        title: TextFormField(
-          decoration: InputDecoration(
-            isDense: true,
-            labelText: label,
-            border: const OutlineInputBorder(),
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        vertical: 8,
+        horizontal: 16,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TextFormField(
+            decoration: InputDecoration(
+              isDense: false,
+              labelText: label,
+              border: const OutlineInputBorder(),
+            ),
+            initialValue: value,
+            onChanged: (v) => context.read<StoryProvider>().update(label, v),
           ),
-          initialValue: value,
-          onChanged: (v) => context.read<StoryProvider>().update(label, v),
-        ),
-        subtitle: description == null
-            ? null
-            : Padding(
-                padding: const EdgeInsets.only(top: 2),
-                child: Text(description!),
+          if (description != null)
+            Padding(
+              padding: const EdgeInsets.only(top: 4),
+              child: Text(
+                description!,
+                style: textTheme.bodyText2?.copyWith(
+                  color: textTheme.caption?.color,
+                ),
               ),
-      );
+            ),
+        ],
+      ),
+    );
+  }
 }
