@@ -2,15 +2,38 @@ import 'package:flutter/widgets.dart';
 
 import 'select_knob.dart';
 
+/// {@template knob}
+/// An abstract class that represents a control knob.
+///
+/// Consumers can extend this class to create custom knob types.
+/// {@endtemplate}
 abstract class Knob<T> {
-  Knob(this.label, this.value);
+  /// {@macro knob}
+  Knob({
+    required this.label,
+    this.description,
+    required this.value,
+  });
 
+  /// The label of the knob.
   final String label;
+
+  /// An optional description of the knob.
+  final String? description;
+
+  /// The current value of the knob.
+  ///
+  /// This may change as the user interacts with the knob.
   T value;
 
+  /// The build method for the knob.
+  ///
+  /// This method is responsible for building the widget that represents the
+  /// knob.
   Widget build();
 }
 
+/// {@template knobs_builder}
 /// Provides helper methods for creating knobs: control elements
 /// that can be used in stories to dynamically update its properties.
 ///
@@ -25,16 +48,29 @@ abstract class Knob<T> {
 ///    ),
 ///  )
 ///  ```
+/// {@endtemplate}
 abstract class KnobsBuilder {
-  /// Creates checkbox with [label] and [initial] value.
-  bool boolean({required String label, bool initial = false});
+  /// {@macro knobs_builder}
+  const KnobsBuilder();
 
-  /// Creates text input field with [label] and [initial] value.
-  String text({required String label, String initial = ''});
+  /// Creates checkbox with [label], [description] and [initial] value.
+  bool boolean({
+    required String label,
+    String? description,
+    bool initial = false,
+  });
+
+  /// Creates text input field with [label], [description] and [initial] value.
+  String text({
+    required String label,
+    String? description,
+    String initial = '',
+  });
 
   /// Creates slider knob with `double` value.
   double slider({
     required String label,
+    String? description,
     double initial = 0,
     double max = 1,
     double min = 0,
@@ -43,15 +79,18 @@ abstract class KnobsBuilder {
   /// Creates slider knob with `int` value.
   int sliderInt({
     required String label,
+    String? description,
     int initial = 0,
     int max = 100,
     int min = 0,
     int divisions = 100,
   });
 
-  /// Creates select field with [label], [initial] value and list of [options].
+  /// Creates select field with [label], [description], [initial] value and
+  /// list of [options].
   T options<T>({
     required String label,
+    String? description,
     required T initial,
     List<Option<T>> options = const [],
   });
