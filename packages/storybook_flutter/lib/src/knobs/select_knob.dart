@@ -106,57 +106,56 @@ class SelectKnobWidget<T> extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) => ListTile(
-        isThreeLine: description != null,
-        title: DropdownButtonFormField<Option<T>>(
-          decoration: InputDecoration(
-            isDense: true,
-            labelText: label,
-            border: const OutlineInputBorder(),
-          ),
-          isExpanded: true,
-          value: values.firstWhereOrNull((e) => e.value == value),
-          items: [
-            for (final option in values)
-              DropdownMenuItem<Option<T>>(
-                value: option,
-                child: Builder(
-                  builder: (context) {
-                    final textTheme = Theme.of(context).textTheme;
-                    final isInDropdownRoute = _isInDropdownRoute(context);
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
 
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(option.label),
-                        if (option.description != null &&
-                            isInDropdownRoute) ...[
-                          const SizedBox(height: 4),
-                          Text(
-                            option.description!,
-                            style: textTheme.bodyText2?.copyWith(
-                              color: textTheme.caption?.color,
-                            ),
-                          ),
-                        ],
-                      ],
-                    );
-                  },
-                ),
-              ),
-          ],
-          onChanged: (v) {
-            if (v != null) {
-              context.read<KnobsNotifier>().update<T>(label, v.value);
-            }
-          },
+    return ListTile(
+      isThreeLine: description != null,
+      title: DropdownButtonFormField<Option<T>>(
+        decoration: InputDecoration(
+          isDense: true,
+          labelText: label,
+          border: const OutlineInputBorder(),
         ),
-        subtitle: description == null
-            ? null
-            : Padding(
-                padding: const EdgeInsets.only(top: 2),
-                child: Text(description!),
+        isExpanded: true,
+        value: values.firstWhereOrNull((e) => e.value == value),
+        selectedItemBuilder: (context) => [
+          for (final option in values) Text(option.label),
+        ],
+        items: [
+          for (final option in values)
+            DropdownMenuItem<Option<T>>(
+              value: option,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(option.label),
+                  if (option.description != null) ...[
+                    const SizedBox(height: 4),
+                    Text(
+                      option.description!,
+                      style: textTheme.bodyText2?.copyWith(
+                        color: textTheme.caption?.color,
+                      ),
+                    ),
+                  ],
+                ],
               ),
-      );
+            ),
+        ],
+        onChanged: (v) {
+          if (v != null) {
+            context.read<KnobsNotifier>().update<T>(label, v.value);
+          }
+        },
+      ),
+      subtitle: description == null
+          ? null
+          : Padding(
+              padding: const EdgeInsets.only(top: 2),
+              child: Text(description!),
+            ),
+    );
+  }
 }

@@ -1,12 +1,3 @@
-## 0.9.0-dev.2
-
-> Note: This release has breaking changes.
-
-- **FEAT**: Add description field to stories and all knobs.
-- **CHORE**: Add docs to all knobs.
-- **FIX**: Fix bug where desktop users could not enter space in text knob fields.
-- **CHORE**: Version bump.
-
 ## 0.9.0-dev.1
 
 - **FEAT**: Update plugins.
