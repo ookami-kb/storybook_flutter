@@ -86,25 +86,6 @@ class SelectKnobWidget<T> extends StatelessWidget {
   final List<Option<T>> values;
   final T value;
 
-  /// Determines if the given [context] is enclosed by a dropdown menu route.
-  ///
-  /// This is used in the dropdown options builder to determine whether a
-  /// description should be shown.
-  ///
-  /// The algorithm used is quite hacky, and we should probably find a better
-  /// way to do this.
-  bool _isInDropdownRoute(BuildContext context) {
-    late final bool result;
-    try {
-      final route = ModalRoute.of(context);
-      result = route is PopupRoute && (route as dynamic).items != null;
-      // ignore: avoid_catching_errors
-    } on NoSuchMethodError {
-      result = false;
-    }
-    return result;
-  }
-
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;

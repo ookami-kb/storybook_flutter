@@ -1,96 +1,96 @@
 ## 0.9.0-dev.1
 
-- **FEAT**: Update plugins.
-- **FEAT**: Update plugins.
-- **DOCS**: Update example.
-- **CHORE**: Update pubignore.
+ - **FEAT**: Update plugins.
+ - **FEAT**: Update plugins.
+ - **DOCS**: Update example.
+ - **CHORE**: Update pubignore.
 
 ## 0.9.0-dev.0
 
 > Note: This release has breaking changes.
 
-- **CHORE**: Add .pubignore.
-- **CHORE**: Update .gitignore.
-- **BREAKING** **FEAT**: Reorganize (#59).
+ - **CHORE**: Add .pubignore.
+ - **CHORE**: Update .gitignore.
+ - **BREAKING** **FEAT**: Reorganize (#59).
 
 ## 0.8.0
 
 > Note: This release has breaking changes.
 
-- **TEST**: Update golden test images.
-- **FIX**: Remove deprecated accentColor.
-- **FEAT**: Add scaffoldMessengerKey to Storybook (#46).
-- **CHORE**: Update license (#49).
-- **BREAKING** **CHORE**: Update dependencies.
+ - **TEST**: Update golden test images.
+ - **FIX**: Remove deprecated accentColor.
+ - **FEAT**: Add scaffoldMessengerKey to Storybook (#46).
+ - **CHORE**: Update license (#49).
+ - **BREAKING** **CHORE**: Update dependencies.
 
 ## 0.7.0+1
 
-- **FIX**: Fix list views in macOS.
+ - **FIX**: Fix list views in macOS.
 
 ## 0.7.0
 
 > Note: This release has breaking changes.
 
-- **BREAKING** **FEAT**: Bump provider to 6.0.0 (#41).
+ - **BREAKING** **FEAT**: Bump provider to 6.0.0 (#41).
 
 ## 0.6.0
 
 > Note: This release has breaking changes.
 
-- **BREAKING** **FEAT**: Add sliderInt (#40).
+ - **BREAKING** **FEAT**: Add sliderInt (#40).
 
 ## 0.5.1
 
-- **FEAT**: Expose builder and navigatorObservers.
+ - **FEAT**: Expose builder and navigatorObservers.
 
 ## 0.5.0+1
 
-- **REFACTOR**: Remove dfunc dependency.
-- **REFACTOR**: Update dependencies.
+ - **REFACTOR**: Remove dfunc dependency.
+ - **REFACTOR**: Update dependencies.
 
 ## 0.5.0
 
-- Graduate package to a stable release. See pre-releases prior to this version for changelog entries.
+ - Graduate package to a stable release. See pre-releases prior to this version for changelog entries.
 
 ## 0.5.0-dev.1
 
-- **FIX**: Fix responsive layout.
-- **DOCS**: Update docs link.
-- **DOCS**: Update docs.
-- **DOCS**: Update demo.
-- **DOCS**: Add demo page.
+ - **FIX**: Fix responsive layout.
+ - **DOCS**: Update docs link.
+ - **DOCS**: Update docs.
+ - **DOCS**: Update demo.
+ - **DOCS**: Add demo page.
 
 ## 0.5.0-dev.0
 
 > Note: This release has breaking changes.
 
-- **BREAKING** **FEAT**: Add plugins.
+ - **BREAKING** **FEAT**: Add plugins.
 
 ## 0.4.1+2
 
-- **FIX**: Fix knobs reload for CustomStorybook.
+ - **FIX**: Fix knobs reload for CustomStorybook.
 
 ## 0.4.1+1
 
-- **STYLE**: Fix formatting.
-- **DOCS**: Update README.md.
+ - **STYLE**: Fix formatting.
+ - **DOCS**: Update README.md.
 
 ## 0.4.1
 
-- **FEAT**: Add storybook_device_preview.
-- **CHORE**: Update dependencies.
-- **CHORE**: Restructure.
+ - **FEAT**: Add storybook_device_preview.
+ - **CHORE**: Update dependencies.
+ - **CHORE**: Restructure.
 
 ## 0.4.0
 
-- Bump "storybook_flutter" to `0.4.0`.
+ - Bump "storybook_flutter" to `0.4.0`.
 
 ## 0.3.0
 
 > Note: This release has breaking changes.
 
-- **CI**: Add CI job (#20).
-- **BREAKING** **FEAT**: Major theme upgrade.
+ - **CI**: Add CI job (#20).
+ - **BREAKING** **FEAT**: Major theme upgrade.
 
 ## 0.2.1
 
