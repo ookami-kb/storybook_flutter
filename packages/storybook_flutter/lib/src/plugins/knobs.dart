@@ -98,33 +98,6 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
 
   void _onStoryChanged() => notifyListeners();
 
-  @override
-  bool boolean({required String label, bool initial = false}) =>
-      _addKnob(BoolKnob(label, initial));
-
-  @override
-  String text({required String label, String initial = ''}) =>
-      _addKnob(StringKnob(label, initial));
-
-  @override
-  T options<T>({
-    required String label,
-    required T initial,
-    List<Option<T>> options = const [],
-  }) =>
-      _addKnob(SelectKnob(label, initial, options));
-
-  T _addKnob<T>(Knob<T> value) {
-    final story = _storyNotifier.value!;
-    final knobs = _knobs.putIfAbsent(story.name, () => <String, Knob>{});
-
-    return (knobs.putIfAbsent(value.label, () {
-      Future.microtask(notifyListeners);
-      return value;
-    }) as Knob<T>)
-        .value;
-  }
-
   void update<T>(String label, T value) {
     final story = _storyNotifier.value;
     if (story == null) return;
@@ -146,31 +119,99 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     return _knobs[story.name]?.values.toList() ?? [];
   }
 
+  T _addKnob<T>(Knob<T> value) {
+    final story = _storyNotifier.value!;
+    final knobs = _knobs.putIfAbsent(story.name, () => <String, Knob>{});
+
+    return (knobs.putIfAbsent(value.label, () {
+      Future.microtask(notifyListeners);
+      return value;
+    }) as Knob<T>)
+        .value;
+  }
+
+  @override
+  bool boolean({
+    required String label,
+    String? description,
+    bool initial = false,
+  }) =>
+      _addKnob(
+        BoolKnob(
+          label: label,
+          description: description,
+          value: initial,
+        ),
+      );
+
+  @override
+  String text({
+    required String label,
+    String? description,
+    String initial = '',
+  }) =>
+      _addKnob(
+        StringKnob(
+          label: label,
+          description: description,
+          value: initial,
+        ),
+      );
+
+  @override
+  T options<T>({
+    required String label,
+    String? description,
+    required T initial,
+    List<Option<T>> options = const [],
+  }) =>
+      _addKnob(
+        SelectKnob(
+          label: label,
+          description: description,
+          value: initial,
+          options: options,
+        ),
+      );
+
   @override
   double slider({
     required String label,
+    String? description,
     double initial = 0,
     double max = 1,
     double min = 0,
   }) =>
-      _addKnob(SliderKnob(label, value: initial, max: max, min: min));
+      _addKnob(
+        SliderKnob(
+          label: label,
+          description: description,
+          value: initial,
+          max: max,
+          min: min,
+        ),
+      );
 
   @override
   int sliderInt({
     required String label,
+    String? description,
     int initial = 0,
     int max = 100,
     int min = 0,
     int divisions = 100,
   }) =>
-      _addKnob(SliderKnob(
-        label,
-        value: initial.toDouble(),
-        max: max.toDouble(),
-        min: min.toDouble(),
-        divisions: divisions,
-        formatValue: (v) => v.toInt().toString(),
-      )).toInt();
+      _addKnob(
+        SliderKnob(
+          label: label,
+          description: description,
+          value: initial.toDouble(),
+          max: max.toDouble(),
+          min: min.toDouble(),
+          divisions: divisions,
+          formatValue: (v) => v.toInt().toString(),
+        ),
+      ).toInt();
 
   @override
   void dispose() {
