@@ -30,7 +30,7 @@ Widget _buildWrapper(BuildContext context, Widget? child) => Directionality(
                   right: BorderSide(color: Colors.black12),
                 ),
               ),
-              child: SizedBox(width: 250, child: Contents()),
+              child: const SizedBox(width: 250, child: Contents()),
             ),
           ),
           Expanded(
@@ -91,7 +91,7 @@ class _ContentsState extends State<_Contents> {
 
   Widget _buildStoryTile(Story story) => ListTile(
         selected: story == context.watch<StoryNotifier>().value,
-        title: Text(story.name),
+        title: Text(story.title),
         subtitle: story.description == null ? null : Text(story.description!),
         onTap: () {
           final onStorySelected = widget.onStorySelected;
