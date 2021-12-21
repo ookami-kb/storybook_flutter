@@ -23,13 +23,13 @@ Widget _buildWrapper(BuildContext context, Widget? child) => Directionality(
       textDirection: TextDirection.ltr,
       child: Row(
         children: [
-          Container(
-            decoration: const BoxDecoration(
-              border: Border(
-                right: BorderSide(color: Colors.black12),
+          Material(
+            child: Container(
+              decoration: const BoxDecoration(
+                border: Border(
+                  right: BorderSide(color: Colors.black12),
+                ),
               ),
-            ),
-            child: const Material(
               child: SizedBox(width: 250, child: Contents()),
             ),
           ),
@@ -75,12 +75,16 @@ class _ContentsState extends State<_Contents> {
         .where((k) => k.isNotEmpty)
         .map((k) => _buildSection(k, grouped[k]!));
     final stories = (grouped[''] ?? []).map(_buildStoryTile);
-    return ListTileTheme(
-      style: ListTileStyle.drawer,
-      child: ListView(
-        padding: EdgeInsets.zero,
-        primary: false,
-        children: [...sections, ...stories],
+
+    return SafeArea(
+      right: false,
+      child: ListTileTheme(
+        style: ListTileStyle.drawer,
+        child: ListView(
+          padding: EdgeInsets.zero,
+          primary: false,
+          children: [...sections, ...stories],
+        ),
       ),
     );
   }

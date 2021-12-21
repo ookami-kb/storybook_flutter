@@ -79,30 +79,27 @@ class _StorybookState extends State<Storybook> {
                 children: [
                   Column(
                     children: [
-                      Expanded(
-                        child: currentStory,
-                      ),
-                      Material(
-                        child: SafeArea(
-                          top: false,
-                          child: CompositedTransformTarget(
-                            link: _layerLink,
-                            child: Directionality(
-                              textDirection: TextDirection.ltr,
-                              child: Container(
-                                width: double.infinity,
-                                decoration: const BoxDecoration(
-                                  border: Border(
-                                    top: BorderSide(
-                                      color: Colors.black12,
-                                      width: 1,
+                      Expanded(child: currentStory),
+                      RepaintBoundary(
+                        child: Material(
+                          child: SafeArea(
+                            top: false,
+                            child: CompositedTransformTarget(
+                              link: _layerLink,
+                              child: Directionality(
+                                textDirection: TextDirection.ltr,
+                                child: Container(
+                                  width: double.infinity,
+                                  decoration: const BoxDecoration(
+                                    border: Border(
+                                      top: BorderSide(color: Colors.black12),
                                     ),
                                   ),
-                                ),
-                                child: PluginPanel(
-                                  plugins: widget.plugins,
-                                  overlayKey: _overlayKey,
-                                  layerLink: _layerLink,
+                                  child: PluginPanel(
+                                    plugins: widget.plugins,
+                                    overlayKey: _overlayKey,
+                                    layerLink: _layerLink,
+                                  ),
                                 ),
                               ),
                             ),

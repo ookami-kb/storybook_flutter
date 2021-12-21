@@ -20,25 +20,6 @@ class MyApp extends StatelessWidget {
         plugins: _plugins,
         stories: [
           Story(
-            name: 'Button',
-            builder: (context) => TextButton(
-              onPressed: () => showDialog<void>(
-                context: context,
-                builder: (context) => const AlertDialog(
-                  title: Text('Hello'),
-                  content: Text('Hello World!'),
-                ),
-              ),
-              child: const Text('Press me'),
-            ),
-          ),
-          Story(
-            name: 'Text',
-            builder: (context) => Text(
-              context.knobs.text(label: 'Text', initial: 'Simple text story'),
-            ),
-          ),
-          Story(
             name: 'Scaffold',
             builder: (context) => Scaffold(
               appBar: AppBar(

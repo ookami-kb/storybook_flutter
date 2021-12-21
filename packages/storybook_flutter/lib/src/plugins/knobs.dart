@@ -52,25 +52,30 @@ Widget _buildWrapper(
               child: Row(
                 children: [
                   Expanded(child: child!),
-                  Container(
-                    decoration: const BoxDecoration(
-                      border: Border(
-                        left: BorderSide(color: Colors.black12),
-                      ),
-                    ),
+                  RepaintBoundary(
                     child: Material(
-                      child: SizedBox(
-                        width: 250,
-                        child: Localizations(
-                          delegates: const [
-                            DefaultMaterialLocalizations.delegate,
-                            DefaultWidgetsLocalizations.delegate,
-                          ],
-                          locale: const Locale('en', 'US'),
-                          child: Navigator(
-                            onGenerateRoute: (_) => PageRouteBuilder<void>(
-                              pageBuilder: (context, _, __) =>
-                                  _buildPanel(context),
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          border: Border(
+                            left: BorderSide(color: Colors.black12),
+                          ),
+                        ),
+                        child: SafeArea(
+                          left: false,
+                          child: SizedBox(
+                            width: 250,
+                            child: Localizations(
+                              delegates: const [
+                                DefaultMaterialLocalizations.delegate,
+                                DefaultWidgetsLocalizations.delegate,
+                              ],
+                              locale: const Locale('en', 'US'),
+                              child: Navigator(
+                                onGenerateRoute: (_) => PageRouteBuilder<void>(
+                                  pageBuilder: (context, _, __) =>
+                                      _buildPanel(context),
+                                ),
+                              ),
                             ),
                           ),
                         ),
