@@ -16,11 +16,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Storybook(
-        initialStory: 'Scaffold',
+        initialStory: 'Screens/Scaffold',
         plugins: _plugins,
         stories: [
           Story(
-            name: 'Scaffold',
+            name: 'Screens/Scaffold',
+            description: 'Story with scaffold and different knobs.',
             builder: (context) => Scaffold(
               appBar: AppBar(
                 title: Text(
@@ -88,11 +89,17 @@ class MyApp extends StatelessWidget {
             ),
           ),
           Story(
-            name: 'Counter',
+            name: 'Screens/Counter',
+            description: 'Demo Counter app with about dialog.',
             builder: (context) => CounterPage(
               title: context.knobs.text(label: 'Title', initial: 'Counter'),
               enabled: context.knobs.boolean(label: 'Enabled', initial: true),
             ),
+          ),
+          Story(
+            name: 'Widgets/Text',
+            description: 'Simple text widget.',
+            builder: (context) => const Center(child: Text('Simple text')),
           ),
         ],
       );
