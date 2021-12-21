@@ -12,17 +12,17 @@ class Story {
   final WidgetBuilder builder;
 
   String get section {
-    final parts = name.split('/');
+    final parts = name.split(_sectionSeparator);
     if (parts.length > 1) return parts[0];
 
     return '';
   }
 
   String get title {
-    final parts = name.split('/');
+    final parts = name.split(_sectionSeparator);
     if (parts.length > 1) {
       parts.removeAt(0);
-      return parts.join('/');
+      return parts.join(_sectionSeparator);
     }
 
     return name;
@@ -32,3 +32,5 @@ class Story {
 class StoryNotifier extends ValueNotifier<Story?> {
   StoryNotifier(Story? value) : super(value);
 }
+
+const _sectionSeparator = '/';
