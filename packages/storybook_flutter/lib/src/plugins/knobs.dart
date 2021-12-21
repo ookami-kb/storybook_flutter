@@ -61,19 +61,18 @@ Widget _buildWrapper(
                     child: Material(
                       child: SizedBox(
                         width: 250,
-                        child: Overlay(
-                          initialEntries: [
-                            OverlayEntry(
-                              builder: (context) => Localizations(
-                                delegates: const [
-                                  DefaultMaterialLocalizations.delegate,
-                                  DefaultWidgetsLocalizations.delegate,
-                                ],
-                                locale: const Locale('en', 'US'),
-                                child: const Builder(builder: _buildPanel),
-                              ),
-                            ),
+                        child: Localizations(
+                          delegates: const [
+                            DefaultMaterialLocalizations.delegate,
+                            DefaultWidgetsLocalizations.delegate,
                           ],
+                          locale: const Locale('en', 'US'),
+                          child: Navigator(
+                            onGenerateRoute: (_) => PageRouteBuilder<void>(
+                              pageBuilder: (context, _, __) =>
+                                  _buildPanel(context),
+                            ),
+                          ),
                         ),
                       ),
                     ),
