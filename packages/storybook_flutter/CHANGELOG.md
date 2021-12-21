@@ -1,3 +1,13 @@
+## 0.9.0-dev.2
+
+> Note: This release has breaking changes.
+
+ - **REFACTOR**: Fix imports.
+ - **FIX**: Add repaint boundaries.
+ - **FIX**: Fix knobs rendering.
+ - **DOCS**: Update example.
+ - **BREAKING** **FEAT**: Add story and knob description fields (#61).
+
 ## 0.9.0-dev.1
 
  - **FEAT**: Update plugins.
