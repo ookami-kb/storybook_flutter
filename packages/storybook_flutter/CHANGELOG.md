@@ -1,3 +1,10 @@
+## 0.9.0-dev.3
+
+> Note: This release has breaking changes.
+
+ - **REFACTOR**: Extract _sectionSeparator const.
+ - **BREAKING** **FEAT**: Move sections into story name.
+
 ## 0.9.0-dev.2
 
 > Note: This release has breaking changes.
