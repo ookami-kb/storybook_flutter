@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:storybook_flutter/src/control_panel/provider.dart';
 import 'package:storybook_flutter/src/control_panel/widgets/full_screen_button.dart';
+import 'package:storybook_flutter/src/control_panel/widgets/screenshot_button/screenshot_button.dart';
 import 'package:storybook_flutter/src/plugins/plugin.dart';
 import 'package:storybook_flutter/src/plugins/plugin_settings_notifier.dart';
 import 'package:storybook_flutter/src/story_provider.dart';
@@ -98,6 +99,12 @@ class ControlPanel extends StatelessWidget {
                         .map(buildIcon)
                         .toList(),
                     const Spacer(),
+                    Consumer<StoryProvider>(
+                        builder: (_, provider, __) => Visibility(
+                              visible: provider.currentStory != null,
+                              replacement: const SizedBox(),
+                              child: const ScreenShotButton(),
+                            )),
                     const FullScreenButton(),
                     const ThemeSwitcher(),
                   ],
