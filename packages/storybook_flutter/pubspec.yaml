@@ -12,6 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   freezed_annotation: ^0.15.0
+  path_provider: ^2.0.8
   provider: '>=5.0.0 <7.0.0'
   recase: ^4.0.0
 
