@@ -5,13 +5,15 @@ import 'package:provider/provider.dart';
 import 'package:storybook_flutter/src/control_panel/widgets/screenshot_button/screenshot_entity.dart';
 import 'package:storybook_flutter/src/story_provider.dart';
 
+import 'handler/screenshot_handler.dart';
+
 class ScreenShotButton extends StatelessWidget {
   const ScreenShotButton({Key? key}) : super(key: key);
 
   Future<void> _print(BuildContext context) async {
     final image = await _captureStoryAsImage(context);
     if (image == null) return;
-    print('Should save ${image.filename} in local storage');
+    return ScreenShotHandler().saveImage(image);
   }
 
   Future<ScreenShot?> _captureStoryAsImage(BuildContext context) async {

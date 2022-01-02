@@ -1,4 +1,5 @@
-import './screenshot_handler_unsupported.dart';
+import './screenshot_handler_unsupported.dart'
+    if (dart.library.html) './screenshot_handler_web.dart';
 import '../screenshot_entity.dart';
 
 abstract class ScreenShotHandlerInterface {
