@@ -12,7 +12,7 @@ import 'package:storybook_flutter/src/storybook.dart';
 ///
 /// It's better to use it to demonstrate a single widget (e.g. Button).
 class Story extends StatefulWidget {
-  const Story({
+  Story({
     Key? key,
     required this.name,
     required StoryBuilder builder,
@@ -68,6 +68,9 @@ class Story extends StatefulWidget {
   /// Padding of the story.
   final EdgeInsets padding;
 
+  /// key to provide a context to find a render object to export as image
+  final GlobalKey screenShotKey = GlobalKey();
+
   String get path => ReCase(name).paramCase;
 
   @override
@@ -99,7 +102,7 @@ class _StoryState extends State<Story> {
       );
     }
 
-    return child;
+    return RepaintBoundary(key: widget.screenShotKey, child: child);
   }
 }
 
