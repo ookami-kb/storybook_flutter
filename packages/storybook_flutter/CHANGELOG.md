@@ -1,3 +1,35 @@
+## 0.9.0-dev.3
+
+> Note: This release has breaking changes.
+
+ - **REFACTOR**: Extract _sectionSeparator const.
+ - **BREAKING** **FEAT**: Move sections into story name.
+
+## 0.9.0-dev.2
+
+> Note: This release has breaking changes.
+
+ - **REFACTOR**: Fix imports.
+ - **FIX**: Add repaint boundaries.
+ - **FIX**: Fix knobs rendering.
+ - **DOCS**: Update example.
+ - **BREAKING** **FEAT**: Add story and knob description fields (#61).
+
+## 0.9.0-dev.1
+
+ - **FEAT**: Update plugins.
+ - **FEAT**: Update plugins.
+ - **DOCS**: Update example.
+ - **CHORE**: Update pubignore.
+
+## 0.9.0-dev.0
+
+> Note: This release has breaking changes.
+
+ - **CHORE**: Add .pubignore.
+ - **CHORE**: Update .gitignore.
+ - **BREAKING** **FEAT**: Reorganize (#59).
+
 ## 0.8.0
 
 > Note: This release has breaking changes.

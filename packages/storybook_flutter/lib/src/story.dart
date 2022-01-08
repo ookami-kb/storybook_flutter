@@ -1,111 +1,47 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
-import 'package:recase/recase.dart';
-import 'package:storybook_flutter/src/control_panel/provider.dart';
-import 'package:storybook_flutter/src/knobs/knobs.dart';
-import 'package:storybook_flutter/src/plugins/plugin_settings_notifier.dart';
-import 'package:storybook_flutter/src/story_provider.dart';
-import 'package:storybook_flutter/src/storybook.dart';
 
-/// Single story (page) in storybook.
-///
-/// It's better to use it to demonstrate a single widget (e.g. Button).
-class Story extends StatefulWidget {
-  const Story({
-    Key? key,
+class Story {
+  Story({
     required this.name,
-    required StoryBuilder builder,
-    this.section = '',
-    this.background,
-    this.padding = const EdgeInsets.all(16),
-    this.wrapperBuilder,
-  })  : _builder = builder,
-        super(key: key);
+    this.description,
+    required this.builder,
+  });
 
-  Story.simple({
-    Key? key,
-    required String name,
-    required Widget child,
-    String section = '',
-    Color? background,
-    EdgeInsets padding = const EdgeInsets.all(16),
-    StoryWrapperBuilder? wrapperBuilder,
-  }) : this(
-          key: key,
-          name: name,
-          background: background,
-          padding: padding,
-          builder: (_, __) => child,
-          section: section,
-          wrapperBuilder: wrapperBuilder,
-        );
-
-  /// A unique name to identify this story.
+  /// Unique name of the story.
   ///
-  /// It's used to generate list item in Contents.
+  /// Use `/` to group stories in sections, e.g. `Buttons/FlatButton`
+  /// will create a section `Buttons` with a story `FlatButton` in it.
   final String name;
 
-  /// Section title.
+  /// Optional description of the story.
   ///
-  /// Stories will be grouped by sections.
-  final String section;
+  /// It will be used in the contents as a secondary text.
+  final String? description;
 
-  /// Widget to be displayed in the story. It will be centered on the page.
-  final StoryBuilder _builder;
+  /// Story builder.
+  final WidgetBuilder builder;
 
-  /// Optional parameter to override story wrapper.
-  ///
-  /// {@macro storybook_flutter.default_story_wrapper}
-  ///
-  /// You can also override wrapper for all stories  by using
-  /// [Storybook.storyWrapperBuilder].
-  final StoryWrapperBuilder? wrapperBuilder;
+  String get section {
+    final parts = name.split(_sectionSeparator);
+    if (parts.length > 1) return parts[0];
 
-  /// Background color of the story.
-  final Color? background;
+    return '';
+  }
 
-  /// Padding of the story.
-  final EdgeInsets padding;
-
-  String get path => ReCase(name).paramCase;
-
-  @override
-  _StoryState createState() => _StoryState();
-}
-
-typedef StoryBuilder = Widget Function(BuildContext context, KnobsBuilder kb);
-
-class _StoryState extends State<Story> {
-  @override
-  Widget build(BuildContext context) {
-    final StoryWrapperBuilder effectiveWrapper = widget.wrapperBuilder ??
-        context.watch<StoryWrapperBuilder?>() ??
-        _defaultWrapperBuilder;
-
-    Widget child = effectiveWrapper(
-      context,
-      widget,
-      widget._builder(context, context.watch<StoryProvider>()),
-    );
-    for (final plugin in context.watch<ControlPanelProvider>().plugins) {
-      child = plugin.storyBuilder(
-        context,
-        widget,
-        child,
-        context
-            .watch<PluginSettingsNotifier>()
-            .get<dynamic>(plugin.runtimeType),
-      );
+  String get title {
+    final parts = name.split(_sectionSeparator);
+    if (parts.length > 1) {
+      parts.removeAt(0);
+      return parts.join(_sectionSeparator);
     }
 
-    return child;
+    return name;
   }
 }
 
-final StoryWrapperBuilder _defaultWrapperBuilder =
-    (_, story, child) => Container(
-          color: story.background,
-          padding: story.padding,
-          child: Center(child: child),
-        );
+/// Use this notifier to get the current story.
+class StoryNotifier extends ValueNotifier<Story?> {
+  StoryNotifier(Story? value) : super(value);
+}
+
+const _sectionSeparator = '/';

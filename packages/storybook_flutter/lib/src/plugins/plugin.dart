@@ -1,70 +1,66 @@
-import 'package:flutter/material.dart';
-import 'package:storybook_flutter/src/plugins/device_frame_plugin.dart';
-import 'package:storybook_flutter/src/story.dart';
+import 'package:flutter/widgets.dart';
 
-/// Base class for custom plugins.
-///
-/// Create a custom plugin by extending this class. Plugins can wrap
-/// story into custom widgets by providing [storyBuilder] and have
-/// settings panel by providing [settingsBuilder].
-///
-/// See [DeviceFramePlugin] as an example for using both [settingsBuilder]
-/// and [storyBuilder].
-abstract class Plugin<T> {
-  Plugin({
-    this.icon = Icons.settings,
-    PluginSettingsBuilder<T>? settingsBuilder,
-    PluginStoryBuilder<T> storyBuilder = _default,
-    this.initialData,
-  })  : settingsBuilder = settingsBuilder == null
-            ? null
-            : ((context, story, dynamic data, update) => settingsBuilder(
-                context, story, (data as T?) ?? initialData, update)),
-        storyBuilder = ((context, story, child, dynamic data) =>
-            storyBuilder(context, story, child, (data as T?) ?? initialData));
+import 'contents.dart';
+import 'device_frame.dart';
+import 'knobs.dart';
+import 'theme_mode.dart';
 
-  /// Icon that will be rendered in settings panel.
+export 'contents.dart';
+export 'device_frame.dart';
+export 'knobs.dart';
+export 'theme_mode.dart';
+
+/// Use this method to initialize and customize built-in plugins.
+List<Plugin> initializePlugins({
+  bool enableContents = true,
+  bool enableKnobs = true,
+  bool enableThemeMode = true,
+  bool enableDeviceFrame = true,
+  DeviceFrameData initialDeviceFrameData = const DeviceFrameData(),
+  bool contentsSidePanel = false,
+  bool knobsSidePanel = false,
+}) =>
+    [
+      if (enableContents) ContentsPlugin(sidePanel: contentsSidePanel),
+      if (enableKnobs) KnobsPlugin(sidePanel: knobsSidePanel),
+      if (enableThemeMode) themeModePlugin,
+      if (enableDeviceFrame)
+        DeviceFramePlugin(initialData: initialDeviceFrameData),
+    ];
+
+typedef OnPluginButtonPressed = void Function(BuildContext);
+
+class Plugin {
+  const Plugin({
+    this.wrapperBuilder,
+    this.panelBuilder,
+    this.storyBuilder,
+    this.icon,
+    this.onPressed,
+  });
+
+  /// Optional wrapper that will be inserted above the whole storybook content,
+  /// including panel.
   ///
-  /// Icon appears only if the plugin provides [settingsBuilder].
-  final IconData icon;
+  /// E.g. `ContentsPlugin` uses this builder to add side panel.
+  final TransitionBuilder? wrapperBuilder;
 
-  /// Settings panel content for this plugin.
+  /// Optional builder that will be used to display panel popup. It appears when
+  /// user clicks on the [icon].
   ///
-  /// Provide [settingsBuilder] to show plugin icon and render settings
-  /// in the panel.
-  final PluginSettingsBuilder? settingsBuilder;
+  /// For it to be used, [icon] must be provided.
+  final WidgetBuilder? panelBuilder;
 
-  /// Story wrapper.
+  /// Optional wrapper that will be inserted above each story.
   ///
-  /// By default it will just render the story without any changes.
-  final PluginStoryBuilder storyBuilder;
+  /// E.g. `DeviceFramePlugin` uses this builder to display device frame.
+  final TransitionBuilder? storyBuilder;
 
-  /// Initial data.
-  final T? initialData;
+  /// Optional icon that will be displayed on the bottom panel.
+  final WidgetBuilder? icon;
+
+  /// Optional callback that will be called when user clicks on the [icon].
+  ///
+  /// For it to be used, [icon] must be provided.
+  final OnPluginButtonPressed? onPressed;
 }
-
-Widget _default(
-  BuildContext context,
-  Story story,
-  Widget child,
-  dynamic data,
-) =>
-    child;
-
-typedef PluginSettingsBuilder<T> = Widget Function(
-  BuildContext context,
-  Story? story,
-  T? data,
-  void Function(T?) update,
-);
-
-typedef PluginStoryBuilder<T> = Widget Function(
-  BuildContext context,
-  Story story,
-  Widget child,
-  T? data,
-);
-
-final Iterable<Plugin> allPlugins = [
-  DeviceFramePlugin(),
-];

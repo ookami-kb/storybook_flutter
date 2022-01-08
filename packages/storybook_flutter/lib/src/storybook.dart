@@ -1,157 +1,168 @@
+import 'package:collection/collection.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
-import 'package:storybook_flutter/src/control_panel/provider.dart';
-import 'package:storybook_flutter/src/knobs/knobs_plugin.dart';
-import 'package:storybook_flutter/src/plugins/plugin.dart';
-import 'package:storybook_flutter/src/plugins/plugin_settings_notifier.dart';
-import 'package:storybook_flutter/src/route.dart';
-import 'package:storybook_flutter/src/story.dart';
-import 'package:storybook_flutter/src/story_page_wrapper.dart';
-import 'package:storybook_flutter/src/story_provider.dart';
-import 'package:storybook_flutter/src/theme_mode_provider.dart';
 
-typedef StoryWrapperBuilder = Widget Function(
-  BuildContext context,
-  Story story,
-  Widget child,
-);
+import 'plugins/plugin.dart';
+import 'plugins/plugin_panel.dart';
+import 'story.dart';
 
-/// A collection of stories.
-///
-/// It generates Contents in navigation drawer based on stories names.
-///
-/// This example shows how to create a simple Storybook:
-///
-/// ```
-/// Widget build(BuildContext context) => Storybook(
-///     children: [
-///       Story(
-///         name: 'Flat button',
-///         child: MaterialButton(child: Text('Flat button'), onPressed: () {}),
-///       ),
-///       Story(
-///         name: 'Raised button',
-///         child: RaisedButton(child: Text('Raised button'), onPressed: () {}),
-///       ),
-///       Story(
-///         name: 'Input field',
-///         child: TextField(
-///           decoration: InputDecoration(
-///             border: OutlineInputBorder(),
-///             labelText: 'Input field',
-///           ),
-///         ),
-///       ),
-///     ],
-///   );
-/// ```
-class Storybook extends StatelessWidget {
+/// Use this wrapper to wrap each story into a [MaterialApp] widget.
+Widget materialWrapper(BuildContext context, Widget? child) => MaterialApp(
+      theme: ThemeData.light(),
+      darkTheme: ThemeData.dark(),
+      debugShowCheckedModeBanner: false,
+      useInheritedMediaQuery: true,
+      home: Scaffold(body: Center(child: child)),
+    );
+
+/// Use this wrapper to wrap each story into a [CupertinoApp] widget.
+Widget cupertinoWrapper(BuildContext context, Widget? child) => CupertinoApp(
+      debugShowCheckedModeBanner: false,
+      useInheritedMediaQuery: true,
+      home: CupertinoPageScaffold(child: Center(child: child)),
+    );
+
+final _defaultPlugins = initializePlugins();
+
+class Storybook extends StatefulWidget {
   Storybook({
     Key? key,
-    this.children = const [],
-    this.theme,
-    this.darkTheme,
-    this.themeMode = ThemeMode.system,
-    this.localizationDelegates,
-    this.storyWrapperBuilder,
+    required Iterable<Story> stories,
     Iterable<Plugin>? plugins,
-    this.initialRoute = '/',
-    this.scaffoldMessengerKey,
-    this.navigatorObservers = const <NavigatorObserver>[],
-    this.builder,
-  })  : plugins = plugins ?? allPlugins,
+    this.initialStory,
+    this.wrapperBuilder = materialWrapper,
+    this.showPanel = true,
+  })  : plugins = UnmodifiableListView(plugins ?? _defaultPlugins),
+        stories = UnmodifiableListView(stories),
         super(key: key);
 
-  final GlobalKey<ScaffoldMessengerState>? scaffoldMessengerKey;
+  /// All enabled plugins.
+  final List<Plugin> plugins;
 
-  /// Theme override for the light theme.
-  final ThemeData? theme;
+  /// All available stories.
+  final List<Story> stories;
 
-  /// Theme override for the dark theme.
-  final ThemeData? darkTheme;
+  /// Optional initial story.
+  final String? initialStory;
 
-  /// Indicates theme mode to use: light, dark or system.
-  final ThemeMode themeMode;
+  /// Each story will be wrapped into a widget returned by this builder.
+  final TransitionBuilder wrapperBuilder;
 
-  /// Stories in the storybook.
-  final List<Story> children;
-
-  /// Localizations Delegates override
-  final List<LocalizationsDelegate>? localizationDelegates;
-
-  /// Optional list of plugins.
-  final Iterable<Plugin> plugins;
-
-  /// {@macro flutter.widgets.widgetsApp.navigatorObservers}
-  final List<NavigatorObserver> navigatorObservers;
-
-  /// {@macro flutter.widgets.widgetsApp.builder}
-  ///
-  /// Material specific features such as [showDialog] and [showMenu], and widgets
-  /// such as [Tooltip], [PopupMenuButton], also require a [Navigator] to properly
-  /// function.
-  final TransitionBuilder? builder;
-
-  /// Optional parameter to override story wrapper.
-  ///
-  /// {@template storybook_flutter.default_story_wrapper}
-  /// By default each story is wrapped into:
-  /// ```dart
-  /// Container(
-  ///   color: story.background,
-  ///   padding: story.padding,
-  ///   child: Center(child: child),
-  /// )
-  /// ```
-  /// {@endtemplate}
-  ///
-  /// You can also override individual story wrapper by using
-  /// [Story.wrapperBuilder].
-  final StoryWrapperBuilder? storyWrapperBuilder;
-
-  final String initialRoute;
+  /// Whether to show the plugin panel at the bottom.
+  final bool showPanel;
 
   @override
-  Widget build(BuildContext context) => MultiProvider(
-        providers: [
-          Provider.value(value: children),
-          ChangeNotifierProvider(create: (_) => ThemeModeProvider(themeMode)),
-          Provider<StoryWrapperBuilder?>.value(value: storyWrapperBuilder),
-          ChangeNotifierProvider(
-            create: (_) => ControlPanelProvider([KnobsPlugin(), ...plugins]),
-          ),
-          ChangeNotifierProvider(create: (_) => PluginSettingsNotifier()),
-        ],
-        child: Builder(
-          builder: (context) => MaterialApp(
-            scaffoldMessengerKey: scaffoldMessengerKey,
-            debugShowCheckedModeBanner: false,
-            themeMode: Provider.of<ThemeModeProvider>(context).current,
-            theme: theme ?? ThemeData(brightness: Brightness.light),
-            darkTheme: darkTheme ?? ThemeData(brightness: Brightness.dark),
-            localizationsDelegates: localizationDelegates,
-            initialRoute: initialRoute,
-            onGenerateInitialRoutes: (name) => [_generateRoute(context, name)],
-            onGenerateRoute: (settings) =>
-                _generateRoute(context, settings.name, settings: settings),
-            builder: builder,
-            navigatorObservers: navigatorObservers,
-          ),
-        ),
-      );
+  State<Storybook> createState() => _StorybookState();
 }
 
-ModalRoute<void> _generateRoute(
-  BuildContext context,
-  String? name, {
-  RouteSettings? settings,
-}) {
-  final WidgetBuilder builder = (_) => ChangeNotifierProvider(
-        create: (_) => StoryProvider.fromPath(name, context.read()),
-        child: const StoryPageWrapper(),
+class _StorybookState extends State<Storybook> {
+  final _overlayKey = GlobalKey<OverlayState>();
+  final _layerLink = LayerLink();
+
+  @override
+  Widget build(BuildContext context) {
+    final currentStory = CurrentStory(
+      wrapperBuilder: widget.wrapperBuilder,
+    );
+
+    return MediaQuery.fromWindow(
+      child: Nested(
+        children: [
+          Provider.value(value: widget.plugins),
+          ChangeNotifierProvider(
+            create: (_) => StoryNotifier(
+              widget.initialStory == null
+                  ? null
+                  : widget.stories
+                      .firstWhere((s) => s.name == widget.initialStory),
+            ),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => StoriesNotifier(widget.stories),
+          ),
+          ...widget.plugins
+              .where((p) => p.wrapperBuilder != null)
+              .map((p) => SingleChildBuilder(builder: p.wrapperBuilder!))
+        ],
+        child: widget.showPanel
+            ? Stack(
+                alignment: Alignment.topCenter,
+                children: [
+                  Column(
+                    children: [
+                      Expanded(child: currentStory),
+                      RepaintBoundary(
+                        child: Material(
+                          child: SafeArea(
+                            top: false,
+                            child: CompositedTransformTarget(
+                              link: _layerLink,
+                              child: Directionality(
+                                textDirection: TextDirection.ltr,
+                                child: Container(
+                                  width: double.infinity,
+                                  decoration: const BoxDecoration(
+                                    border: Border(
+                                      top: BorderSide(color: Colors.black12),
+                                    ),
+                                  ),
+                                  child: PluginPanel(
+                                    plugins: widget.plugins,
+                                    overlayKey: _overlayKey,
+                                    layerLink: _layerLink,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Directionality(
+                    textDirection: TextDirection.ltr,
+                    child: Overlay(key: _overlayKey),
+                  ),
+                ],
+              )
+            : currentStory,
+      ),
+    );
+  }
+}
+
+class CurrentStory extends StatelessWidget {
+  const CurrentStory({Key? key, required this.wrapperBuilder})
+      : super(key: key);
+
+  final TransitionBuilder wrapperBuilder;
+
+  @override
+  Widget build(BuildContext context) {
+    final story = context.watch<StoryNotifier>().value;
+    if (story == null) {
+      return const Directionality(
+        textDirection: TextDirection.ltr,
+        child: Material(child: Center(child: Text('Select story'))),
       );
-  return name?.endsWith('/full') == true
-      ? MaterialPageRoute<void>(settings: settings, builder: builder)
-      : StoryRoute(settings: settings, builder: builder);
+    }
+
+    final plugins = context.watch<List<Plugin>>();
+    final pluginBuilders = plugins
+        .where((p) => p.storyBuilder != null)
+        .map((p) => SingleChildBuilder(builder: p.storyBuilder!))
+        .toList();
+
+    final child = wrapperBuilder(context, Builder(builder: story.builder));
+
+    return pluginBuilders.isEmpty
+        ? child
+        : Nested(children: pluginBuilders, child: child);
+  }
+}
+
+class StoriesNotifier extends ValueNotifier<List<Story>> {
+  StoriesNotifier(List<Story> value) : super(value);
 }

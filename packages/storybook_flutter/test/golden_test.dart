@@ -2,21 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:golden_toolkit/golden_toolkit.dart';
 import 'package:storybook_flutter/storybook_flutter.dart';
 
-Widget simpleStorybook(String initialRoute) => Storybook(
-      initialRoute: initialRoute,
-      children: [
-        Story.simple(
+Widget simpleStorybook(String initialStory) => Storybook(
+      plugins: initializePlugins(
+        contentsSidePanel: true,
+        knobsSidePanel: true,
+      ),
+      initialStory: initialStory,
+      stories: [
+        Story(
           name: 'Button',
-          child: TextButton(
+          builder: (_) => TextButton(
             onPressed: () {},
             child: const Text('Push me'),
           ),
         ),
         Story(
           name: 'Customizable Button',
-          builder: (context, k) => TextButton(
+          builder: (context) => TextButton(
             onPressed: () {},
-            child: Text(k.text(label: 'Text', initial: 'Push me')),
+            child: Text(context.knobs.text(label: 'Text', initial: 'Push me')),
           ),
         )
       ],
@@ -26,7 +30,7 @@ void main() {
   testGoldens('Simple story layout', (tester) async {
     final builder = DeviceBuilder()
       ..addScenario(
-        widget: simpleStorybook('/stories/button'),
+        widget: simpleStorybook('Button'),
         name: 'simple storybook',
       );
 
@@ -37,7 +41,7 @@ void main() {
   testGoldens('Story layout', (tester) async {
     final builder = DeviceBuilder()
       ..addScenario(
-        widget: simpleStorybook('/stories/customizable-button'),
+        widget: simpleStorybook('Customizable Button'),
         name: 'simple storybook',
       );
 
