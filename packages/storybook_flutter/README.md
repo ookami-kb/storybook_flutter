@@ -5,7 +5,6 @@
 A cross-platform storybook for showcasing widgets. It should work in all platforms supported by Flutter.
 
 - [Demo version](https://ookami-kb.github.io/storybook_flutter/)
-- [Documentation](https://ookamikb.gitbook.io/flutter-storybook/)
 
 ![](https://github.com/ookami-kb/storybook_flutter/raw/master/meta/preview.png)
 
@@ -16,42 +15,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
       Storybook(
-        children: [
+        stories: [
           Story(
-            name: 'Flat button',
-            padding: EdgeInsets.all(5), // optional padding customization
-            background: Colors.red, // optional background color customization
-            builder: (_, k) =>
-                MaterialButton(
-                  onPressed: k.boolean(label: 'Enabled', initial: true) ? () {} : null,
-                  child: Text(k.text(label: 'Text', initial: 'Flat button')),
-                ),
-          ),
-          Story(
-            name: 'Raised button',
-            builder: (_, k) =>
-                RaisedButton(
-                  onPressed: k.boolean(label: 'Enabled', initial: true) ? () {} : null,
-                  color: k.options(
-                    label: 'Color',
-                    initial: Colors.deepOrange,
-                    options: const [
-                      Option('Red', Colors.deepOrange),
-                      Option('Green', Colors.teal),
-                    ],
-                  ),
-                  textColor: Colors.white,
-                  child: Text(k.text(label: 'Text', initial: 'Raised button')),
-                ),
-          ),
-          Story.simple(
-            name: 'Input field',
-            child: const TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Input field',
-              ),
+            name: 'Screens/Counter',
+            description: 'Demo Counter app with about dialog.',
+            builder: (context) => CounterPage(
+              title: context.knobs.text(label: 'Title', initial: 'Counter'),
+              enabled: context.knobs.boolean(label: 'Enabled', initial: true),
             ),
+          ),
+          Story(
+            name: 'Widgets/Text',
+            description: 'Simple text widget.',
+            builder: (context) => const Center(child: Text('Simple text')),
           ),
         ],
       );
@@ -60,30 +36,21 @@ class MyApp extends StatelessWidget {
 
 ## Customization
 
-By default, each story is wrapped into:
+By default, each story is wrapped into `MaterialApp`.
 
-```
-Container(
-  color: story.background,
-  padding: story.padding,
-  child: Center(child: child),
-)
-```
+You can override this behavior by providing either `wrapperBuilder` to the
+`Storybook`. You can either use one of the default ones: `materialWrapper` or
+`cupertinoWrapper`, or provide a fully custom wrapper. In the latest case,
+make sure to use `child` widget that will contain the story.
 
-You can override this behavior by providing either `wrapperBuilder` to the `Story` or `storyWrapperBuilder` to
-the `Storybook`. In the latest case this wrapper will be applied to each story (of course, you can still override this
-behavior by providing another `wrapperBuilder` to individual stories).
+## Plugins
 
-## CustomStorybook
+Almost all the functionality is provided by plugins, even contents and
+knobs are plugins (although, they are first-party plugins).
 
-If you need even more customization, you can use `CustomStorybook`. You have to provide `builder` parameter to it where
-you can define the custom layout. In this case you're responsible for rendering the story, contents and knobs panel.
-
-You can use `CurrentStory`, `Contents` and `KnobPanel` widgets that will render the corresponding data automatically.
-
-As an example of full customization, take a look
-at [storybook_device_preview](https://pub.dev/packages/storybook_device_preview) package that allows to embed storybook
-into [device_preview](https://pub.dev/packages/device_preview) package with knobs and contents rendered as plugins.
+Plugins documentation is TBD, but you can take a look at the existing
+first-party plugins: `ContentsPlugin`, `DeviceFramePlugin`, `KnobsPlugin`,
+`ThemModePlugin`.
 
 ## Features and bugs
 

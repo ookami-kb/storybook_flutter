@@ -6,6 +6,10 @@ import '../story.dart';
 import '../storybook.dart';
 import 'plugin.dart';
 
+/// Plugin that adds content as expandable list of stories.
+///
+/// If [sidePanel] is true, the stories are shown in a left side panel,
+/// otherwise as a popup.
 class ContentsPlugin extends Plugin {
   const ContentsPlugin({bool sidePanel = false})
       : super(
@@ -17,7 +21,7 @@ class ContentsPlugin extends Plugin {
 
 Widget _buildIcon(BuildContext _) => const Icon(Icons.list);
 
-Widget _buildPanel(BuildContext context) => const Contents();
+Widget _buildPanel(BuildContext context) => const _Contents();
 
 Widget _buildWrapper(BuildContext context, Widget? child) => Directionality(
       textDirection: TextDirection.ltr,
@@ -30,7 +34,7 @@ Widget _buildWrapper(BuildContext context, Widget? child) => Directionality(
                   right: BorderSide(color: Colors.black12),
                 ),
               ),
-              child: const SizedBox(width: 250, child: Contents()),
+              child: const SizedBox(width: 250, child: _Contents()),
             ),
           ),
           Expanded(
@@ -40,27 +44,8 @@ Widget _buildWrapper(BuildContext context, Widget? child) => Directionality(
       ),
     );
 
-class Contents extends StatelessWidget {
-  const Contents({
-    Key? key,
-    this.onStorySelected,
-  }) : super(key: key);
-
-  final ValueSetter<Story>? onStorySelected;
-
-  @override
-  Widget build(BuildContext context) => _Contents(
-        onStorySelected: (story) {
-          context.read<StoryNotifier>().value = story;
-          onStorySelected?.call(story);
-        },
-      );
-}
-
 class _Contents extends StatefulWidget {
-  const _Contents({Key? key, required this.onStorySelected}) : super(key: key);
-
-  final ValueSetter<Story> onStorySelected;
+  const _Contents({Key? key}) : super(key: key);
 
   @override
   _ContentsState createState() => _ContentsState();
@@ -93,10 +78,7 @@ class _ContentsState extends State<_Contents> {
         selected: story == context.watch<StoryNotifier>().value,
         title: Text(story.title),
         subtitle: story.description == null ? null : Text(story.description!),
-        onTap: () {
-          final onStorySelected = widget.onStorySelected;
-          onStorySelected(story);
-        },
+        onTap: () => context.read<StoryNotifier>().value = story,
       );
 
   Widget _buildSection(String title, Iterable<Story> stories) => ExpansionTile(

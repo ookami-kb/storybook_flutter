@@ -8,6 +8,7 @@ import 'plugin.dart';
 
 part 'device_frame.freezed.dart';
 
+/// Plugin that allows wrapping each story into a device frame.
 class DeviceFramePlugin extends Plugin {
   DeviceFramePlugin({DeviceFrameData initialData = const DeviceFrameData()})
       : super(

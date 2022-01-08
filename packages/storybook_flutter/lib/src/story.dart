@@ -7,8 +7,18 @@ class Story {
     required this.builder,
   });
 
+  /// Unique name of the story.
+  ///
+  /// Use `/` to group stories in sections, e.g. `Buttons/FlatButton`
+  /// will create a section `Buttons` with a story `FlatButton` in it.
   final String name;
+
+  /// Optional description of the story.
+  ///
+  /// It will be used in the contents as a secondary text.
   final String? description;
+
+  /// Story builder.
   final WidgetBuilder builder;
 
   String get section {
@@ -29,6 +39,7 @@ class Story {
   }
 }
 
+/// Use this notifier to get the current story.
 class StoryNotifier extends ValueNotifier<Story?> {
   StoryNotifier(Story? value) : super(value);
 }

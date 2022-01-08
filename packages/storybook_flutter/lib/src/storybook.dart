@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
@@ -7,6 +8,7 @@ import 'plugins/plugin.dart';
 import 'plugins/plugin_panel.dart';
 import 'story.dart';
 
+/// Use this wrapper to wrap each story into a [MaterialApp] widget.
 Widget materialWrapper(BuildContext context, Widget? child) => MaterialApp(
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
@@ -15,6 +17,7 @@ Widget materialWrapper(BuildContext context, Widget? child) => MaterialApp(
       home: Scaffold(body: Center(child: child)),
     );
 
+/// Use this wrapper to wrap each story into a [CupertinoApp] widget.
 Widget cupertinoWrapper(BuildContext context, Widget? child) => CupertinoApp(
       debugShowCheckedModeBanner: false,
       useInheritedMediaQuery: true,
@@ -26,18 +29,28 @@ final _defaultPlugins = initializePlugins();
 class Storybook extends StatefulWidget {
   Storybook({
     Key? key,
-    required this.stories,
-    List<Plugin>? plugins,
+    required Iterable<Story> stories,
+    Iterable<Plugin>? plugins,
     this.initialStory,
     this.wrapperBuilder = materialWrapper,
     this.showPanel = true,
-  })  : plugins = plugins ?? _defaultPlugins,
+  })  : plugins = UnmodifiableListView(plugins ?? _defaultPlugins),
+        stories = UnmodifiableListView(stories),
         super(key: key);
 
+  /// All enabled plugins.
   final List<Plugin> plugins;
+
+  /// All available stories.
   final List<Story> stories;
+
+  /// Optional initial story.
   final String? initialStory;
+
+  /// Each story will be wrapped into a widget returned by this builder.
   final TransitionBuilder wrapperBuilder;
+
+  /// Whether to show the plugin panel at the bottom.
   final bool showPanel;
 
   @override

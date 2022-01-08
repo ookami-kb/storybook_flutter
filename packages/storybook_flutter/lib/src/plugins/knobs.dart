@@ -9,6 +9,9 @@ import '../knobs/string_knob.dart';
 import '../story.dart';
 import 'plugin.dart';
 
+/// Plugin that adds story customization knobs.
+///
+/// If [sidePanel] is true, the knobs will be displayed in the right side panel.
 class KnobsPlugin extends Plugin {
   KnobsPlugin({bool sidePanel = false})
       : super(
