@@ -1,3 +1,9 @@
+## 0.10.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **FIX**: Hot reload for stories (#66).
+
 ## 0.9.0
 
  - Graduate package to a stable release. See pre-releases prior to this version for changelog entries.
