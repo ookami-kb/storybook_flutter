@@ -37,6 +37,7 @@ class _PluginPanelState extends State<PluginPanel> {
               ],
               locale: const Locale('en', 'US'),
               child: Dialog(
+                clipBehavior: Clip.antiAlias,
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(8),

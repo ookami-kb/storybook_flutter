@@ -61,6 +61,7 @@ class _ContentsState extends State<_Contents> {
     final stories = (grouped[''] ?? []).map(_buildStoryTile);
 
     return SafeArea(
+      top: false,
       right: false,
       child: ListTileTheme(
         style: ListTileStyle.drawer,
