@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../story.dart';
-import '../storybook.dart';
 import 'plugin.dart';
 
 /// Plugin that adds content as expandable list of stories.
@@ -55,7 +54,7 @@ class _ContentsState extends State<_Contents> {
   @override
   Widget build(BuildContext context) {
     final grouped =
-        context.watch<StoriesNotifier>().value.groupListsBy((s) => s.section);
+        context.watch<StoryNotifier>().stories.groupListsBy((s) => s.section);
     final sections = grouped.keys
         .where((k) => k.isNotEmpty)
         .map((k) => _buildSection(k, grouped[k]!));
@@ -75,16 +74,18 @@ class _ContentsState extends State<_Contents> {
   }
 
   Widget _buildStoryTile(Story story) => ListTile(
-        selected: story == context.watch<StoryNotifier>().value,
+        selected: story == context.watch<StoryNotifier>().currentStory,
         title: Text(story.title),
         subtitle: story.description == null ? null : Text(story.description!),
-        onTap: () => context.read<StoryNotifier>().value = story,
+        onTap: () =>
+            context.read<StoryNotifier>().currentStoryName = story.name,
       );
 
   Widget _buildSection(String title, Iterable<Story> stories) => ExpansionTile(
         title: Text(title),
-        initiallyExpanded:
-            stories.contains(context.watch<StoryNotifier>().value),
+        initiallyExpanded: stories
+            .map((s) => s.name)
+            .contains(context.watch<StoryNotifier>().currentStoryName),
         children: stories.map(_buildStoryTile).toList(),
       );
 }

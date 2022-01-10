@@ -60,6 +60,30 @@ class Storybook extends StatefulWidget {
 class _StorybookState extends State<Storybook> {
   final _overlayKey = GlobalKey<OverlayState>();
   final _layerLink = LayerLink();
+  late final StoryNotifier _storyNotifier;
+
+  @override
+  void initState() {
+    super.initState();
+    _storyNotifier = StoryNotifier(
+      widget.stories,
+      initial: widget.initialStory,
+    );
+  }
+
+  @override
+  void didUpdateWidget(covariant Storybook oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.stories != oldWidget.stories) {
+      _storyNotifier.stories = widget.stories;
+    }
+  }
+
+  @override
+  void dispose() {
+    _storyNotifier.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,17 +95,7 @@ class _StorybookState extends State<Storybook> {
       child: Nested(
         children: [
           Provider.value(value: widget.plugins),
-          ChangeNotifierProvider(
-            create: (_) => StoryNotifier(
-              widget.initialStory == null
-                  ? null
-                  : widget.stories
-                      .firstWhere((s) => s.name == widget.initialStory),
-            ),
-          ),
-          ChangeNotifierProvider(
-            create: (_) => StoriesNotifier(widget.stories),
-          ),
+          ChangeNotifierProvider.value(value: _storyNotifier),
           ...widget.plugins
               .where((p) => p.wrapperBuilder != null)
               .map((p) => SingleChildBuilder(builder: p.wrapperBuilder!))
@@ -141,7 +155,7 @@ class CurrentStory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final story = context.watch<StoryNotifier>().value;
+    final story = context.watch<StoryNotifier>().currentStory;
     if (story == null) {
       return const Directionality(
         textDirection: TextDirection.ltr,
@@ -157,12 +171,11 @@ class CurrentStory extends StatelessWidget {
 
     final child = wrapperBuilder(context, Builder(builder: story.builder));
 
-    return pluginBuilders.isEmpty
-        ? child
-        : Nested(children: pluginBuilders, child: child);
+    return KeyedSubtree(
+      key: ValueKey(story.name),
+      child: pluginBuilders.isEmpty
+          ? child
+          : Nested(children: pluginBuilders, child: child),
+    );
   }
-}
-
-class StoriesNotifier extends ValueNotifier<List<Story>> {
-  StoriesNotifier(List<Story> value) : super(value);
 }

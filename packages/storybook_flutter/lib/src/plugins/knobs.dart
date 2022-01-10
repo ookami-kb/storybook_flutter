@@ -106,7 +106,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
   void _onStoryChanged() => notifyListeners();
 
   void update<T>(String label, T value) {
-    final story = _storyNotifier.value;
+    final story = _storyNotifier.currentStory;
     if (story == null) return;
 
     _knobs[story.name]![label]!.value = value;
@@ -114,20 +114,20 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
   }
 
   T get<T>(String label) {
-    final story = _storyNotifier.value!;
+    final story = _storyNotifier.currentStory!;
 
     return _knobs[story.name]![label]!.value as T;
   }
 
   List<Knob> all() {
-    final story = _storyNotifier.value;
+    final story = _storyNotifier.currentStory;
     if (story == null) return [];
 
     return _knobs[story.name]?.values.toList() ?? [];
   }
 
   T _addKnob<T>(Knob<T> value) {
-    final story = _storyNotifier.value!;
+    final story = _storyNotifier.currentStory!;
     final knobs = _knobs.putIfAbsent(story.name, () => <String, Knob>{});
 
     return (knobs.putIfAbsent(value.label, () {
