@@ -1,7 +1,9 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/widgets.dart';
 
+@immutable
 class Story {
-  Story({
+  const Story({
     required this.name,
     this.description,
     required this.builder,
@@ -40,8 +42,33 @@ class Story {
 }
 
 /// Use this notifier to get the current story.
-class StoryNotifier extends ValueNotifier<Story?> {
-  StoryNotifier(Story? value) : super(value);
+class StoryNotifier extends ChangeNotifier {
+  StoryNotifier(List<Story> stories, {String? initial})
+      : _stories = stories.toList(),
+        _currentStoryName = initial;
+
+  List<Story> _stories;
+
+  set stories(List<Story> value) {
+    _stories = value.toList(growable: false);
+    notifyListeners();
+  }
+
+  List<Story> get stories => UnmodifiableListView(_stories);
+
+  String? _currentStoryName;
+
+  Story? get currentStory {
+    final index = _stories.indexWhere((s) => s.name == _currentStoryName);
+    return index != -1 ? _stories[index] : null;
+  }
+
+  String? get currentStoryName => _currentStoryName;
+
+  set currentStoryName(String? value) {
+    _currentStoryName = value;
+    notifyListeners();
+  }
 }
 
 const _sectionSeparator = '/';
