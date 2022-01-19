@@ -2,7 +2,8 @@
 
 # Storybook Flutter
 
-A cross-platform storybook for showcasing widgets. It should work in all platforms supported by Flutter.
+A cross-platform storybook for showcasing widgets. It should work at all
+platforms supported by Flutter.
 
 - [Demo version](https://ookami-kb.github.io/storybook_flutter/)
 
@@ -39,14 +40,14 @@ class MyApp extends StatelessWidget {
 By default, each story is wrapped into `MaterialApp`.
 
 You can override this behavior by providing either `wrapperBuilder` to the
-`Storybook`. You can either use one of the default ones: `materialWrapper` or
-`cupertinoWrapper`, or provide a fully custom wrapper. In the latest case,
-make sure to use `child` widget that will contain the story.
+`Storybook`. You can either use one of the default ones
+(`materialWrapper`/`cupertinoWrapper`) or provide a fully custom wrapper. In the
+latest case, make sure to use the `child` widget that will contain the story.
 
 ## Plugins
 
-Almost all the functionality is provided by plugins, even contents and
-knobs are plugins (although, they are first-party plugins).
+Almost all the functionality is provided by plugins. Even contents and
+knobs are plugins (although they are first-party plugins).
 
 Plugins documentation is TBD, but you can take a look at the existing
 first-party plugins: `ContentsPlugin`, `DeviceFramePlugin`, `KnobsPlugin`,
