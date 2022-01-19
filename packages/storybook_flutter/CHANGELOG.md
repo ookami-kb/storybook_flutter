@@ -1,3 +1,8 @@
+## 0.10.0+1
+
+ - **FIX**: Select knob dropdown in overlay (#70).
+ - **FIX**: Panel dialog layout (#67).
+
 ## 0.10.0
 
 > Note: This release has breaking changes.
