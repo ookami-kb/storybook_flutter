@@ -45,8 +45,12 @@ class _PluginPanelState extends State<PluginPanel> {
                   ),
                 ),
                 insetPadding: EdgeInsets.zero,
-                child: Material(
-                  child: childBuilder(context),
+                child: Navigator(
+                  onGenerateRoute: (_) => MaterialPageRoute<void>(
+                    builder: (context) => Material(
+                      child: childBuilder(context),
+                    ),
+                  ),
                 ),
               ),
             ),
