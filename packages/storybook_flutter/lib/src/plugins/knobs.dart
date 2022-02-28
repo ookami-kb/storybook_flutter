@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../knobs/bool_knob.dart';
 import '../knobs/knobs.dart';
+import '../knobs/nullable_knob.dart';
 import '../knobs/select_knob.dart';
 import '../knobs/slider_knob.dart';
 import '../knobs/string_knob.dart';
@@ -102,6 +103,8 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
 
   final StoryNotifier _storyNotifier;
   final Map<String, Map<String, Knob>> _knobs = <String, Map<String, Knob>>{};
+  @override
+  late final nullable = _NullableKnobsBuilder(this);
 
   void _onStoryChanged() => notifyListeners();
 
@@ -144,10 +147,12 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     bool initial = false,
   }) =>
       _addKnob(
-        BoolKnob(
+        Knob(
           label: label,
           description: description,
-          value: initial,
+          knobValue: BoolKnobValue(
+            value: initial,
+          ),
         ),
       );
 
@@ -158,10 +163,12 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     String initial = '',
   }) =>
       _addKnob(
-        StringKnob(
+        Knob(
           label: label,
           description: description,
-          value: initial,
+          knobValue: StringKnobValue(
+            value: initial,
+          ),
         ),
       );
 
@@ -173,11 +180,13 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     List<Option<T>> options = const [],
   }) =>
       _addKnob(
-        SelectKnob(
+        Knob(
           label: label,
           description: description,
-          value: initial,
-          options: options,
+          knobValue: SelectKnobValue(
+            value: initial,
+            options: options,
+          ),
         ),
       );
 
@@ -190,12 +199,14 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     double min = 0,
   }) =>
       _addKnob(
-        SliderKnob(
+        Knob(
           label: label,
           description: description,
-          value: initial,
-          max: max,
-          min: min,
+          knobValue: SliderKnobValue(
+            value: initial,
+            max: max,
+            min: min,
+          ),
         ),
       );
 
@@ -209,14 +220,16 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     int divisions = 100,
   }) =>
       _addKnob(
-        SliderKnob(
+        Knob(
           label: label,
           description: description,
-          value: initial.toDouble(),
-          max: max.toDouble(),
-          min: min.toDouble(),
-          divisions: divisions,
-          formatValue: (v) => v.toInt().toString(),
+          knobValue: SliderKnobValue(
+            value: initial.toDouble(),
+            max: max.toDouble(),
+            min: min.toDouble(),
+            divisions: divisions,
+            formatValue: (v) => v.toInt().toString(),
+          ),
         ),
       ).toInt();
 
@@ -225,4 +238,115 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     _storyNotifier.removeListener(_onStoryChanged);
     super.dispose();
   }
+}
+
+class _NullableKnobsBuilder extends NullableKnobsBuilder {
+  const _NullableKnobsBuilder(this._knobs);
+
+  final KnobsNotifier _knobs;
+
+  @override
+  bool? boolean({
+    required String label,
+    String? description,
+    bool initial = false,
+    bool enabled = false,
+  }) =>
+      _knobs._addKnob(
+        NullableKnob(
+          enabled: enabled,
+          label: label,
+          description: description,
+          knobValue: BoolKnobValue(
+            value: initial,
+          ),
+        ),
+      );
+
+  @override
+  T? options<T>({
+    required String label,
+    String? description,
+    required T initial,
+    List<Option<T>> options = const [],
+    bool enabled = false,
+  }) =>
+      _knobs._addKnob(
+        NullableKnob(
+          enabled: enabled,
+          label: label,
+          description: description,
+          knobValue: SelectKnobValue(
+            value: initial,
+            options: options,
+          ),
+        ),
+      );
+
+  @override
+  double? slider({
+    required String label,
+    String? description,
+    double initial = 0,
+    double max = 1,
+    double min = 0,
+    bool enabled = false,
+  }) =>
+      _knobs._addKnob(
+        NullableKnob(
+          enabled: enabled,
+          label: label,
+          description: description,
+          knobValue: SliderKnobValue(
+            value: initial,
+            max: max,
+            min: min,
+          ),
+        ),
+      );
+
+  @override
+  int? sliderInt({
+    required String label,
+    String? description,
+    int initial = 0,
+    int max = 100,
+    int min = 0,
+    int divisions = 100,
+    bool enabled = false,
+  }) =>
+      _knobs
+          ._addKnob(
+            NullableKnob(
+              enabled: enabled,
+              label: label,
+              description: description,
+              knobValue: SliderKnobValue(
+                value: initial.toDouble(),
+                max: max.toDouble(),
+                min: min.toDouble(),
+                divisions: divisions,
+                formatValue: (v) => v.toInt().toString(),
+              ),
+            ),
+          )
+          ?.toInt();
+
+  @override
+  String? text({
+    required String label,
+    String? description,
+    String initial = '',
+    bool enabled = false,
+  }) =>
+      _knobs._addKnob(
+        NullableKnob(
+          enabled: enabled,
+          label: label,
+          description: description,
+          knobValue: StringKnobValue(
+            value: initial,
+          ),
+        ),
+      );
 }

@@ -31,14 +31,14 @@ class MyApp extends StatelessWidget {
                     description: 'The title of the app bar.',
                   ),
                 ),
-                elevation: context.knobs.slider(
+                elevation: context.knobs.nullable.slider(
                   label: 'AppBar elevation',
                   initial: 4,
                   min: 0,
                   max: 10,
                   description: 'Elevation of the app bar.',
                 ),
-                backgroundColor: context.knobs.options(
+                backgroundColor: context.knobs.nullable.options(
                   label: 'AppBar color',
                   initial: Colors.blue,
                   description: 'Background color of the app bar.',
