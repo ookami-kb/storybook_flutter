@@ -11,33 +11,33 @@ class NullableKnob<T> extends Knob<T?> {
     required String label,
     String? description,
     required KnobValue<T> knobValue,
-    bool enabled = false,
-  })  : _enabled = enabled,
-        super(
+    this.enabled = false,
+  }) : super(
           label: label,
           description: description,
           knobValue: knobValue,
         );
 
-  bool _enabled;
+  @visibleForTesting
+  bool enabled;
 
   @override
   Widget build() => knobValue.build(
         label: label,
         description: description,
         nullable: true,
-        enabled: _enabled,
+        enabled: enabled,
       );
 
   @override
-  T? get value => _enabled ? knobValue.value : null;
+  T? get value => enabled ? knobValue.value : null;
 
   @override
   set value(T? value) {
     if (value == null) {
-      _enabled = false;
+      enabled = false;
     } else {
-      _enabled = true;
+      enabled = true;
       knobValue.value = value;
     }
   }

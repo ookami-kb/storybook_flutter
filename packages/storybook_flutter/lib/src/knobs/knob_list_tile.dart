@@ -25,16 +25,18 @@ class KnobListTile extends StatelessWidget {
         value: enabled,
         controlAffinity: ListTileControlAffinity.leading,
         title: IgnorePointer(
+          key: const Key('knobListTile_ignorePointer_disableTitle'),
           ignoring: !enabled,
           child: Opacity(
             opacity: enabled ? 1 : 0.5,
             child: title!,
           ),
         ),
-        subtitle: Opacity(
-          opacity: enabled ? 1 : 0.5,
-          child: IgnorePointer(
-            ignoring: !enabled,
+        subtitle: IgnorePointer(
+          key: const Key('knobListTile_ignorePointer_disableSubtitle'),
+          ignoring: !enabled,
+          child: Opacity(
+            opacity: enabled ? 1 : 0.5,
             child: subtitle,
           ),
         ),
