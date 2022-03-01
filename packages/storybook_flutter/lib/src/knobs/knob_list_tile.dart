@@ -29,7 +29,12 @@ class KnobListTile extends StatelessWidget {
           ignoring: !enabled,
           child: Opacity(
             opacity: enabled ? 1 : 0.5,
-            child: title!,
+            child: DefaultTextStyle.merge(
+              style: TextStyle(
+                color: Theme.of(context).textTheme.subtitle1?.color,
+              ),
+              child: title!,
+            ),
           ),
         ),
         subtitle: IgnorePointer(
