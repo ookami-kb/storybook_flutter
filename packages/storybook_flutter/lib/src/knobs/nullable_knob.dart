@@ -11,7 +11,7 @@ class NullableKnob<T> extends Knob<T?> {
     required String label,
     String? description,
     required KnobValue<T> knobValue,
-    this.enabled = false,
+    this.enabled = true,
   }) : super(
           label: label,
           description: description,

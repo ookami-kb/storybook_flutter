@@ -25,16 +25,44 @@ void main() {
           ),
         );
 
-    testWidgets('contains title', (tester) async {
-      await tester.pumpWidget(buildSubject(nullable: false));
+    group('when knob is nullable', () {
+      testWidgets('contains SwitchListTile', (tester) async {
+        await tester.pumpWidget(buildSubject(nullable: true));
 
-      expect(findTitle, findsOneWidget);
+        expect(find.byType(SwitchListTile), findsOneWidget);
+      });
+
+      testWidgets('contains title', (tester) async {
+        await tester.pumpWidget(buildSubject(nullable: true));
+
+        expect(findTitle, findsOneWidget);
+      });
+
+      testWidgets('contains subtitle', (tester) async {
+        await tester.pumpWidget(buildSubject(nullable: true));
+
+        expect(findSubtitle, findsOneWidget);
+      });
     });
 
-    testWidgets('contains subtitle', (tester) async {
-      await tester.pumpWidget(buildSubject(nullable: false));
+    group('when knob is not nullable', () {
+      testWidgets('contains ListTile', (tester) async {
+        await tester.pumpWidget(buildSubject(nullable: false));
 
-      expect(findSubtitle, findsOneWidget);
+        expect(find.byType(ListTile), findsOneWidget);
+      });
+
+      testWidgets('contains title', (tester) async {
+        await tester.pumpWidget(buildSubject(nullable: false));
+
+        expect(findTitle, findsOneWidget);
+      });
+
+      testWidgets('contains subtitle', (tester) async {
+        await tester.pumpWidget(buildSubject(nullable: false));
+
+        expect(findSubtitle, findsOneWidget);
+      });
     });
 
     testWidgets('title is grayed out when disabled', (tester) async {

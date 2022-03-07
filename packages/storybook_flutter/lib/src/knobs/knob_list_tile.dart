@@ -19,9 +19,11 @@ class KnobListTile extends StatelessWidget {
   final bool isThreeLine;
 
   @override
-  Widget build(BuildContext context) => SwitchListTile(
+  Widget build(BuildContext context) {
+    if (nullable) {
+      return SwitchListTile(
         isThreeLine: isThreeLine,
-        onChanged: nullable ? onToggled : null,
+        onChanged: onToggled,
         value: enabled,
         controlAffinity: ListTileControlAffinity.leading,
         title: IgnorePointer(
@@ -46,4 +48,12 @@ class KnobListTile extends StatelessWidget {
           ),
         ),
       );
+    } else {
+      return ListTile(
+        isThreeLine: isThreeLine,
+        title: title,
+        subtitle: subtitle,
+      );
+    }
+  }
 }

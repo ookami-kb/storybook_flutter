@@ -245,7 +245,7 @@ class _NullableKnobsBuilder extends NullableKnobsBuilder {
     required String label,
     String? description,
     bool initial = false,
-    bool enabled = false,
+    bool enabled = true,
   }) =>
       _knobs._addKnob(
         NullableKnob(
@@ -264,7 +264,7 @@ class _NullableKnobsBuilder extends NullableKnobsBuilder {
     String? description,
     required T initial,
     List<Option<T>> options = const [],
-    bool enabled = false,
+    bool enabled = true,
   }) =>
       _knobs._addKnob(
         NullableKnob(
@@ -285,7 +285,7 @@ class _NullableKnobsBuilder extends NullableKnobsBuilder {
     double initial = 0,
     double max = 1,
     double min = 0,
-    bool enabled = false,
+    bool enabled = true,
   }) =>
       _knobs._addKnob(
         NullableKnob(
@@ -308,7 +308,7 @@ class _NullableKnobsBuilder extends NullableKnobsBuilder {
     int max = 100,
     int min = 0,
     int divisions = 100,
-    bool enabled = false,
+    bool enabled = true,
   }) =>
       _knobs
           ._addKnob(
@@ -332,7 +332,7 @@ class _NullableKnobsBuilder extends NullableKnobsBuilder {
     required String label,
     String? description,
     String initial = '',
-    bool enabled = false,
+    bool enabled = true,
   }) =>
       _knobs._addKnob(
         NullableKnob(

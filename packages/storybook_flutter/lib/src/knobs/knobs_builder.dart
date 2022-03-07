@@ -78,7 +78,7 @@ abstract class NullableKnobsBuilder {
     required String label,
     String? description,
     bool initial = false,
-    bool enabled = false,
+    bool enabled = true,
   });
 
   /// Creates text input field with [label], [description] and [initial] value.
@@ -86,7 +86,7 @@ abstract class NullableKnobsBuilder {
     required String label,
     String? description,
     String initial = '',
-    bool enabled = false,
+    bool enabled = true,
   });
 
   /// Creates slider knob with `double` value.
@@ -96,7 +96,7 @@ abstract class NullableKnobsBuilder {
     double initial = 0,
     double max = 1,
     double min = 0,
-    bool enabled = false,
+    bool enabled = true,
   });
 
   /// Creates slider knob with `int` value.
@@ -107,7 +107,7 @@ abstract class NullableKnobsBuilder {
     int max = 100,
     int min = 0,
     int divisions = 100,
-    bool enabled = false,
+    bool enabled = true,
   });
 
   /// Creates select field with [label], [description], [initial] value and
@@ -117,6 +117,6 @@ abstract class NullableKnobsBuilder {
     String? description,
     required T initial,
     List<Option<T>> options = const [],
-    bool enabled = false,
+    bool enabled = true,
   });
 }
