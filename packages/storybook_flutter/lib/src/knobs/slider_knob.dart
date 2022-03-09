@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../plugins/knobs.dart';
+import 'knob_list_tile.dart';
 import 'knobs.dart';
 
 /// A type definition for a function that formats a [double] value.
@@ -13,19 +14,15 @@ typedef DoubleFormatter = String Function(double value);
 /// See also:
 /// * [SliderKnobWidget], which is the widget that displays the knob.
 /// {@endtemplate}
-class SliderKnob extends Knob<double> {
+class SliderKnobValue extends KnobValue<double> {
   /// {@macro slider_knob}
-  SliderKnob({
-    required String label,
-    String? description,
+  SliderKnobValue({
     required double value,
     required this.max,
     required this.min,
     this.divisions,
     this.formatValue = _defaultFormat,
   }) : super(
-          label: label,
-          description: description,
           value: value,
         );
 
@@ -45,7 +42,13 @@ class SliderKnob extends Knob<double> {
   final DoubleFormatter formatValue;
 
   @override
-  Widget build() => SliderKnobWidget(
+  Widget build({
+    required String label,
+    required String? description,
+    required bool enabled,
+    required bool nullable,
+  }) =>
+      SliderKnobWidget(
         label: label,
         description: description,
         value: value,
@@ -53,6 +56,8 @@ class SliderKnob extends Knob<double> {
         max: max,
         divisions: divisions,
         formatValue: formatValue,
+        enabled: enabled,
+        nullable: nullable,
       );
 }
 
@@ -75,6 +80,8 @@ class SliderKnobWidget extends StatelessWidget {
     required this.max,
     required this.divisions,
     required this.formatValue,
+    required this.enabled,
+    required this.nullable,
   }) : super(key: key);
 
   final String label;
@@ -84,12 +91,18 @@ class SliderKnobWidget extends StatelessWidget {
   final double value;
   final int? divisions;
   final DoubleFormatter formatValue;
+  final bool enabled;
+  final bool nullable;
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
-    return ListTile(
+    return KnobListTile(
+      nullable: nullable,
+      enabled: enabled,
+      onToggled: (enabled) =>
+          context.read<KnobsNotifier>().update(label, enabled ? value : null),
       title: Text('$label (${formatValue(value)})'),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../plugins/knobs.dart';
+import 'knob_list_tile.dart';
 import 'knobs.dart';
 
 /// {@template select_knob}
@@ -12,16 +13,12 @@ import 'knobs.dart';
 /// * [Option], which represents a single option in the list.
 /// * [SelectKnobWidget], which is the widget that displays the knob.
 /// {@endtemplate}
-class SelectKnob<T> extends Knob<T> {
+class SelectKnobValue<T> extends KnobValue<T> {
   /// {@macro select_knob}
-  SelectKnob({
-    required String label,
-    String? description,
+  SelectKnobValue({
     required T value,
     required this.options,
   }) : super(
-          label: label,
-          description: description,
           value: value,
         );
 
@@ -32,11 +29,19 @@ class SelectKnob<T> extends Knob<T> {
   final List<Option<T>> options;
 
   @override
-  Widget build() => SelectKnobWidget<T>(
+  Widget build({
+    required String label,
+    required String? description,
+    required bool enabled,
+    required bool nullable,
+  }) =>
+      SelectKnobWidget<T>(
         label: label,
         description: description,
         value: value,
         values: options,
+        enabled: enabled,
+        nullable: nullable,
       );
 }
 
@@ -79,18 +84,27 @@ class SelectKnobWidget<T> extends StatelessWidget {
     required this.description,
     required this.values,
     required this.value,
+    required this.nullable,
+    required this.enabled,
   }) : super(key: key);
 
   final String label;
   final String? description;
   final List<Option<T>> values;
   final T value;
+  final bool enabled;
+  final bool nullable;
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
-    return ListTile(
+    return KnobListTile(
+      nullable: nullable,
+      enabled: enabled,
+      onToggled: (enabled) => context
+          .read<KnobsNotifier>()
+          .update<T?>(label, enabled ? value : null),
       isThreeLine: description != null,
       title: DropdownButtonFormField<Option<T>>(
         decoration: InputDecoration(

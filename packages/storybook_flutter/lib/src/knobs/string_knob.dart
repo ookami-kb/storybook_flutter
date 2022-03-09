@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../plugins/knobs.dart';
+import 'knob_list_tile.dart';
 import 'knobs.dart';
 
 /// {@template string_knob}
@@ -10,23 +11,27 @@ import 'knobs.dart';
 /// See also:
 /// * [StringKnobWidget], which is the widget that displays the knob.
 /// {@endtemplate}
-class StringKnob extends Knob<String> {
+class StringKnobValue extends KnobValue<String> {
   /// {@macro string_knob}
-  StringKnob({
-    required String label,
-    String? description,
+  StringKnobValue({
     required String value,
   }) : super(
-          label: label,
-          description: description,
           value: value,
         );
 
   @override
-  Widget build() => StringKnobWidget(
+  Widget build({
+    required String label,
+    required String? description,
+    required bool enabled,
+    required bool nullable,
+  }) =>
+      StringKnobWidget(
         label: label,
         description: description,
         value: value,
+        enabled: enabled,
+        nullable: nullable,
       );
 }
 
@@ -45,45 +50,42 @@ class StringKnobWidget extends StatelessWidget {
     required this.label,
     required this.description,
     required this.value,
+    required this.enabled,
+    required this.nullable,
   }) : super(key: key);
 
   final String label;
   final String? description;
   final String value;
+  final bool enabled;
+  final bool nullable;
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: 8,
-        horizontal: 16,
+    return KnobListTile(
+      enabled: enabled,
+      nullable: nullable,
+      onToggled: (enabled) =>
+          context.read<KnobsNotifier>().update(label, enabled ? value : null),
+      title: TextFormField(
+        decoration: InputDecoration(
+          isDense: false,
+          labelText: label,
+          border: const OutlineInputBorder(),
+        ),
+        initialValue: value,
+        onChanged: (v) => context.read<KnobsNotifier>().update(label, v),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          TextFormField(
-            decoration: InputDecoration(
-              isDense: false,
-              labelText: label,
-              border: const OutlineInputBorder(),
-            ),
-            initialValue: value,
-            onChanged: (v) => context.read<KnobsNotifier>().update(label, v),
-          ),
-          if (description != null)
-            Padding(
-              padding: const EdgeInsets.only(top: 4),
-              child: Text(
-                description!,
-                style: textTheme.bodyText2?.copyWith(
-                  color: textTheme.caption?.color,
-                ),
+      subtitle: description != null
+          ? Text(
+              description!,
+              style: textTheme.bodyText2?.copyWith(
+                color: textTheme.caption?.color,
               ),
-            ),
-        ],
-      ),
+            )
+          : null,
     );
   }
 }
