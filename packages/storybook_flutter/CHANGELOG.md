@@ -1,3 +1,8 @@
+## 0.10.1
+
+ - **FEAT**: knobs with nullable values (#74).
+ - **DOCS**: Update readme.
+
 ## 0.10.0+1
 
  - **FIX**: Select knob dropdown in overlay (#70).
