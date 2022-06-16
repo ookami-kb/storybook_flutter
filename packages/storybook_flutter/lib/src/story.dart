@@ -12,7 +12,9 @@ class Story {
   /// Unique name of the story.
   ///
   /// Use `/` to group stories in sections, e.g. `Buttons/FlatButton`
-  /// will create a section `Buttons` with a story `FlatButton` in it.
+  /// will create a section `Buttons` with a story `FlatButton` in it. You can
+  /// use 2 level of nesting, e.g. 'General/Buttons/FlatButton'. The last part
+  /// after '/' will be used as a name for the section.
   final String name;
 
   /// Optional description of the story.
@@ -30,15 +32,14 @@ class Story {
     return '';
   }
 
-  String get title {
+  String get subsection {
     final parts = name.split(_sectionSeparator);
-    if (parts.length > 1) {
-      parts.removeAt(0);
-      return parts.join(_sectionSeparator);
-    }
+    if (parts.length > 2) return parts[1];
 
-    return name;
+    return '';
   }
+
+  String get title => name.split(_sectionSeparator).last;
 }
 
 /// Use this notifier to get the current story.

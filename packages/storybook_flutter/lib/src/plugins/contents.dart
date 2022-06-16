@@ -51,6 +51,41 @@ class _Contents extends StatefulWidget {
 }
 
 class _ContentsState extends State<_Contents> {
+  Widget _buildSection(String title, Iterable<Story> sectionStories) {
+    final grouped = sectionStories.groupListsBy((s) => s.subsection);
+    final subsections =
+        grouped.keys.where((k) => k.isNotEmpty).map((k) => _buildExpansionTile(
+              k,
+              grouped[k]!,
+              grouped[k]!.map(_buildStoryTile).toList(),
+            ));
+    final stories = (grouped[''] ?? []).map(_buildStoryTile);
+
+    return _buildExpansionTile(
+      title,
+      sectionStories,
+      [...subsections, ...stories],
+    );
+  }
+
+  Widget _buildExpansionTile(
+          String title, Iterable<Story> stories, List<Widget> children) =>
+      ExpansionTile(
+        title: Text(title),
+        initiallyExpanded: stories
+            .map((s) => s.name)
+            .contains(context.watch<StoryNotifier>().currentStoryName),
+        children: children,
+      );
+
+  Widget _buildStoryTile(Story story) => ListTile(
+        selected: story == context.watch<StoryNotifier>().currentStory,
+        title: Text(story.title),
+        subtitle: story.description == null ? null : Text(story.description!),
+        onTap: () =>
+            context.read<StoryNotifier>().currentStoryName = story.name,
+      );
+
   @override
   Widget build(BuildContext context) {
     final grouped =
@@ -73,20 +108,4 @@ class _ContentsState extends State<_Contents> {
       ),
     );
   }
-
-  Widget _buildStoryTile(Story story) => ListTile(
-        selected: story == context.watch<StoryNotifier>().currentStory,
-        title: Text(story.title),
-        subtitle: story.description == null ? null : Text(story.description!),
-        onTap: () =>
-            context.read<StoryNotifier>().currentStoryName = story.name,
-      );
-
-  Widget _buildSection(String title, Iterable<Story> stories) => ExpansionTile(
-        title: Text(title),
-        initiallyExpanded: stories
-            .map((s) => s.name)
-            .contains(context.watch<StoryNotifier>().currentStoryName),
-        children: stories.map(_buildStoryTile).toList(),
-      );
 }
