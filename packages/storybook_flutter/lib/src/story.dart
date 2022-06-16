@@ -13,8 +13,8 @@ class Story {
   ///
   /// Use `/` to group stories in sections, e.g. `Buttons/FlatButton`
   /// will create a section `Buttons` with a story `FlatButton` in it. You can
-  /// use 2 level of nesting, e.g. 'General/Buttons/FlatButton'. The last part
-  /// after '/' will be used as a name for the section.
+  /// use 2 level of nesting, e.g. `General/Buttons/FlatButton`. The last part
+  /// after `/` will be used as a name for the section.
   final String name;
 
   /// Optional description of the story.
