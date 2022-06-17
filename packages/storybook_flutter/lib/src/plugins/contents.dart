@@ -53,28 +53,36 @@ class _Contents extends StatefulWidget {
 class _ContentsState extends State<_Contents> {
   Widget _buildSection(String title, Iterable<Story> sectionStories) {
     final grouped = sectionStories.groupListsBy((s) => s.subsection);
-    final subsections =
-        grouped.keys.where((k) => k.isNotEmpty).map((k) => _buildExpansionTile(
-              k,
-              grouped[k]!,
-              grouped[k]!.map(_buildStoryTile).toList(),
-            ));
+    final subsections = grouped.keys.where((k) => k.isNotEmpty).map(
+          (k) => _buildExpansionTile(
+            title: k,
+            stories: grouped[k]!,
+            childrenPadding: _subSectionPadding,
+            children: grouped[k]!.map(_buildStoryTile).toList(),
+          ),
+        );
     final stories = (grouped[''] ?? []).map(_buildStoryTile);
 
     return _buildExpansionTile(
-      title,
-      sectionStories,
-      [...subsections, ...stories],
+      title: title,
+      stories: sectionStories,
+      childrenPadding: _sectionPadding,
+      children: [...subsections, ...stories],
     );
   }
 
-  Widget _buildExpansionTile(
-          String title, Iterable<Story> stories, List<Widget> children) =>
+  Widget _buildExpansionTile({
+    required String title,
+    required Iterable<Story> stories,
+    required List<Widget> children,
+    EdgeInsetsGeometry? childrenPadding,
+  }) =>
       ExpansionTile(
         title: Text(title),
         initiallyExpanded: stories
             .map((s) => s.name)
             .contains(context.watch<StoryNotifier>().currentStoryName),
+        childrenPadding: childrenPadding,
         children: children,
       );
 
@@ -109,3 +117,6 @@ class _ContentsState extends State<_Contents> {
     );
   }
 }
+
+const EdgeInsetsGeometry _sectionPadding = EdgeInsets.only(left: 8);
+const EdgeInsetsGeometry _subSectionPadding = EdgeInsets.only(left: 16);
