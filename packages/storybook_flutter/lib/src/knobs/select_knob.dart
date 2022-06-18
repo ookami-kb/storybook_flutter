@@ -1,10 +1,9 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../plugins/knobs.dart';
-import 'knob_list_tile.dart';
-import 'knobs.dart';
+import 'package:storybook_flutter/src/knobs/knob_list_tile.dart';
+import 'package:storybook_flutter/src/knobs/knobs.dart';
+import 'package:storybook_flutter/src/plugins/knobs.dart';
 
 /// {@template select_knob}
 /// A knob that allows the user to select an option from a list of options.
@@ -46,7 +45,7 @@ class SelectKnobValue<T> extends KnobValue<T> {
 }
 
 /// {@template option}
-/// Represents a single option for a [SelectKnob].
+/// Represents a single option for a `SelectKnob`.
 ///
 /// Every option will be displayed in a dropdown menu.
 /// {@endtemplate}
@@ -74,7 +73,7 @@ class Option<T> {
 /// The knob is displayed as a dropdown menu.
 ///
 /// See also:
-/// * [SelectKnob], which is the knob that this widget represents.
+/// * [SelectKnobValue], which is the knob that this widget represents.
 /// {@endtemplate}
 class SelectKnobWidget<T> extends StatelessWidget {
   /// {@macro select_knob_widget}
@@ -98,6 +97,7 @@ class SelectKnobWidget<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final description = this.description;
 
     return KnobListTile(
       nullable: nullable,
@@ -129,6 +129,7 @@ class SelectKnobWidget<T> extends StatelessWidget {
                   if (option.description != null) ...[
                     const SizedBox(height: 4),
                     Text(
+                      // ignore: avoid-non-null-assertion, checked for null
                       option.description!,
                       style: textTheme.bodyText2?.copyWith(
                         color: textTheme.caption?.color,
@@ -149,7 +150,7 @@ class SelectKnobWidget<T> extends StatelessWidget {
           ? null
           : Padding(
               padding: const EdgeInsets.only(top: 2),
-              child: Text(description!),
+              child: Text(description),
             ),
     );
   }

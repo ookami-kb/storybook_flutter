@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'plugin.dart';
+import 'package:storybook_flutter/src/plugins/plugin.dart';
 
 class PluginPanel extends StatefulWidget {
   const PluginPanel({
@@ -60,19 +59,20 @@ class _PluginPanelState extends State<PluginPanel> {
 
   void _onPluginButtonPressed(Plugin p) {
     p.onPressed?.call(context);
-    if (p.panelBuilder == null) return;
+    final panelBuilder = p.panelBuilder;
+    if (panelBuilder == null) return;
 
     void insertOverlay() {
-      _overlay = PluginOverlay(
-        plugin: p,
-        entry: _createEntry((context) => p.panelBuilder!(context)),
-      );
-      widget.overlayKey.currentState!.insert(_overlay!.entry);
+      final overlay =
+          PluginOverlay(plugin: p, entry: _createEntry(panelBuilder));
+      _overlay = overlay;
+      widget.overlayKey.currentState?.insert(overlay.entry);
     }
 
-    if (_overlay != null) {
-      _overlay!.remove();
-      if (_overlay!.plugin != p) {
+    final overlay = _overlay;
+    if (overlay != null) {
+      overlay.remove();
+      if (overlay.plugin != p) {
         insertOverlay();
       } else {
         _overlay = null;
@@ -89,6 +89,7 @@ class _PluginPanelState extends State<PluginPanel> {
             .where((p) => p.icon != null)
             .map(
               (p) => IconButton(
+                // ignore: avoid-non-null-assertion, checked for null
                 icon: p.icon!.call(context),
                 onPressed: () => _onPluginButtonPressed(p),
               ),

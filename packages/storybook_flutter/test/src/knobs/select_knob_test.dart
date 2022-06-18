@@ -27,7 +27,7 @@ void main() {
             enabled: true,
             nullable: false,
           ),
-          isA<SelectKnobWidget>().having(
+          isA<SelectKnobWidget<dynamic>>().having(
             (w) => w.value,
             'value',
             2,

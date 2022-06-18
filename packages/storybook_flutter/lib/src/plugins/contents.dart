@@ -1,13 +1,12 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../story.dart';
-import 'plugin.dart';
+import 'package:storybook_flutter/src/plugins/plugin.dart';
+import 'package:storybook_flutter/src/story.dart';
 
 /// Plugin that adds content as expandable list of stories.
 ///
-/// If [sidePanel] is true, the stories are shown in a left side panel,
+/// If `sidePanel` is true, the stories are shown in a left side panel,
 /// otherwise as a popup.
 class ContentsPlugin extends Plugin {
   const ContentsPlugin({bool sidePanel = false})
@@ -20,25 +19,21 @@ class ContentsPlugin extends Plugin {
 
 Widget _buildIcon(BuildContext _) => const Icon(Icons.list);
 
-Widget _buildPanel(BuildContext context) => const _Contents();
+Widget _buildPanel(BuildContext _) => const _Contents();
 
-Widget _buildWrapper(BuildContext context, Widget? child) => Directionality(
+Widget _buildWrapper(BuildContext _, Widget? child) => Directionality(
       textDirection: TextDirection.ltr,
       child: Row(
         children: [
-          Material(
-            child: Container(
-              decoration: const BoxDecoration(
-                border: Border(
-                  right: BorderSide(color: Colors.black12),
-                ),
+          const Material(
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                border: Border(right: BorderSide(color: Colors.black12)),
               ),
-              child: const SizedBox(width: 250, child: _Contents()),
+              child: SizedBox(width: 250, child: _Contents()),
             ),
           ),
-          Expanded(
-            child: ClipRect(clipBehavior: Clip.hardEdge, child: child!),
-          ),
+          Expanded(child: ClipRect(clipBehavior: Clip.hardEdge, child: child)),
         ],
       ),
     );
@@ -74,13 +69,16 @@ class _ContentsState extends State<_Contents> {
     );
   }
 
-  Widget _buildStoryTile(Story story) => ListTile(
-        selected: story == context.watch<StoryNotifier>().currentStory,
-        title: Text(story.title),
-        subtitle: story.description == null ? null : Text(story.description!),
-        onTap: () =>
-            context.read<StoryNotifier>().currentStoryName = story.name,
-      );
+  Widget _buildStoryTile(Story story) {
+    final description = story.description;
+
+    return ListTile(
+      selected: story == context.watch<StoryNotifier>().currentStory,
+      title: Text(story.title),
+      subtitle: description == null ? null : Text(description),
+      onTap: () => context.read<StoryNotifier>().currentStoryName = story.name,
+    );
+  }
 
   Widget _buildSection(String title, Iterable<Story> stories) => ExpansionTile(
         title: Text(title),

@@ -25,7 +25,7 @@ class Story {
 
   String get section {
     final parts = name.split(_sectionSeparator);
-    if (parts.length > 1) return parts[0];
+    if (parts.length > 1) return parts.first;
 
     return '';
   }
@@ -34,6 +34,7 @@ class Story {
     final parts = name.split(_sectionSeparator);
     if (parts.length > 1) {
       parts.removeAt(0);
+
       return parts.join(_sectionSeparator);
     }
 
@@ -60,6 +61,7 @@ class StoryNotifier extends ChangeNotifier {
 
   Story? get currentStory {
     final index = _stories.indexWhere((s) => s.name == _currentStoryName);
+
     return index != -1 ? _stories[index] : null;
   }
 

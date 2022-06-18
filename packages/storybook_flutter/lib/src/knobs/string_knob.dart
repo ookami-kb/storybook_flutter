@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../plugins/knobs.dart';
-import 'knob_list_tile.dart';
-import 'knobs.dart';
+import 'package:storybook_flutter/src/knobs/knob_list_tile.dart';
+import 'package:storybook_flutter/src/knobs/knobs.dart';
+import 'package:storybook_flutter/src/plugins/knobs.dart';
 
 /// {@template string_knob}
 /// A knob that allows the user to edit a string value.
@@ -41,7 +40,7 @@ class StringKnobValue extends KnobValue<String> {
 /// The knob is displayed as a [TextFormField].
 ///
 /// See also:
-/// * [StringKnob], which is the knob that this widget represents.
+/// * [StringKnobValue], which is the knob that this widget represents.
 /// {@endtemplate}
 class StringKnobWidget extends StatelessWidget {
   /// {@macro string_knob_widget}
@@ -63,6 +62,7 @@ class StringKnobWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final description = this.description;
 
     return KnobListTile(
       enabled: enabled,
@@ -80,7 +80,7 @@ class StringKnobWidget extends StatelessWidget {
       ),
       subtitle: description != null
           ? Text(
-              description!,
+              description,
               style: textTheme.bodyText2?.copyWith(
                 color: textTheme.caption?.color,
               ),

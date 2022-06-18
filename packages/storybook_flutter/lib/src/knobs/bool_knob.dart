@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../plugins/knobs.dart';
-import 'knobs.dart';
+import 'package:storybook_flutter/src/knobs/knobs.dart';
+import 'package:storybook_flutter/src/plugins/knobs.dart';
 
 /// {@template bool_knob_value}
 /// A knob value that allows the user to toggle a boolean value.
@@ -38,7 +37,7 @@ class BoolKnobValue extends KnobValue<bool> {
 /// The knob is displayed as a checkbox.
 ///
 /// See also:
-/// * [BoolKnob], which is the knob that this widget represents.
+/// * [BoolKnobValue], which is the knob that this widget represents.
 /// {@endtemplate}
 class BooleanKnobWidget extends StatelessWidget {
   /// {@macro boolean_knob_widget}
@@ -58,12 +57,16 @@ class BooleanKnobWidget extends StatelessWidget {
   final bool nullable;
 
   @override
-  Widget build(BuildContext context) => CheckboxListTile(
-        tristate: nullable,
-        title: Text(label),
-        subtitle: description == null ? null : Text(description!),
-        value: enabled ? value : null,
-        onChanged: (v) => context.read<KnobsNotifier>().update(label, v),
-        controlAffinity: ListTileControlAffinity.leading,
-      );
+  Widget build(BuildContext context) {
+    final description = this.description;
+
+    return CheckboxListTile(
+      tristate: nullable,
+      title: Text(label),
+      subtitle: description == null ? null : Text(description),
+      value: enabled ? value : null,
+      onChanged: (v) => context.read<KnobsNotifier>().update(label, v),
+      controlAffinity: ListTileControlAffinity.leading,
+    );
+  }
 }

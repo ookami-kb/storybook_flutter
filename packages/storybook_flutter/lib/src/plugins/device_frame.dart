@@ -3,8 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:provider/provider.dart';
-
-import 'plugin.dart';
+import 'package:storybook_flutter/src/plugins/plugin.dart';
 
 part 'device_frame.freezed.dart';
 
@@ -27,9 +26,10 @@ Widget _buildIcon(BuildContext _) => const Icon(Icons.phone_android);
 
 Widget _buildStoryWrapper(BuildContext context, Widget? child) {
   final d = context.watch<DeviceFrameDataNotifier>().value;
+  final device = d.device;
 
-  final result = d.device == null
-      ? child!
+  final result = device == null
+      ? child ?? const SizedBox.shrink()
       : SizedBox(
           width: double.infinity,
           child: Material(
@@ -38,10 +38,10 @@ Widget _buildStoryWrapper(BuildContext context, Widget? child) {
               child: Padding(
                 padding: const EdgeInsets.all(16),
                 child: DeviceFrame(
-                  device: d.device!,
+                  device: device,
                   isFrameVisible: d.isFrameVisible,
                   orientation: d.orientation,
-                  screen: child!,
+                  screen: child ?? const SizedBox.shrink(),
                 ),
               ),
             ),
@@ -65,7 +65,7 @@ class DeviceFrameDataNotifier extends ValueNotifier<DeviceFrameData> {
 }
 
 Widget _buildWrapper(
-  BuildContext context,
+  BuildContext _,
   Widget? child, {
   required DeviceFrameData initial,
 }) =>
@@ -135,6 +135,7 @@ Widget _buildPanel(BuildContext context) {
           onTap: () => update(d.copyWith(device: null)),
         );
       }
+
       return devices[i - 3];
     },
     itemCount: devices.length + 3,

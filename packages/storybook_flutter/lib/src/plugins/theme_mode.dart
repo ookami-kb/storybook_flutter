@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'plugin.dart';
+import 'package:storybook_flutter/src/plugins/plugin.dart';
 
 const themeModePlugin = Plugin(
   icon: _buildIcon,
@@ -40,7 +39,7 @@ void _onPressed(BuildContext context) {
   }
 }
 
-Widget _buildWrapper(BuildContext context, Widget? child) =>
+Widget _buildWrapper(BuildContext _, Widget? child) =>
     ChangeNotifierProvider<ThemeModeNotifier>(
       create: (_) => ThemeModeNotifier(ThemeMode.system),
       child: Builder(
@@ -56,7 +55,7 @@ Widget _buildWrapper(BuildContext context, Widget? child) =>
             data: MediaQuery.of(context).copyWith(
               platformBrightness: brightness,
             ),
-            child: child!,
+            child: child ?? const SizedBox.shrink(),
           );
         },
       ),
@@ -64,7 +63,7 @@ Widget _buildWrapper(BuildContext context, Widget? child) =>
 
 /// Use this notifier to get the current theme mode.
 ///
-/// [ThemeModePlugin] should be added to plugins for this to work.
+/// `ThemeModePlugin` should be added to plugins for this to work.
 class ThemeModeNotifier extends ValueNotifier<ThemeMode> {
   ThemeModeNotifier(ThemeMode value) : super(value);
 }

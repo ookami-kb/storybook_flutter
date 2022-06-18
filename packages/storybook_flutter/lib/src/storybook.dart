@@ -3,13 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
-
-import 'plugins/plugin.dart';
-import 'plugins/plugin_panel.dart';
-import 'story.dart';
+import 'package:storybook_flutter/src/plugins/plugin.dart';
+import 'package:storybook_flutter/src/plugins/plugin_panel.dart';
+import 'package:storybook_flutter/src/story.dart';
 
 /// Use this wrapper to wrap each story into a [MaterialApp] widget.
-Widget materialWrapper(BuildContext context, Widget? child) => MaterialApp(
+Widget materialWrapper(BuildContext _, Widget? child) => MaterialApp(
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
       debugShowCheckedModeBanner: false,
@@ -18,7 +17,7 @@ Widget materialWrapper(BuildContext context, Widget? child) => MaterialApp(
     );
 
 /// Use this wrapper to wrap each story into a [CupertinoApp] widget.
-Widget cupertinoWrapper(BuildContext context, Widget? child) => CupertinoApp(
+Widget cupertinoWrapper(BuildContext _, Widget? child) => CupertinoApp(
       debugShowCheckedModeBanner: false,
       useInheritedMediaQuery: true,
       home: CupertinoPageScaffold(child: Center(child: child)),
@@ -97,8 +96,9 @@ class _StorybookState extends State<Storybook> {
           Provider.value(value: widget.plugins),
           ChangeNotifierProvider.value(value: _storyNotifier),
           ...widget.plugins
-              .where((p) => p.wrapperBuilder != null)
-              .map((p) => SingleChildBuilder(builder: p.wrapperBuilder!))
+              .map((p) => p.wrapperBuilder)
+              .whereType<TransitionBuilder>()
+              .map((builder) => SingleChildBuilder(builder: builder))
         ],
         child: widget.showPanel
             ? Stack(
@@ -165,8 +165,9 @@ class CurrentStory extends StatelessWidget {
 
     final plugins = context.watch<List<Plugin>>();
     final pluginBuilders = plugins
-        .where((p) => p.storyBuilder != null)
-        .map((p) => SingleChildBuilder(builder: p.storyBuilder!))
+        .map((p) => p.storyBuilder)
+        .whereType<TransitionBuilder>()
+        .map((builder) => SingleChildBuilder(builder: builder))
         .toList();
 
     final child = wrapperBuilder(context, Builder(builder: story.builder));
