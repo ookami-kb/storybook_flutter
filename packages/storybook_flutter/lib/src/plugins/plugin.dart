@@ -1,9 +1,8 @@
 import 'package:flutter/widgets.dart';
-
-import 'contents.dart';
-import 'device_frame.dart';
-import 'knobs.dart';
-import 'theme_mode.dart';
+import 'package:storybook_flutter/src/plugins/contents.dart';
+import 'package:storybook_flutter/src/plugins/device_frame.dart';
+import 'package:storybook_flutter/src/plugins/knobs.dart';
+import 'package:storybook_flutter/src/plugins/theme_mode.dart';
 
 export 'contents.dart';
 export 'device_frame.dart';
