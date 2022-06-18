@@ -1,3 +1,7 @@
+## 0.11.0+1
+
+ - **FIX**: Add generated files.
+
 ## 0.11.0
 
 > Note: This release has breaking changes.
