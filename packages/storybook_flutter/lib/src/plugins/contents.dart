@@ -71,10 +71,10 @@ class _ContentsState extends State<_Contents> {
 
   List<Widget> _buildListChildren(
     List<Story> stories, {
-    int deep = 1,
+    int depth = 1,
   }) {
     final grouped = stories.groupListsBy(
-      (story) => story.path.length == deep ? '' : story.path[deep - 1],
+      (story) => story.path.length == depth ? '' : story.path[depth - 1],
     );
 
     final sectionStories = (grouped[''] ?? []).map(_buildStoryTile).toList();
@@ -90,9 +90,9 @@ class _ContentsState extends State<_Contents> {
             (k) => _buildExpansionTile(
               title: k,
               childrenPadding:
-                  EdgeInsets.only(left: (deep - 1) * _sectionPadding),
+                  EdgeInsets.only(left: (depth - 1) * _sectionPadding),
               stories: grouped[k]!,
-              children: _buildListChildren(grouped[k]!, deep: deep + 1),
+              children: _buildListChildren(grouped[k]!, depth: depth + 1),
             ),
           )
           .toList(),
