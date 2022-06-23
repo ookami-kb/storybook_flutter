@@ -51,26 +51,6 @@ class _Contents extends StatefulWidget {
 }
 
 class _ContentsState extends State<_Contents> {
-  Widget _buildSection(String title, Iterable<Story> sectionStories) {
-    final grouped = sectionStories.groupListsBy((s) => s.subsection);
-    final subsections = grouped.keys.where((k) => k.isNotEmpty).map(
-          (k) => _buildExpansionTile(
-            title: k,
-            stories: grouped[k]!,
-            childrenPadding: _subSectionPadding,
-            children: grouped[k]!.map(_buildStoryTile).toList(),
-          ),
-        );
-    final stories = (grouped[''] ?? []).map(_buildStoryTile);
-
-    return _buildExpansionTile(
-      title: title,
-      stories: sectionStories,
-      childrenPadding: _sectionPadding,
-      children: [...subsections, ...stories],
-    );
-  }
-
   Widget _buildExpansionTile({
     required String title,
     required Iterable<Story> stories,
@@ -94,14 +74,36 @@ class _ContentsState extends State<_Contents> {
             context.read<StoryNotifier>().currentStoryName = story.name,
       );
 
+  List<Widget> _buildListChildren(
+    List<Story> stories, {
+    int deep = 1,
+  }) {
+    final grouped = stories.groupListsBy(
+        (story) => story.path.length == deep ? '' : story.path[deep - 1]);
+
+    final sectionStories = (grouped[''] ?? []).map(_buildStoryTile).toList();
+
+    if (stories.length == sectionStories.length) {
+      return sectionStories;
+    }
+
+    return [
+      ...grouped.keys
+          .where((k) => k.isNotEmpty)
+          .map((k) => _buildExpansionTile(
+              title: k,
+              childrenPadding:
+                  EdgeInsets.only(left: (deep - 1) * _sectionPadding),
+              stories: grouped[k]!,
+              children: _buildListChildren(grouped[k]!, deep: deep + 1)))
+          .toList(),
+      ...sectionStories
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
-    final grouped =
-        context.watch<StoryNotifier>().stories.groupListsBy((s) => s.section);
-    final sections = grouped.keys
-        .where((k) => k.isNotEmpty)
-        .map((k) => _buildSection(k, grouped[k]!));
-    final stories = (grouped[''] ?? []).map(_buildStoryTile);
+    final children = _buildListChildren(context.watch<StoryNotifier>().stories);
 
     return SafeArea(
       top: false,
@@ -111,12 +113,11 @@ class _ContentsState extends State<_Contents> {
         child: ListView(
           padding: EdgeInsets.zero,
           primary: false,
-          children: [...sections, ...stories],
+          children: children,
         ),
       ),
     );
   }
 }
 
-const EdgeInsetsGeometry _sectionPadding = EdgeInsets.only(left: 8);
-const EdgeInsetsGeometry _subSectionPadding = EdgeInsets.only(left: 16);
+const double _sectionPadding = 8;
