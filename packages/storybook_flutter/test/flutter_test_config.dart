@@ -6,6 +6,7 @@ Future<void> testExecutable(FutureOr<void> Function() testMain) =>
     GoldenToolkit.runWithConfiguration(
       () async {
         await loadAppFonts();
+
         return testMain();
       },
       config: GoldenToolkitConfiguration(

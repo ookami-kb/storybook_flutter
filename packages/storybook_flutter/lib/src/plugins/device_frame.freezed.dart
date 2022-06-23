@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'device_frame.dart';
@@ -11,26 +12,7 @@ part of 'device_frame.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$DeviceFrameDataTearOff {
-  const _$DeviceFrameDataTearOff();
-
-  _DeviceFrameData call(
-      {bool isFrameVisible = true,
-      DeviceInfo? device,
-      Orientation orientation = Orientation.portrait}) {
-    return _DeviceFrameData(
-      isFrameVisible: isFrameVisible,
-      device: device,
-      orientation: orientation,
-    );
-  }
-}
-
-/// @nodoc
-const $DeviceFrameData = _$DeviceFrameDataTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$DeviceFrameData {
@@ -97,11 +79,11 @@ class _$DeviceFrameDataCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$DeviceFrameDataCopyWith<$Res>
+abstract class _$$_DeviceFrameDataCopyWith<$Res>
     implements $DeviceFrameDataCopyWith<$Res> {
-  factory _$DeviceFrameDataCopyWith(
-          _DeviceFrameData value, $Res Function(_DeviceFrameData) then) =
-      __$DeviceFrameDataCopyWithImpl<$Res>;
+  factory _$$_DeviceFrameDataCopyWith(
+          _$_DeviceFrameData value, $Res Function(_$_DeviceFrameData) then) =
+      __$$_DeviceFrameDataCopyWithImpl<$Res>;
   @override
   $Res call({bool isFrameVisible, DeviceInfo? device, Orientation orientation});
 
@@ -110,15 +92,15 @@ abstract class _$DeviceFrameDataCopyWith<$Res>
 }
 
 /// @nodoc
-class __$DeviceFrameDataCopyWithImpl<$Res>
+class __$$_DeviceFrameDataCopyWithImpl<$Res>
     extends _$DeviceFrameDataCopyWithImpl<$Res>
-    implements _$DeviceFrameDataCopyWith<$Res> {
-  __$DeviceFrameDataCopyWithImpl(
-      _DeviceFrameData _value, $Res Function(_DeviceFrameData) _then)
-      : super(_value, (v) => _then(v as _DeviceFrameData));
+    implements _$$_DeviceFrameDataCopyWith<$Res> {
+  __$$_DeviceFrameDataCopyWithImpl(
+      _$_DeviceFrameData _value, $Res Function(_$_DeviceFrameData) _then)
+      : super(_value, (v) => _then(v as _$_DeviceFrameData));
 
   @override
-  _DeviceFrameData get _value => super._value as _DeviceFrameData;
+  _$_DeviceFrameData get _value => super._value as _$_DeviceFrameData;
 
   @override
   $Res call({
@@ -126,7 +108,7 @@ class __$DeviceFrameDataCopyWithImpl<$Res>
     Object? device = freezed,
     Object? orientation = freezed,
   }) {
-    return _then(_DeviceFrameData(
+    return _then(_$_DeviceFrameData(
       isFrameVisible: isFrameVisible == freezed
           ? _value.isFrameVisible
           : isFrameVisible // ignore: cast_nullable_to_non_nullable
@@ -153,13 +135,13 @@ class _$_DeviceFrameData
       this.device,
       this.orientation = Orientation.portrait});
 
-  @JsonKey(defaultValue: true)
   @override
+  @JsonKey()
   final bool isFrameVisible;
   @override
   final DeviceInfo? device;
-  @JsonKey(defaultValue: Orientation.portrait)
   @override
+  @JsonKey()
   final Orientation orientation;
 
   @override
@@ -181,7 +163,7 @@ class _$_DeviceFrameData
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _DeviceFrameData &&
+            other is _$_DeviceFrameData &&
             const DeepCollectionEquality()
                 .equals(other.isFrameVisible, isFrameVisible) &&
             const DeepCollectionEquality().equals(other.device, device) &&
@@ -198,24 +180,24 @@ class _$_DeviceFrameData
 
   @JsonKey(ignore: true)
   @override
-  _$DeviceFrameDataCopyWith<_DeviceFrameData> get copyWith =>
-      __$DeviceFrameDataCopyWithImpl<_DeviceFrameData>(this, _$identity);
+  _$$_DeviceFrameDataCopyWith<_$_DeviceFrameData> get copyWith =>
+      __$$_DeviceFrameDataCopyWithImpl<_$_DeviceFrameData>(this, _$identity);
 }
 
 abstract class _DeviceFrameData implements DeviceFrameData {
   const factory _DeviceFrameData(
-      {bool isFrameVisible,
-      DeviceInfo? device,
-      Orientation orientation}) = _$_DeviceFrameData;
+      {final bool isFrameVisible,
+      final DeviceInfo? device,
+      final Orientation orientation}) = _$_DeviceFrameData;
 
   @override
-  bool get isFrameVisible;
+  bool get isFrameVisible => throw _privateConstructorUsedError;
   @override
-  DeviceInfo? get device;
+  DeviceInfo? get device => throw _privateConstructorUsedError;
   @override
-  Orientation get orientation;
+  Orientation get orientation => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$DeviceFrameDataCopyWith<_DeviceFrameData> get copyWith =>
+  _$$_DeviceFrameDataCopyWith<_$_DeviceFrameData> get copyWith =>
       throw _privateConstructorUsedError;
 }

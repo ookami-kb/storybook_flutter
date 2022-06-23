@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../knobs/knobs.dart';
-import '../story.dart';
-import 'plugin.dart';
+import 'package:storybook_flutter/src/knobs/knobs.dart';
+import 'package:storybook_flutter/src/plugins/plugin.dart';
+import 'package:storybook_flutter/src/story.dart';
 
 /// Plugin that adds story customization knobs.
 ///
-/// If [sidePanel] is true, the knobs will be displayed in the right side panel.
+/// If `sidePanel` is true, the knobs will be displayed in the right side panel.
 class KnobsPlugin extends Plugin {
   KnobsPlugin({bool sidePanel = false})
       : super(
@@ -21,7 +20,7 @@ class KnobsPlugin extends Plugin {
         );
 }
 
-Widget _buildIcon(BuildContext context) => const Icon(Icons.settings);
+Widget _buildIcon(BuildContext _) => const Icon(Icons.settings);
 
 Widget _buildPanel(BuildContext context) {
   final knobs = context.watch<KnobsNotifier>();
@@ -39,7 +38,7 @@ Widget _buildPanel(BuildContext context) {
 }
 
 Widget _buildWrapper(
-  BuildContext context,
+  BuildContext _,
   Widget? child, {
   required bool sidePanel,
 }) =>
@@ -50,10 +49,10 @@ Widget _buildWrapper(
               textDirection: TextDirection.ltr,
               child: Row(
                 children: [
-                  Expanded(child: child!),
+                  Expanded(child: child ?? const SizedBox.shrink()),
                   RepaintBoundary(
                     child: Material(
-                      child: Container(
+                      child: DecoratedBox(
                         decoration: const BoxDecoration(
                           border: Border(
                             left: BorderSide(color: Colors.black12),
@@ -97,7 +96,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
   }
 
   final StoryNotifier _storyNotifier;
-  final Map<String, Map<String, Knob>> _knobs = <String, Map<String, Knob>>{};
+  final Map<String, Map<String, Knob<dynamic>>> _knobs = {};
   @override
   late final nullable = _NullableKnobsBuilder(this);
 
@@ -112,12 +111,13 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
   }
 
   T get<T>(String label) {
+    // ignore: avoid-non-null-assertion, having null here is a bug
     final story = _storyNotifier.currentStory!;
 
     return _knobs[story.name]![label]!.value as T;
   }
 
-  List<Knob> all() {
+  List<Knob<dynamic>> all() {
     final story = _storyNotifier.currentStory;
     if (story == null) return [];
 
@@ -125,11 +125,13 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
   }
 
   T _addKnob<T>(Knob<T> value) {
+    // ignore: avoid-non-null-assertion, having null here is a bug
     final story = _storyNotifier.currentStory!;
-    final knobs = _knobs.putIfAbsent(story.name, () => <String, Knob>{});
+    final knobs = _knobs.putIfAbsent(story.name, () => {});
 
     return (knobs.putIfAbsent(value.label, () {
       Future.microtask(notifyListeners);
+
       return value;
     }) as Knob<T>)
         .value;

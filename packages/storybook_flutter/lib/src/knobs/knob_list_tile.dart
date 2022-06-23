@@ -35,7 +35,7 @@ class KnobListTile extends StatelessWidget {
               style: TextStyle(
                 color: Theme.of(context).textTheme.subtitle1?.color,
               ),
-              child: title!,
+              child: title ?? const SizedBox.shrink(),
             ),
           ),
         ),

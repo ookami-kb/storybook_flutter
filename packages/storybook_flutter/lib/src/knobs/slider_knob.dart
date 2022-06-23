@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../plugins/knobs.dart';
-import 'knob_list_tile.dart';
-import 'knobs.dart';
+import 'package:storybook_flutter/src/knobs/knob_list_tile.dart';
+import 'package:storybook_flutter/src/knobs/knobs.dart';
+import 'package:storybook_flutter/src/plugins/knobs.dart';
 
 /// A type definition for a function that formats a [double] value.
 typedef DoubleFormatter = String Function(double value);
@@ -67,7 +66,7 @@ class SliderKnobValue extends KnobValue<double> {
 /// The knob is displayed as a [Slider].
 ///
 /// See also:
-/// * [SliderKnob], which is the knob that this widget represents.
+/// * [SliderKnobValue], which is the knob that this widget represents.
 /// {@endtemplate}
 class SliderKnobWidget extends StatelessWidget {
   /// {@macro slider_knob_widget}
@@ -110,6 +109,7 @@ class SliderKnobWidget extends StatelessWidget {
         children: [
           if (description != null) ...[
             Text(
+              // ignore: avoid-non-null-assertion, checked for null
               description!,
               style: textTheme.bodyText2?.copyWith(
                 color: textTheme.caption?.color,

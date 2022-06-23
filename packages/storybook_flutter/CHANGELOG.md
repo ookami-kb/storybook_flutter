@@ -1,3 +1,13 @@
+## 0.11.0+1
+
+ - **FIX**: Add generated files.
+
+## 0.11.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **FEAT**: Bump freezed dependency (#81).
+
 ## 0.10.1
 
  - **FEAT**: knobs with nullable values (#74).

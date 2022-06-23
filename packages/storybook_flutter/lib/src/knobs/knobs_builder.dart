@@ -1,4 +1,4 @@
-import 'select_knob.dart';
+import 'package:storybook_flutter/src/knobs/select_knob.dart';
 
 /// {@template knobs_builder}
 /// Provides helper methods for creating knobs: control elements

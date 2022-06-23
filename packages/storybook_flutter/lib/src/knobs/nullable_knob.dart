@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'knobs.dart';
+import 'package:storybook_flutter/src/knobs/knobs.dart';
 
 /// {@template nullable_knob}
 /// A class that represents a nullable control knob.

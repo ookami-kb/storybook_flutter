@@ -47,6 +47,7 @@ class StoryNotifier extends ChangeNotifier {
 
   Story? get currentStory {
     final index = _stories.indexWhere((s) => s.name == _currentStoryName);
+
     return index != -1 ? _stories[index] : null;
   }
 
