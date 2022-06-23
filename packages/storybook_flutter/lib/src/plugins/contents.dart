@@ -74,7 +74,8 @@ class _ContentsState extends State<_Contents> {
     int deep = 1,
   }) {
     final grouped = stories.groupListsBy(
-        (story) => story.path.length == deep ? '' : story.path[deep - 1]);
+      (story) => story.path.length == deep ? '' : story.path[deep - 1],
+    );
 
     final sectionStories = (grouped[''] ?? []).map(_buildStoryTile).toList();
 
@@ -85,12 +86,15 @@ class _ContentsState extends State<_Contents> {
     return [
       ...grouped.keys
           .where((k) => k.isNotEmpty)
-          .map((k) => _buildExpansionTile(
+          .map(
+            (k) => _buildExpansionTile(
               title: k,
               childrenPadding:
                   EdgeInsets.only(left: (deep - 1) * _sectionPadding),
               stories: grouped[k]!,
-              children: _buildListChildren(grouped[k]!, deep: deep + 1)))
+              children: _buildListChildren(grouped[k]!, deep: deep + 1),
+            ),
+          )
           .toList(),
       ...sectionStories
     ];
