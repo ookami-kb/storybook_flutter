@@ -1,3 +1,7 @@
+## 0.11.1
+
+ - **FEAT**: Add multiple levels of nesting (#80).
+
 ## 0.11.0+1
 
  - **FIX**: Add generated files.
