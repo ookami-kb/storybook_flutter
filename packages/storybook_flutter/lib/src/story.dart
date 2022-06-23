@@ -23,23 +23,9 @@ class Story {
   /// Story builder.
   final WidgetBuilder builder;
 
-  String get section {
-    final parts = name.split(_sectionSeparator);
-    if (parts.length > 1) return parts.first;
+  List<String> get path => name.split(_sectionSeparator);
 
-    return '';
-  }
-
-  String get title {
-    final parts = name.split(_sectionSeparator);
-    if (parts.length > 1) {
-      parts.removeAt(0);
-
-      return parts.join(_sectionSeparator);
-    }
-
-    return name;
-  }
+  String get title => name.split(_sectionSeparator).last;
 }
 
 /// Use this notifier to get the current story.

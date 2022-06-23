@@ -101,6 +101,21 @@ class MyApp extends StatelessWidget {
             description: 'Simple text widget.',
             builder: (context) => const Center(child: Text('Simple text')),
           ),
+          Story(
+              name: 'Story/Nested/Multiple/Times/First',
+              builder: (context) => const Center(child: Text('First'))),
+          Story(
+              name: 'Story/Nested/Multiple/Times/Second',
+              builder: (context) => const Center(child: Text('Second'))),
+          Story(
+              name: 'Story/Nested/Multiple/Third',
+              builder: (context) => const Center(child: Text('Third'))),
+          Story(
+              name: 'Story/Nested/Multiple/Fourth',
+              builder: (context) => const Center(child: Text('Fourth'))),
+          Story(
+              name: 'Story without a category',
+              builder: (context) => const Center(child: Text('Simple text'))),
         ],
       );
 }
