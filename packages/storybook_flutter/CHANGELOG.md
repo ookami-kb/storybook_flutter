@@ -1,3 +1,7 @@
+## 0.11.2
+
+ - **FEAT**: Allow configuration of device infos (#84).
+
 ## 0.11.1
 
  - **FEAT**: Add multiple levels of nesting (#80).
