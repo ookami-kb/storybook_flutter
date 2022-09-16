@@ -9,7 +9,7 @@ part 'device_frame.freezed.dart';
 
 /// Plugin that allows wrapping each story into a device frame.
 class DeviceFramePlugin extends Plugin {
-  DeviceFramePlugin({DeviceFrameData initialData = const DeviceFrameData()})
+  DeviceFramePlugin({DeviceFrameData initialData = const DeviceFrameData(), List<DeviceInfo>? deviceInfos})
       : super(
           icon: _buildIcon,
           storyBuilder: _buildStoryWrapper,
@@ -18,7 +18,7 @@ class DeviceFramePlugin extends Plugin {
             child,
             initial: initialData,
           ),
-          panelBuilder: _buildPanel,
+          panelBuilder: (context) => _buildPanel(context, deviceInfos),
         );
 }
 
@@ -74,12 +74,12 @@ Widget _buildWrapper(
       child: child,
     );
 
-Widget _buildPanel(BuildContext context) {
+Widget _buildPanel(BuildContext context, List<DeviceInfo>? deviceInfos) {
   final d = context.watch<DeviceFrameDataNotifier>().value;
   void update(DeviceFrameData data) =>
       context.read<DeviceFrameDataNotifier>().value = data;
 
-  final devices = Devices.all
+  final devices = (deviceInfos ?? Devices.all)
       .map(
         (device) => ListTile(
           leading: CircleAvatar(
