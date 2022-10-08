@@ -38,19 +38,23 @@ abstract class KnobsBuilder {
   });
 
   /// Creates slider knob with `double` value.
+  ///
+  /// If [initial] is not provided, [min] is used.
   double slider({
     required String label,
     String? description,
-    double initial = 0,
+    double? initial,
     double max = 1,
     double min = 0,
   });
 
   /// Creates slider knob with `int` value.
+  ///
+  /// If [initial] is not provided, [min] is used.
   int sliderInt({
     required String label,
     String? description,
-    int initial = 0,
+    int? initial,
     int max = 100,
     int min = 0,
     int divisions = 100,
@@ -90,20 +94,24 @@ abstract class NullableKnobsBuilder {
   });
 
   /// Creates slider knob with `double` value.
+  ///
+  /// If [initial] is not provided, [min] is used.
   double? slider({
     required String label,
     String? description,
-    double initial = 0,
+    double? initial,
     double max = 1,
     double min = 0,
     bool enabled = true,
   });
 
   /// Creates slider knob with `int` value.
+  ///
+  /// If [initial] is not provided, [min] is used.
   int? sliderInt({
     required String label,
     String? description,
-    int initial = 0,
+    int? initial,
     int max = 100,
     int min = 0,
     int divisions = 100,
