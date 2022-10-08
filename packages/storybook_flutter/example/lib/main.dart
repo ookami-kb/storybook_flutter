@@ -102,20 +102,25 @@ class MyApp extends StatelessWidget {
             builder: (context) => const Center(child: Text('Simple text')),
           ),
           Story(
-              name: 'Story/Nested/Multiple/Times/First',
-              builder: (context) => const Center(child: Text('First'))),
+            name: 'Story/Nested/Multiple/Times/First',
+            builder: (context) => const Center(child: Text('First')),
+          ),
           Story(
-              name: 'Story/Nested/Multiple/Times/Second',
-              builder: (context) => const Center(child: Text('Second'))),
+            name: 'Story/Nested/Multiple/Times/Second',
+            builder: (context) => const Center(child: Text('Second')),
+          ),
           Story(
-              name: 'Story/Nested/Multiple/Third',
-              builder: (context) => const Center(child: Text('Third'))),
+            name: 'Story/Nested/Multiple/Third',
+            builder: (context) => const Center(child: Text('Third')),
+          ),
           Story(
-              name: 'Story/Nested/Multiple/Fourth',
-              builder: (context) => const Center(child: Text('Fourth'))),
+            name: 'Story/Nested/Multiple/Fourth',
+            builder: (context) => const Center(child: Text('Fourth')),
+          ),
           Story(
-              name: 'Story without a category',
-              builder: (context) => const Center(child: Text('Simple text'))),
+            name: 'Story without a category',
+            builder: (context) => const Center(child: Text('Simple text')),
+          ),
         ],
       );
 }
@@ -131,7 +136,7 @@ class CounterPage extends StatefulWidget {
   final bool enabled;
 
   @override
-  _CounterPageState createState() => _CounterPageState();
+  State<CounterPage> createState() => _CounterPageState();
 }
 
 class _CounterPageState extends State<CounterPage> {

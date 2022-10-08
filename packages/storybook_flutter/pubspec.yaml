@@ -23,7 +23,7 @@ dev_dependencies:
     sdk: flutter
   freezed: ^2.0.0
   golden_toolkit: ^0.9.0
-  mews_pedantic: ^0.6.0
+  mews_pedantic: ^0.9.0+2
   mocktail: ^0.2.0
 
 flutter:
