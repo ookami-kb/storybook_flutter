@@ -191,7 +191,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
   double slider({
     required String label,
     String? description,
-    double initial = 0,
+    double? initial,
     double max = 1,
     double min = 0,
   }) =>
@@ -200,7 +200,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
           label: label,
           description: description,
           knobValue: SliderKnobValue(
-            value: initial,
+            value: initial ?? min,
             max: max,
             min: min,
           ),
@@ -211,7 +211,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
   int sliderInt({
     required String label,
     String? description,
-    int initial = 0,
+    int? initial,
     int max = 100,
     int min = 0,
     int divisions = 100,
@@ -221,7 +221,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
           label: label,
           description: description,
           knobValue: SliderKnobValue(
-            value: initial.toDouble(),
+            value: (initial ?? min).toDouble(),
             max: max.toDouble(),
             min: min.toDouble(),
             divisions: divisions,
@@ -284,7 +284,7 @@ class _NullableKnobsBuilder extends NullableKnobsBuilder {
   double? slider({
     required String label,
     String? description,
-    double initial = 0,
+    double? initial,
     double max = 1,
     double min = 0,
     bool enabled = true,
@@ -295,7 +295,7 @@ class _NullableKnobsBuilder extends NullableKnobsBuilder {
           label: label,
           description: description,
           knobValue: SliderKnobValue(
-            value: initial,
+            value: initial ?? min,
             max: max,
             min: min,
           ),
@@ -306,7 +306,7 @@ class _NullableKnobsBuilder extends NullableKnobsBuilder {
   int? sliderInt({
     required String label,
     String? description,
-    int initial = 0,
+    int? initial,
     int max = 100,
     int min = 0,
     int divisions = 100,
@@ -319,7 +319,7 @@ class _NullableKnobsBuilder extends NullableKnobsBuilder {
               label: label,
               description: description,
               knobValue: SliderKnobValue(
-                value: initial.toDouble(),
+                value: (initial ?? min).toDouble(),
                 max: max.toDouble(),
                 min: min.toDouble(),
                 divisions: divisions,

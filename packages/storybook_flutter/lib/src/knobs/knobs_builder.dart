@@ -41,7 +41,7 @@ abstract class KnobsBuilder {
   double slider({
     required String label,
     String? description,
-    double initial = 0,
+    double? initial,
     double max = 1,
     double min = 0,
   });
@@ -50,7 +50,7 @@ abstract class KnobsBuilder {
   int sliderInt({
     required String label,
     String? description,
-    int initial = 0,
+    int? initial,
     int max = 100,
     int min = 0,
     int divisions = 100,
@@ -93,7 +93,7 @@ abstract class NullableKnobsBuilder {
   double? slider({
     required String label,
     String? description,
-    double initial = 0,
+    double? initial,
     double max = 1,
     double min = 0,
     bool enabled = true,
@@ -103,7 +103,7 @@ abstract class NullableKnobsBuilder {
   int? sliderInt({
     required String label,
     String? description,
-    int initial = 0,
+    int? initial,
     int max = 100,
     int min = 0,
     int divisions = 100,
