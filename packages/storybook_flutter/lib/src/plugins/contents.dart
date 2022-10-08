@@ -61,13 +61,16 @@ class _ContentsState extends State<_Contents> {
         children: children,
       );
 
-  Widget _buildStoryTile(Story story) => ListTile(
-        selected: story == context.watch<StoryNotifier>().currentStory,
-        title: Text(story.title),
-        subtitle: story.description == null ? null : Text(story.description!),
-        onTap: () =>
-            context.read<StoryNotifier>().currentStoryName = story.name,
-      );
+  Widget _buildStoryTile(Story story) {
+    final description = story.description;
+
+    return ListTile(
+      selected: story == context.watch<StoryNotifier>().currentStory,
+      title: Text(story.title),
+      subtitle: description == null ? null : Text(description),
+      onTap: () => context.read<StoryNotifier>().currentStoryName = story.name,
+    );
+  }
 
   List<Widget> _buildListChildren(
     List<Story> stories, {
