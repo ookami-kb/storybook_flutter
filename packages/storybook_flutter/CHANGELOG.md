@@ -1,3 +1,7 @@
+## 0.11.2+1
+
+ - **FIX**: no initial value in slider fallbacks to min (#87).
+
 ## 0.11.2
 
  - **FEAT**: Allow configuration of device infos (#84).
