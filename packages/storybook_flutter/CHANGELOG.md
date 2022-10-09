@@ -1,3 +1,8 @@
+## 0.11.2+2
+
+ - **REFACTOR**: upgrade to mews_pedantic 0.9.0+2 (#90).
+ - **FIX**: wrap plugin panel into PointerInterceptor (#92).
+
 ## 0.11.2+1
 
  - **FIX**: no initial value in slider fallbacks to min (#87).
