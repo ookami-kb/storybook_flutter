@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:storybook_flutter/src/plugins/plugin.dart';
 
 class PluginPanel extends StatefulWidget {
@@ -46,8 +47,10 @@ class _PluginPanelState extends State<PluginPanel> {
                 insetPadding: EdgeInsets.zero,
                 child: Navigator(
                   onGenerateRoute: (_) => MaterialPageRoute<void>(
-                    builder: (context) => Material(
-                      child: childBuilder(context),
+                    builder: (context) => PointerInterceptor(
+                      child: Material(
+                        child: childBuilder(context),
+                      ),
                     ),
                   ),
                 ),
