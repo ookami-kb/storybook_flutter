@@ -1,6 +1,9 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:storybook_flutter/src/plugins/contents/search_story_notifier.dart';
+import 'package:storybook_flutter/src/plugins/contents/search_story_notifier_provider.dart';
+import 'package:storybook_flutter/src/plugins/contents/search_text_field.dart';
 import 'package:storybook_flutter/src/plugins/plugin.dart';
 import 'package:storybook_flutter/src/story.dart';
 
@@ -19,18 +22,21 @@ class ContentsPlugin extends Plugin {
 
 Widget _buildIcon(BuildContext _) => const Icon(Icons.list);
 
-Widget _buildPanel(BuildContext _) => const _Contents();
+Widget _buildPanel(BuildContext _) =>
+    const SearchStoryNotifierProvider(child: _Contents());
 
-Widget _buildWrapper(BuildContext _, Widget? child) => Directionality(
-      textDirection: TextDirection.ltr,
-      child: Row(
+Widget _buildWrapper(BuildContext _, Widget? child) => MaterialApp(
+      home: Row(
         children: [
           const Material(
             child: DecoratedBox(
               decoration: BoxDecoration(
                 border: Border(right: BorderSide(color: Colors.black12)),
               ),
-              child: SizedBox(width: 250, child: _Contents()),
+              child: SizedBox(
+                width: 250,
+                child: SearchStoryNotifierProvider(child: _Contents()),
+              ),
             ),
           ),
           Expanded(child: ClipRect(clipBehavior: Clip.hardEdge, child: child)),
@@ -105,18 +111,27 @@ class _ContentsState extends State<_Contents> {
 
   @override
   Widget build(BuildContext context) {
-    final children = _buildListChildren(context.watch<StoryNotifier>().stories);
+    context.watch<StoryNotifier>();
+    final children = _buildListChildren(
+        context.watch<SearchStoryNotifier>().searchedStories);
 
     return SafeArea(
       top: false,
       right: false,
-      child: ListTileTheme(
-        style: ListTileStyle.drawer,
-        child: ListView(
-          padding: EdgeInsets.zero,
-          primary: false,
-          children: children,
-        ),
+      child: Column(
+        children: [
+          const SearchTextField(),
+          Expanded(
+            child: ListTileTheme(
+              style: ListTileStyle.drawer,
+              child: ListView(
+                padding: EdgeInsets.zero,
+                primary: false,
+                children: children,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
