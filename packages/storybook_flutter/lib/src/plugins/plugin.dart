@@ -1,10 +1,10 @@
 import 'package:flutter/widgets.dart';
-import 'package:storybook_flutter/src/plugins/contents.dart';
+import 'package:storybook_flutter/src/plugins/contents/contents.dart';
 import 'package:storybook_flutter/src/plugins/device_frame.dart';
 import 'package:storybook_flutter/src/plugins/knobs.dart';
 import 'package:storybook_flutter/src/plugins/theme_mode.dart';
 
-export 'contents.dart';
+export 'contents/contents.dart';
 export 'device_frame.dart';
 export 'knobs.dart';
 export 'theme_mode.dart';
