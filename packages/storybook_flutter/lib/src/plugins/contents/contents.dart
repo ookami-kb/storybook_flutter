@@ -26,6 +26,7 @@ Widget _buildPanel(BuildContext _) =>
     const SearchStoryNotifierProvider(child: _Contents());
 
 Widget _buildWrapper(BuildContext _, Widget? child) => MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Row(
         children: [
           const Material(
@@ -69,9 +70,10 @@ class _ContentsState extends State<_Contents> {
 
   Widget _buildStoryTile(Story story) {
     final description = story.description;
+    final current = context.watch<StoryNotifier>().currentStory;
 
     return ListTile(
-      selected: story == context.watch<StoryNotifier>().currentStory,
+      selected: story == current,
       title: Text(story.title),
       subtitle: description == null ? null : Text(description),
       onTap: () => context.read<StoryNotifier>().currentStoryName = story.name,

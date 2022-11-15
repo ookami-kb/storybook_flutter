@@ -26,6 +26,35 @@ class Story {
   List<String> get path => name.split(_sectionSeparator);
 
   String get title => name.split(_sectionSeparator).last;
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (other.runtimeType != runtimeType) {
+      return false;
+    }
+
+    return other is Story &&
+        other.name == name &&
+        other.description == description &&
+        const ListEquality<String>().equals(other.path, path) &&
+        other.title == title;
+  }
+
+  @override
+  int get hashCode => Object.hash(
+        name,
+        description,
+        path,
+        title,
+      );
+
+  @override
+  String toString() {
+    return 'Story(name: $name, description: $description, path: $path, title: $title)';
+  }
 }
 
 /// Use this notifier to get the current story.
@@ -45,11 +74,9 @@ class StoryNotifier extends ChangeNotifier {
 
   String? _currentStoryName;
 
-  Story? get currentStory {
-    final index = _stories.indexWhere((s) => s.name == _currentStoryName);
-
-    return index != -1 ? _stories[index] : null;
-  }
+  Story? get currentStory => _stories.firstWhereOrNull(
+        (story) => story.name == _currentStoryName,
+      );
 
   String? get currentStoryName => _currentStoryName;
 
