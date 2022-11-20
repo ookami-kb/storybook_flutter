@@ -1,3 +1,8 @@
+## 0.11.3
+
+ - **FEAT**: add Story.wrapperBuilder.
+ - **DOCS**: add router aware stories to example.
+
 ## 0.11.2+2
 
  - **REFACTOR**: upgrade to mews_pedantic 0.9.0+2 (#90).
