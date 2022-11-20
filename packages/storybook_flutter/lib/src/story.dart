@@ -7,6 +7,7 @@ class Story {
     required this.name,
     this.description,
     required this.builder,
+    this.wrapperBuilder,
   });
 
   /// Unique name of the story.
@@ -19,6 +20,8 @@ class Story {
   ///
   /// It will be used in the contents as a secondary text.
   final String? description;
+
+  final TransitionBuilder? wrapperBuilder;
 
   /// Story builder.
   final WidgetBuilder builder;

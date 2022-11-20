@@ -170,7 +170,12 @@ class CurrentStory extends StatelessWidget {
         .map((builder) => SingleChildBuilder(builder: builder))
         .toList();
 
-    final child = wrapperBuilder(context, Builder(builder: story.builder));
+    final effectiveWrapperBuilder = story.wrapperBuilder ?? wrapperBuilder;
+
+    final child = effectiveWrapperBuilder(
+      context,
+      Builder(builder: story.builder),
+    );
 
     return KeyedSubtree(
       key: ValueKey(story.name),

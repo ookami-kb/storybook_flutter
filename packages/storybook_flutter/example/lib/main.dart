@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:storybook_flutter/storybook_flutter.dart';
+import 'package:storybook_flutter_example/router_aware_stories.dart';
 
 void main() => runApp(const MyApp());
 
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
         initialStory: 'Screens/Scaffold',
         plugins: _plugins,
         stories: [
+          ...routerAwareStories,
           Story(
             name: 'Screens/Scaffold',
             description: 'Story with scaffold and different knobs.',
