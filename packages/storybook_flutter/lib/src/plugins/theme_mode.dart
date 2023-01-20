@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:storybook_flutter/src/plugins/plugin.dart';
 
-typedef ThemeCallback = void Function(ThemeMode themeMode);
-
 class ThemeModePlugin extends Plugin {
   ThemeModePlugin({
     ThemeMode? initialTheme,
-    ThemeCallback? onThemeChanged,
+    ValueSetter<ThemeMode>? onThemeChanged,
   }) : super(
           icon: _buildIcon,
           wrapperBuilder: (context, widget) => _buildWrapper(
@@ -36,7 +34,7 @@ Widget _buildIcon(BuildContext context) {
   return Icon(icon);
 }
 
-void _onPressed(BuildContext context, ThemeCallback? onThemeChanged) {
+void _onPressed(BuildContext context, ValueSetter<ThemeMode>? onThemeChanged) {
   switch (context.read<ThemeModeNotifier>().value) {
     case ThemeMode.system:
       context.read<ThemeModeNotifier>().value = ThemeMode.light;
