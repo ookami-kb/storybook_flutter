@@ -1,3 +1,7 @@
+## 0.11.4
+
+ - **FEAT**: add initialTheme/onThemeChanged (#99).
+
 ## 0.11.3
 
  - **FEAT**: add Story.wrapperBuilder.
