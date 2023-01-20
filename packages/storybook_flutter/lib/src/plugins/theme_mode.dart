@@ -2,11 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:storybook_flutter/src/plugins/plugin.dart';
 
-const themeModePlugin = Plugin(
-  icon: _buildIcon,
-  wrapperBuilder: _buildWrapper,
-  onPressed: _onPressed,
-);
+class ThemeModePlugin extends Plugin {
+  ThemeModePlugin({
+    ThemeMode? initialTheme,
+    ValueSetter<ThemeMode>? onThemeChanged,
+  }) : super(
+          icon: _buildIcon,
+          wrapperBuilder: (context, widget) => _buildWrapper(
+            context,
+            widget,
+            initialTheme,
+          ),
+          onPressed: (context) => _onPressed(context, onThemeChanged),
+        );
+}
 
 Widget _buildIcon(BuildContext context) {
   final IconData icon;
@@ -25,23 +34,27 @@ Widget _buildIcon(BuildContext context) {
   return Icon(icon);
 }
 
-void _onPressed(BuildContext context) {
+void _onPressed(BuildContext context, ValueSetter<ThemeMode>? onThemeChanged) {
   switch (context.read<ThemeModeNotifier>().value) {
     case ThemeMode.system:
       context.read<ThemeModeNotifier>().value = ThemeMode.light;
+      onThemeChanged?.call(ThemeMode.light);
       break;
     case ThemeMode.light:
       context.read<ThemeModeNotifier>().value = ThemeMode.dark;
+      onThemeChanged?.call(ThemeMode.dark);
+
       break;
     case ThemeMode.dark:
       context.read<ThemeModeNotifier>().value = ThemeMode.system;
+      onThemeChanged?.call(ThemeMode.system);
       break;
   }
 }
 
-Widget _buildWrapper(BuildContext _, Widget? child) =>
+Widget _buildWrapper(BuildContext _, Widget? child, ThemeMode? initialTheme) =>
     ChangeNotifierProvider<ThemeModeNotifier>(
-      create: (_) => ThemeModeNotifier(ThemeMode.system),
+      create: (_) => ThemeModeNotifier(initialTheme ?? ThemeMode.system),
       child: Builder(
         builder: (context) {
           final themeMode = context.watch<ThemeModeNotifier>().value;

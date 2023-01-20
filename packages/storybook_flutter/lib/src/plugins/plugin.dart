@@ -22,7 +22,7 @@ List<Plugin> initializePlugins({
     [
       if (enableContents) ContentsPlugin(sidePanel: contentsSidePanel),
       if (enableKnobs) KnobsPlugin(sidePanel: knobsSidePanel),
-      if (enableThemeMode) themeModePlugin,
+      if (enableThemeMode) ThemeModePlugin(),
       if (enableDeviceFrame)
         DeviceFramePlugin(initialData: initialDeviceFrameData),
     ];
