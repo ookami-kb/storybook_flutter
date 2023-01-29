@@ -44,7 +44,14 @@ class StoryNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<Story> get stories => UnmodifiableListView(_stories);
+  List<Story> get stories => UnmodifiableListView(
+        _searchTerm.isEmpty
+            ? _stories
+            : _stories.where(
+                (s) =>
+                    s.title.toLowerCase().contains(_searchTerm.toLowerCase()),
+              ),
+      );
 
   String? _currentStoryName;
 
@@ -58,6 +65,15 @@ class StoryNotifier extends ChangeNotifier {
 
   set currentStoryName(String? value) {
     _currentStoryName = value;
+    notifyListeners();
+  }
+
+  String _searchTerm = '';
+
+  String get searchTerm => _searchTerm;
+
+  set searchTerm(String value) {
+    _searchTerm = value;
     notifyListeners();
   }
 }
