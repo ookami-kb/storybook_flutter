@@ -1,6 +1,8 @@
 import 'package:collection/collection.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:storybook_flutter/src/plugins/contents/search_text_field.dart';
 import 'package:storybook_flutter/storybook_flutter.dart';
 
 /// Plugin that adds content as expandable list of stories.
@@ -20,20 +22,37 @@ Widget _buildIcon(BuildContext _) => const Icon(Icons.list);
 
 Widget _buildPanel(BuildContext _) => const _Contents();
 
-Widget _buildWrapper(BuildContext _, Widget? child) => Directionality(
-      textDirection: TextDirection.ltr,
-      child: Row(
-        children: [
-          const Material(
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                border: Border(right: BorderSide(color: Colors.black12)),
+Widget _buildWrapper(BuildContext _, Widget? child) => Localizations(
+      delegates: const [
+        DefaultMaterialLocalizations.delegate,
+        DefaultCupertinoLocalizations.delegate,
+        DefaultWidgetsLocalizations.delegate,
+      ],
+      locale: const Locale('en', 'US'),
+      child: Directionality(
+        textDirection: TextDirection.ltr,
+        child: Row(
+          children: [
+            Material(
+              child: DecoratedBox(
+                decoration: const BoxDecoration(
+                  border: Border(right: BorderSide(color: Colors.black12)),
+                ),
+                child: SizedBox(
+                  width: 250,
+                  child: Navigator(
+                    onGenerateRoute: (_) => PageRouteBuilder<void>(
+                      pageBuilder: (_, __, ___) => const _Contents(),
+                    ),
+                  ),
+                ),
               ),
-              child: SizedBox(width: 250, child: _Contents()),
             ),
-          ),
-          Expanded(child: ClipRect(clipBehavior: Clip.hardEdge, child: child)),
-        ],
+            Expanded(
+              child: ClipRect(clipBehavior: Clip.hardEdge, child: child),
+            ),
+          ],
+        ),
       ),
     );
 
@@ -53,9 +72,11 @@ class _ContentsState extends State<_Contents> {
   }) =>
       ExpansionTile(
         title: Text(title),
-        initiallyExpanded: stories
-            .map((s) => s.name)
-            .contains(context.watch<StoryNotifier>().currentStoryName),
+        initiallyExpanded:
+            context.watch<StoryNotifier>().searchTerm.isNotEmpty ||
+                stories
+                    .map((s) => s.name)
+                    .contains(context.watch<StoryNotifier>().currentStoryName),
         childrenPadding: childrenPadding,
         children: children,
       );
@@ -108,17 +129,30 @@ class _ContentsState extends State<_Contents> {
   @override
   Widget build(BuildContext context) {
     final children = _buildListChildren(context.watch<StoryNotifier>().stories);
+    final searchTerm = context.watch<StoryNotifier>().searchTerm;
 
     return SafeArea(
-      top: false,
+      // If there is no overlay, we're in the side panel, so we don't need to
+      // add the top padding.
+      top: context.watch<OverlayController?>() == null,
       right: false,
-      child: ListTileTheme(
-        style: ListTileStyle.drawer,
-        child: ListView(
-          padding: EdgeInsets.zero,
-          primary: false,
-          children: children,
-        ),
+      child: Column(
+        children: [
+          const SearchTextField(),
+          Expanded(
+            key: ValueKey(searchTerm),
+            child: children.isEmpty && searchTerm.isNotEmpty
+                ? const Center(child: Text('Nothing found'))
+                : ListTileTheme(
+                    style: ListTileStyle.drawer,
+                    child: ListView(
+                      padding: EdgeInsets.zero,
+                      primary: false,
+                      children: children,
+                    ),
+                  ),
+          ),
+        ],
       ),
     );
   }
