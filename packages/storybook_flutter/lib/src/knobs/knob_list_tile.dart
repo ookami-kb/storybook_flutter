@@ -33,7 +33,7 @@ class KnobListTile extends StatelessWidget {
             opacity: enabled ? 1 : 0.5,
             child: DefaultTextStyle.merge(
               style: TextStyle(
-                color: Theme.of(context).textTheme.subtitle1?.color,
+                color: Theme.of(context).textTheme.titleMedium?.color,
               ),
               child: title ?? const SizedBox.shrink(),
             ),

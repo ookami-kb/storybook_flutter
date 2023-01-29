@@ -81,8 +81,8 @@ class StringKnobWidget extends StatelessWidget {
       subtitle: description != null
           ? Text(
               description,
-              style: textTheme.bodyText2?.copyWith(
-                color: textTheme.caption?.color,
+              style: textTheme.bodyMedium?.copyWith(
+                color: textTheme.bodySmall?.color,
               ),
             )
           : null,
