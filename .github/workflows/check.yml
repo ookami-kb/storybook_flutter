@@ -5,6 +5,10 @@ on:
       - master
       - next
 
+concurrency:
+  group: concurrency-${{ github.head_ref }}
+  cancel-in-progress: true
+
 jobs:
   check:
     runs-on: ubuntu-latest
@@ -12,7 +16,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: subosito/flutter-action@v1
         with:
-          flutter-version: "3.0.2"
+          flutter-version: "3.7.0"
       - run: echo "$HOME/.pub-cache/bin" >> $GITHUB_PATH
       - run: dart pub global activate melos
       - run: melos run check_master

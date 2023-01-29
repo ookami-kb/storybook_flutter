@@ -131,8 +131,8 @@ class SelectKnobWidget<T> extends StatelessWidget {
                     Text(
                       // ignore: avoid-non-null-assertion, checked for null
                       option.description!,
-                      style: textTheme.bodyText2?.copyWith(
-                        color: textTheme.caption?.color,
+                      style: textTheme.bodyMedium?.copyWith(
+                        color: textTheme.bodySmall?.color,
                       ),
                     ),
                   ],

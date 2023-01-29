@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
+import 'package:provider/provider.dart';
 import 'package:storybook_flutter/src/plugins/plugin.dart';
 
 class PluginPanel extends StatefulWidget {
@@ -22,34 +23,42 @@ class _PluginPanelState extends State<PluginPanel> {
   PluginOverlay? _overlay;
 
   OverlayEntry _createEntry(WidgetBuilder childBuilder) => OverlayEntry(
-        builder: (context) => Positioned(
-          height: 350,
-          width: 250,
-          child: CompositedTransformFollower(
-            link: widget.layerLink,
-            targetAnchor: Alignment.topLeft,
-            followerAnchor: Alignment.bottomLeft,
-            showWhenUnlinked: false,
-            child: Localizations(
-              delegates: const [
-                DefaultMaterialLocalizations.delegate,
-                DefaultWidgetsLocalizations.delegate,
-              ],
-              locale: const Locale('en', 'US'),
-              child: Dialog(
-                clipBehavior: Clip.antiAlias,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(8),
-                    topRight: Radius.circular(8),
+        builder: (context) => Provider<OverlayController>(
+          create: (context) => OverlayController(
+            remove: () {
+              _overlay?.remove();
+              _overlay = null;
+            },
+          ),
+          child: Positioned(
+            height: 350,
+            width: 250,
+            child: CompositedTransformFollower(
+              link: widget.layerLink,
+              targetAnchor: Alignment.topLeft,
+              followerAnchor: Alignment.bottomLeft,
+              showWhenUnlinked: false,
+              child: Localizations(
+                delegates: const [
+                  DefaultMaterialLocalizations.delegate,
+                  DefaultWidgetsLocalizations.delegate,
+                ],
+                locale: const Locale('en', 'US'),
+                child: Dialog(
+                  clipBehavior: Clip.antiAlias,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(8),
+                      topRight: Radius.circular(8),
+                    ),
                   ),
-                ),
-                insetPadding: EdgeInsets.zero,
-                child: Navigator(
-                  onGenerateRoute: (_) => MaterialPageRoute<void>(
-                    builder: (context) => PointerInterceptor(
-                      child: Material(
-                        child: childBuilder(context),
+                  insetPadding: EdgeInsets.zero,
+                  child: Navigator(
+                    onGenerateRoute: (_) => MaterialPageRoute<void>(
+                      builder: (context) => PointerInterceptor(
+                        child: Material(
+                          child: childBuilder(context),
+                        ),
                       ),
                     ),
                   ),
@@ -109,4 +118,10 @@ class PluginOverlay {
   final Plugin plugin;
 
   void remove() => entry.remove();
+}
+
+class OverlayController {
+  OverlayController({required this.remove});
+
+  final VoidCallback remove;
 }

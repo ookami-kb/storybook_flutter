@@ -111,8 +111,8 @@ class SliderKnobWidget extends StatelessWidget {
             Text(
               // ignore: avoid-non-null-assertion, checked for null
               description!,
-              style: textTheme.bodyText2?.copyWith(
-                color: textTheme.caption?.color,
+              style: textTheme.bodyMedium?.copyWith(
+                color: textTheme.bodySmall?.color,
               ),
             ),
             const SizedBox(height: 4),
