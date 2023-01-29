@@ -1,3 +1,11 @@
+## 0.12.0
+
+> Note: This release has breaking changes.
+
+ - **FEAT**: add search field to contents (#101).
+ - **FEAT**: close contents panel when story is selected.
+ - **BREAKING** **FEAT**: migrate to Flutter 3.7. styles.
+
 ## 0.11.4
 
  - **FEAT**: add initialTheme/onThemeChanged (#99).
