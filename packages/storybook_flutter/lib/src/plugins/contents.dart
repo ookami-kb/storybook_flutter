@@ -1,8 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:storybook_flutter/src/plugins/plugin.dart';
-import 'package:storybook_flutter/src/story.dart';
+import 'package:storybook_flutter/storybook_flutter.dart';
 
 /// Plugin that adds content as expandable list of stories.
 ///
@@ -68,7 +67,10 @@ class _ContentsState extends State<_Contents> {
       selected: story == context.watch<StoryNotifier>().currentStory,
       title: Text(story.title),
       subtitle: description == null ? null : Text(description),
-      onTap: () => context.read<StoryNotifier>().currentStoryName = story.name,
+      onTap: () {
+        context.read<StoryNotifier>().currentStoryName = story.name;
+        context.read<OverlayController?>()?.remove();
+      },
     );
   }
 
