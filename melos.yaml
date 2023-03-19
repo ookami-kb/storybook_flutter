@@ -5,13 +5,16 @@ packages:
 
 scripts:
   format: flutter format --set-exit-if-changed -n .
-  pub_get: melos exec -- "flutter pub get"
+  pub_get:
+    exec: flutter pub get
   analyze: flutter analyze .
 
   test:
-    run: melos exec -c 1 --fail-fast -- "flutter test --no-pub"
-    select-package:
-      dir-exists:
+    run: flutter test --no-pub
+    exec:
+      concurrency: 1
+    packageFilters:
+      dirExists:
         - test
 
   check_master:
@@ -21,4 +24,7 @@ scripts:
         && melos run analyze \
         && melos run test --no-select
 
-  build:docs: melos exec --scope="storybook_flutter" -- "sh MELOS_ROOT_PATH/tool/build_docs.sh"
+  build:docs:
+    exec: sh MELOS_ROOT_PATH/tool/build_docs.sh
+    packageFilters:
+      scope: storybook_flutter
