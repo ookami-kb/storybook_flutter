@@ -25,10 +25,13 @@ Widget _buildIcon(BuildContext _) => const Icon(Icons.settings);
 Widget _buildPanel(BuildContext context) {
   final knobs = context.watch<KnobsNotifier>();
   final items = knobs.all();
+  final currentStoryName =
+      context.select<StoryNotifier, String?>((it) => it.currentStoryName);
 
   return items.isEmpty
       ? const Center(child: Text('No knobs'))
       : ListView.separated(
+          key: ValueKey(currentStoryName ?? ''),
           primary: false,
           padding: const EdgeInsets.symmetric(vertical: 8),
           separatorBuilder: (context, index) => const SizedBox(height: 8),

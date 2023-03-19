@@ -4,10 +4,10 @@ const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
   "version.json": "4e436155d544729791eb7183ce28ded9",
-"index.html": "6db9cd5af0992f2f8be1bd059a58aa1d",
-"/": "6db9cd5af0992f2f8be1bd059a58aa1d",
-"main.dart.js": "f183195ef1c8fa6e3b9eff13f774df3a",
-"flutter.js": "1cfe996e845b3a8a33f57607e8b09ee4",
+"index.html": "21a409f522668321d98c95f91b4d03eb",
+"/": "21a409f522668321d98c95f91b4d03eb",
+"main.dart.js": "7ae18f68c1b1acfd27caf9afb1c14491",
+"flutter.js": "a85fcf6324d3c4d3ae3be1ae4931e9c5",
 "favicon.png": "5dcef449791fa27946b3d35ad8803796",
 "icons/Icon-192.png": "ac9a721a12bbc803b44f645561ecb1e1",
 "icons/Icon-512.png": "96e752610906ba2a93c65f8abe1645f1",
@@ -16,7 +16,6 @@ const RESOURCES = {
 "assets/NOTICES": "c4ef485bb3ff8d863d308d36f629aaec",
 "assets/FontManifest.json": "7b2a36307916a9721811788013e65289",
 "assets/packages/storybook_flutter/assets/README.md": "fbaed1ae60d80596d99545ef45d72803",
-"assets/shaders/ink_sparkle.frag": "14a7aa637028141a03166ccc58a1eea1",
 "assets/fonts/MaterialIcons-Regular.otf": "e7069dfd19b331be16bed984668fe080",
 "canvaskit/canvaskit.js": "97937cb4c2c2073c968525a3e08c86a3",
 "canvaskit/profiling/canvaskit.js": "c21852696bc1cc82e8894d851c01921a",
