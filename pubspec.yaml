@@ -1,4 +1,4 @@
-name: storybook_flutter
+name: storybook_flutter_workspace
 
 environment:
   sdk: ">=2.18.0 <3.0.0"
