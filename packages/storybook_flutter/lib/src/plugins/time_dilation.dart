@@ -43,7 +43,7 @@ Widget _buildWrapper(BuildContext _, Widget? child) => ChangeNotifierProvider<Ti
       ),
     );
 
-/// Use this notifier to get the whether time dilation is applied.
+/// Use this notifier to get whether time dilation is applied.
 ///
 /// `TimeDilationPlugin` should be added to plugins for this to work.
 class TimeDilationNotifier extends ValueNotifier<bool> {
