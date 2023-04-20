@@ -25,8 +25,7 @@ Widget _buildIcon(BuildContext _) => const Icon(Icons.settings);
 Widget _buildPanel(BuildContext context) {
   final knobs = context.watch<KnobsNotifier>();
   final items = knobs.all();
-  final currentStoryName =
-      context.select<StoryNotifier, String?>((it) => it.currentStoryName);
+  final currentStoryName = context.select<StoryNotifier, String?>((it) => it.currentStoryName);
 
   return items.isEmpty
       ? const Center(child: Text('No knobs'))
@@ -73,8 +72,7 @@ Widget _buildWrapper(
                               locale: const Locale('en', 'US'),
                               child: Navigator(
                                 onGenerateRoute: (_) => PageRouteBuilder<void>(
-                                  pageBuilder: (context, _, __) =>
-                                      _buildPanel(context),
+                                  pageBuilder: (context, _, __) => _buildPanel(context),
                                 ),
                               ),
                             ),

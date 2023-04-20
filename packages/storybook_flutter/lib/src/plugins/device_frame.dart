@@ -30,7 +30,7 @@ Widget _buildStoryWrapper(BuildContext context, Widget? child) {
   final d = context.watch<DeviceFrameDataNotifier>().value;
   final device = d.device;
 
-  final result = device == null
+  return device == null
       ? child ?? const SizedBox.shrink()
       : SizedBox(
           width: double.infinity,
@@ -49,8 +49,6 @@ Widget _buildStoryWrapper(BuildContext context, Widget? child) {
             ),
           ),
         );
-
-  return Directionality(textDirection: TextDirection.ltr, child: result);
 }
 
 @freezed
@@ -78,8 +76,7 @@ Widget _buildWrapper(
 
 Widget _buildPanel(BuildContext context, List<DeviceInfo>? deviceInfos) {
   final d = context.watch<DeviceFrameDataNotifier>().value;
-  void update(DeviceFrameData data) =>
-      context.read<DeviceFrameDataNotifier>().value = data;
+  void update(DeviceFrameData data) => context.read<DeviceFrameDataNotifier>().value = data;
 
   final devices = (deviceInfos ?? Devices.all)
       .map(
@@ -107,9 +104,8 @@ Widget _buildPanel(BuildContext context, List<DeviceInfo>? deviceInfos) {
   return ListView.separated(
     padding: EdgeInsets.zero,
     primary: false,
-    separatorBuilder: (context, i) => i == 1
-        ? Container(height: 1, color: Theme.of(context).dividerColor)
-        : const SizedBox(),
+    separatorBuilder: (context, i) =>
+        i == 1 ? Container(height: 1, color: Theme.of(context).dividerColor) : const SizedBox(),
     itemBuilder: (context, i) {
       if (i == 0) {
         return CheckboxListTile(
@@ -123,9 +119,7 @@ Widget _buildPanel(BuildContext context, List<DeviceInfo>? deviceInfos) {
           title: const Text('Orientation'),
           subtitle: Text(describeEnum(d.orientation)),
           onTap: () {
-            final orientation = d.orientation == Orientation.portrait
-                ? Orientation.landscape
-                : Orientation.portrait;
+            final orientation = d.orientation == Orientation.portrait ? Orientation.landscape : Orientation.portrait;
             update(d.copyWith(orientation: orientation));
           },
         );
@@ -148,23 +142,15 @@ extension on DeviceType {
   IconData icon(TargetPlatform platform) {
     switch (this) {
       case DeviceType.phone:
-        return platform == TargetPlatform.android
-            ? Icons.phone_android
-            : Icons.phone_iphone;
+        return platform == TargetPlatform.android ? Icons.phone_android : Icons.phone_iphone;
       case DeviceType.tablet:
-        return platform == TargetPlatform.android
-            ? Icons.tablet_android
-            : Icons.tablet_mac;
+        return platform == TargetPlatform.android ? Icons.tablet_android : Icons.tablet_mac;
       case DeviceType.desktop:
-        return platform == TargetPlatform.macOS
-            ? Icons.desktop_mac
-            : Icons.desktop_windows;
+        return platform == TargetPlatform.macOS ? Icons.desktop_mac : Icons.desktop_windows;
       case DeviceType.tv:
         return Icons.tv;
       case DeviceType.laptop:
-        return platform == TargetPlatform.macOS
-            ? Icons.laptop_mac
-            : Icons.laptop_windows;
+        return platform == TargetPlatform.macOS ? Icons.laptop_mac : Icons.laptop_windows;
       case DeviceType.unknown:
         return Icons.device_unknown;
     }

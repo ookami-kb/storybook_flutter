@@ -72,11 +72,8 @@ class _ContentsState extends State<_Contents> {
   }) =>
       ExpansionTile(
         title: Text(title),
-        initiallyExpanded:
-            context.watch<StoryNotifier>().searchTerm.isNotEmpty ||
-                stories
-                    .map((s) => s.name)
-                    .contains(context.watch<StoryNotifier>().currentStoryName),
+        initiallyExpanded: context.watch<StoryNotifier>().searchTerm.isNotEmpty ||
+            stories.map((s) => s.name).contains(context.watch<StoryNotifier>().currentStoryName),
         childrenPadding: childrenPadding,
         children: children,
       );
@@ -115,8 +112,7 @@ class _ContentsState extends State<_Contents> {
           .map(
             (k) => _buildExpansionTile(
               title: k,
-              childrenPadding:
-                  EdgeInsets.only(left: (depth - 1) * _sectionPadding),
+              childrenPadding: EdgeInsets.only(left: (depth - 1) * _sectionPadding),
               stories: grouped[k]!,
               children: _buildListChildren(grouped[k]!, depth: depth + 1),
             ),
