@@ -27,7 +27,8 @@ List<Plugin> initializePlugins({
       if (enableContents) ContentsPlugin(sidePanel: contentsSidePanel),
       if (enableKnobs) KnobsPlugin(sidePanel: knobsSidePanel),
       if (enableThemeMode) ThemeModePlugin(),
-      if (enableDeviceFrame) DeviceFramePlugin(initialData: initialDeviceFrameData),
+      if (enableDeviceFrame)
+        DeviceFramePlugin(initialData: initialDeviceFrameData),
       if (enableTimeDilation) TimeDilationPlugin(),
       if (enableDirectionality) DirectionalityPlugin(),
     ];

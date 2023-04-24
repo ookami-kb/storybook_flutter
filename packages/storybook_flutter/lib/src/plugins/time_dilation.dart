@@ -19,7 +19,8 @@ Widget _buildIcon(BuildContext context) => Icon(
           : Icons.play_circle_outline_outlined,
     );
 
-void _onPressed(BuildContext context, ValueSetter<bool>? onTimeDilationChanged) {
+void _onPressed(
+    BuildContext context, ValueSetter<bool>? onTimeDilationChanged) {
   switch (context.read<TimeDilationNotifier>().value) {
     case true:
       context.read<TimeDilationNotifier>().value = false;
@@ -32,7 +33,8 @@ void _onPressed(BuildContext context, ValueSetter<bool>? onTimeDilationChanged) 
   }
 }
 
-Widget _buildWrapper(BuildContext _, Widget? child) => ChangeNotifierProvider<TimeDilationNotifier>(
+Widget _buildWrapper(BuildContext _, Widget? child) =>
+    ChangeNotifierProvider<TimeDilationNotifier>(
       create: (_) => TimeDilationNotifier(false),
       child: Builder(
         builder: (context) {

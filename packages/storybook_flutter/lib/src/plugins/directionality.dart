@@ -18,7 +18,8 @@ Widget _buildIcon(BuildContext context) => Icon(
           : Icons.format_textdirection_l_to_r_outlined,
     );
 
-void _onPressed(BuildContext context, ValueSetter<TextDirection>? onTextDirectionChanged) {
+void _onPressed(
+    BuildContext context, ValueSetter<TextDirection>? onTextDirectionChanged) {
   switch (context.read<TextDirectionNotifier>().value) {
     case TextDirection.ltr:
       context.read<TextDirectionNotifier>().value = TextDirection.rtl;
@@ -31,7 +32,8 @@ void _onPressed(BuildContext context, ValueSetter<TextDirection>? onTextDirectio
   }
 }
 
-Widget _buildWrapper(BuildContext _, Widget? child) => ChangeNotifierProvider<TextDirectionNotifier>(
+Widget _buildWrapper(BuildContext _, Widget? child) =>
+    ChangeNotifierProvider<TextDirectionNotifier>(
       create: (_) => TextDirectionNotifier(TextDirection.ltr),
       child: Builder(
         builder: (context) => Directionality(

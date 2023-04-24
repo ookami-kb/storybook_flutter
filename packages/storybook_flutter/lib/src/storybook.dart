@@ -153,7 +153,8 @@ class _StorybookState extends State<Storybook> {
                                             layerLink: _layerLink,
                                           ),
                                         ),
-                                        widget.brandingWidget ?? const SizedBox.shrink(),
+                                        widget.brandingWidget ??
+                                            const SizedBox.shrink(),
                                       ],
                                     ),
                                   ),
@@ -178,7 +179,8 @@ class _StorybookState extends State<Storybook> {
 }
 
 class CurrentStory extends StatelessWidget {
-  const CurrentStory({Key? key, required this.wrapperBuilder}) : super(key: key);
+  const CurrentStory({Key? key, required this.wrapperBuilder})
+      : super(key: key);
 
   final TransitionBuilder wrapperBuilder;
 
@@ -208,7 +210,9 @@ class CurrentStory extends StatelessWidget {
 
     return KeyedSubtree(
       key: ValueKey(story.name),
-      child: pluginBuilders.isEmpty ? child : Nested(children: pluginBuilders, child: child),
+      child: pluginBuilders.isEmpty
+          ? child
+          : Nested(children: pluginBuilders, child: child),
     );
   }
 }
