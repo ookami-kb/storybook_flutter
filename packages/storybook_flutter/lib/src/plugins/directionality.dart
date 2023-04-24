@@ -19,7 +19,9 @@ Widget _buildIcon(BuildContext context) => Icon(
     );
 
 void _onPressed(
-    BuildContext context, ValueSetter<TextDirection>? onTextDirectionChanged) {
+  BuildContext context,
+  ValueSetter<TextDirection>? onTextDirectionChanged,
+) {
   switch (context.read<TextDirectionNotifier>().value) {
     case TextDirection.ltr:
       context.read<TextDirectionNotifier>().value = TextDirection.rtl;

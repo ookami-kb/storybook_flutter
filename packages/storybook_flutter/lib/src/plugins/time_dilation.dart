@@ -20,7 +20,9 @@ Widget _buildIcon(BuildContext context) => Icon(
     );
 
 void _onPressed(
-    BuildContext context, ValueSetter<bool>? onTimeDilationChanged) {
+  BuildContext context,
+  ValueSetter<bool>? onTimeDilationChanged,
+) {
   switch (context.read<TimeDilationNotifier>().value) {
     case true:
       context.read<TimeDilationNotifier>().value = false;
