@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
                   max: 10,
                   description: 'Elevation of the app bar.',
                 ),
-                backgroundColor: context.knobs.nullable.options(
+                backgroundColor: context.knobs.color(
                   label: 'AppBar color',
                   initial: Colors.blue,
                   description: 'Background color of the app bar.',

@@ -1,4 +1,5 @@
 export 'bool_knob.dart';
+export 'color_knob.dart';
 export 'knob.dart';
 export 'knob_value.dart';
 export 'knobs_builder.dart';
