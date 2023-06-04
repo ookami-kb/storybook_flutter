@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:storybook_flutter/src/story.dart';
 
 class SearchTextField extends StatefulWidget {
-  const SearchTextField({Key? key}) : super(key: key);
+  const SearchTextField({super.key});
 
   @override
   State<SearchTextField> createState() => _SearchTextFieldState();

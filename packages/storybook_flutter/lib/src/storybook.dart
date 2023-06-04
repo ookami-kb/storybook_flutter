@@ -12,14 +12,12 @@ Widget materialWrapper(BuildContext _, Widget? child) => MaterialApp(
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
       debugShowCheckedModeBanner: false,
-      useInheritedMediaQuery: true,
       home: Scaffold(body: Center(child: child)),
     );
 
 /// Use this wrapper to wrap each story into a [CupertinoApp] widget.
 Widget cupertinoWrapper(BuildContext _, Widget? child) => CupertinoApp(
       debugShowCheckedModeBanner: false,
-      useInheritedMediaQuery: true,
       home: CupertinoPageScaffold(child: Center(child: child)),
     );
 
@@ -27,15 +25,14 @@ final _defaultPlugins = initializePlugins();
 
 class Storybook extends StatefulWidget {
   Storybook({
-    Key? key,
+    super.key,
     required Iterable<Story> stories,
     Iterable<Plugin>? plugins,
     this.initialStory,
     this.wrapperBuilder = materialWrapper,
     this.showPanel = true,
   })  : plugins = UnmodifiableListView(plugins ?? _defaultPlugins),
-        stories = UnmodifiableListView(stories),
-        super(key: key);
+        stories = UnmodifiableListView(stories);
 
   /// All enabled plugins.
   final List<Plugin> plugins;
@@ -94,7 +91,8 @@ class _StorybookState extends State<Storybook> {
       onTap: () {
         FocusManager.instance.primaryFocus?.unfocus();
       },
-      child: MediaQuery.fromWindow(
+      child: MediaQuery.fromView(
+        view: View.of(context),
         child: Nested(
           children: [
             Provider.value(value: widget.plugins),
@@ -153,8 +151,7 @@ class _StorybookState extends State<Storybook> {
 }
 
 class CurrentStory extends StatelessWidget {
-  const CurrentStory({Key? key, required this.wrapperBuilder})
-      : super(key: key);
+  const CurrentStory({super.key, required this.wrapperBuilder});
 
   final TransitionBuilder wrapperBuilder;
 

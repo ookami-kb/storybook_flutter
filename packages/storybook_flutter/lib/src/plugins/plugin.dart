@@ -15,7 +15,7 @@ List<Plugin> initializePlugins({
   bool enableKnobs = true,
   bool enableThemeMode = true,
   bool enableDeviceFrame = true,
-  DeviceFrameData initialDeviceFrameData = const DeviceFrameData(),
+  DeviceFrameData initialDeviceFrameData = defaultDeviceFrameData,
   bool contentsSidePanel = false,
   bool knobsSidePanel = false,
 }) =>
@@ -27,7 +27,7 @@ List<Plugin> initializePlugins({
         DeviceFramePlugin(initialData: initialDeviceFrameData),
     ];
 
-typedef OnPluginButtonPressed = void Function(BuildContext);
+typedef OnPluginButtonPressed = void Function(BuildContext context);
 
 class Plugin {
   const Plugin({

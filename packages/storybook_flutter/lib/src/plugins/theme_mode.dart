@@ -78,5 +78,5 @@ Widget _buildWrapper(BuildContext _, Widget? child, ThemeMode? initialTheme) =>
 ///
 /// `ThemeModePlugin` should be added to plugins for this to work.
 class ThemeModeNotifier extends ValueNotifier<ThemeMode> {
-  ThemeModeNotifier(ThemeMode value) : super(value);
+  ThemeModeNotifier(super.value);
 }

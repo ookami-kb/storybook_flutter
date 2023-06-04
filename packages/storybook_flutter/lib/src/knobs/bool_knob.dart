@@ -11,9 +11,7 @@ import 'package:storybook_flutter/src/plugins/knobs.dart';
 /// {@endtemplate}
 class BoolKnobValue extends KnobValue<bool> {
   /// {@macro bool_knob_value}
-  BoolKnobValue({
-    required bool value,
-  }) : super(value: value);
+  BoolKnobValue({required super.value});
 
   @override
   Widget build({
@@ -42,13 +40,13 @@ class BoolKnobValue extends KnobValue<bool> {
 class BooleanKnobWidget extends StatelessWidget {
   /// {@macro boolean_knob_widget}
   const BooleanKnobWidget({
-    Key? key,
+    super.key,
     required this.label,
     required this.description,
     required this.value,
     required this.enabled,
     required this.nullable,
-  }) : super(key: key);
+  });
 
   final String label;
   final String? description;
