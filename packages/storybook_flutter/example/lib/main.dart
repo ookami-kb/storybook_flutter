@@ -7,9 +7,7 @@ void main() => runApp(const MyApp());
 final _plugins = initializePlugins(
   contentsSidePanel: true,
   knobsSidePanel: true,
-  initialDeviceFrameData: DeviceFrameData(
-    device: Devices.ios.iPhone13,
-  ),
+  initialDeviceFrameData: defaultDeviceFrameData,
 );
 
 class MyApp extends StatelessWidget {

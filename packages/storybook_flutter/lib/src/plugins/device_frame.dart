@@ -1,16 +1,13 @@
 import 'package:device_frame/device_frame.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:provider/provider.dart';
 import 'package:storybook_flutter/src/plugins/plugin.dart';
-
-part 'device_frame.freezed.dart';
 
 /// Plugin that allows wrapping each story into a device frame.
 class DeviceFramePlugin extends Plugin {
   DeviceFramePlugin({
-    DeviceFrameData initialData = const DeviceFrameData(),
+    DeviceFrameData initialData = defaultDeviceFrameData,
     List<DeviceInfo>? deviceInfos,
   }) : super(
           icon: _buildIcon,
@@ -53,17 +50,20 @@ Widget _buildStoryWrapper(BuildContext context, Widget? child) {
   return Directionality(textDirection: TextDirection.ltr, child: result);
 }
 
-@freezed
-class DeviceFrameData with _$DeviceFrameData {
-  const factory DeviceFrameData({
-    @Default(true) bool isFrameVisible,
-    DeviceInfo? device,
-    @Default(Orientation.portrait) Orientation orientation,
-  }) = _DeviceFrameData;
-}
+typedef DeviceFrameData = ({
+  bool isFrameVisible,
+  DeviceInfo? device,
+  Orientation orientation,
+});
+
+const DeviceFrameData defaultDeviceFrameData = (
+  isFrameVisible: true,
+  device: null,
+  orientation: Orientation.portrait,
+);
 
 class DeviceFrameDataNotifier extends ValueNotifier<DeviceFrameData> {
-  DeviceFrameDataNotifier(DeviceFrameData value) : super(value);
+  DeviceFrameDataNotifier(super.value);
 }
 
 Widget _buildWrapper(
@@ -99,7 +99,13 @@ Widget _buildPanel(BuildContext context, List<DeviceInfo>? deviceInfos) {
             '${device.screenSize.height.toInt()} (${describeEnum(device.identifier.platform)})',
           ),
           trailing: d.device == device ? const Icon(Icons.check) : null,
-          onTap: () => update(d.copyWith(device: device)),
+          onTap: () => update(
+            (
+              device: device,
+              isFrameVisible: d.isFrameVisible,
+              orientation: d.orientation,
+            ),
+          ),
         ),
       )
       .toList();
@@ -115,9 +121,16 @@ Widget _buildPanel(BuildContext context, List<DeviceInfo>? deviceInfos) {
         return CheckboxListTile(
           title: const Text('Display frame'),
           value: d.isFrameVisible,
-          onChanged: (v) => update(d.copyWith(isFrameVisible: v ?? false)),
+          onChanged: (v) => update(
+            (
+              device: d.device,
+              isFrameVisible: v ?? false,
+              orientation: d.orientation,
+            ),
+          ),
         );
       }
+
       if (i == 1) {
         return ListTile(
           title: const Text('Orientation'),
@@ -126,18 +139,32 @@ Widget _buildPanel(BuildContext context, List<DeviceInfo>? deviceInfos) {
             final orientation = d.orientation == Orientation.portrait
                 ? Orientation.landscape
                 : Orientation.portrait;
-            update(d.copyWith(orientation: orientation));
+            update(
+              (
+                orientation: orientation,
+                device: d.device,
+                isFrameVisible: d.isFrameVisible,
+              ),
+            );
           },
         );
       }
+
       if (i == 2) {
         return ListTile(
           title: const Text('No device'),
           trailing: d.device == null ? const Icon(Icons.check) : null,
-          onTap: () => update(d.copyWith(device: null)),
+          onTap: () => update(
+            (
+              device: null,
+              isFrameVisible: d.isFrameVisible,
+              orientation: d.orientation,
+            ),
+          ),
         );
       }
 
+      // ignore: prefer-returning-conditional-expressions, more readable
       return devices[i - 3];
     },
     itemCount: devices.length + 3,

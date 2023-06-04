@@ -15,11 +15,9 @@ import 'package:storybook_flutter/src/plugins/knobs.dart';
 class SelectKnobValue<T> extends KnobValue<T> {
   /// {@macro select_knob}
   SelectKnobValue({
-    required T value,
+    required super.value,
     required this.options,
-  }) : super(
-          value: value,
-        );
+  });
 
   /// The list of options that the user can select from.
   ///
@@ -78,14 +76,14 @@ class Option<T> {
 class SelectKnobWidget<T> extends StatelessWidget {
   /// {@macro select_knob_widget}
   const SelectKnobWidget({
-    Key? key,
+    super.key,
     required this.label,
     required this.description,
     required this.values,
     required this.value,
     required this.nullable,
     required this.enabled,
-  }) : super(key: key);
+  });
 
   final String label;
   final String? description;

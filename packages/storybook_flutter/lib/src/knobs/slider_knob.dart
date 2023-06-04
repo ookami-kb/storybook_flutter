@@ -16,14 +16,12 @@ typedef DoubleFormatter = String Function(double value);
 class SliderKnobValue extends KnobValue<double> {
   /// {@macro slider_knob}
   SliderKnobValue({
-    required double value,
+    required super.value,
     required this.max,
     required this.min,
     this.divisions,
     this.formatValue = _defaultFormat,
-  }) : super(
-          value: value,
-        );
+  });
 
   /// The maximum value of the slider.
   final double max;
@@ -71,7 +69,7 @@ class SliderKnobValue extends KnobValue<double> {
 class SliderKnobWidget extends StatelessWidget {
   /// {@macro slider_knob_widget}
   const SliderKnobWidget({
-    Key? key,
+    super.key,
     required this.label,
     required this.description,
     required this.value,
@@ -81,7 +79,7 @@ class SliderKnobWidget extends StatelessWidget {
     required this.formatValue,
     required this.enabled,
     required this.nullable,
-  }) : super(key: key);
+  });
 
   final String label;
   final String? description;

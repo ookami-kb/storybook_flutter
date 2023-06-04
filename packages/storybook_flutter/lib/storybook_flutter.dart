@@ -1,5 +1,3 @@
-library storybook_flutter;
-
 export 'package:device_frame/device_frame.dart';
 
 export 'src/knobs/bool_knob.dart';

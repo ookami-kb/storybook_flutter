@@ -12,11 +12,7 @@ import 'package:storybook_flutter/src/plugins/knobs.dart';
 /// {@endtemplate}
 class StringKnobValue extends KnobValue<String> {
   /// {@macro string_knob}
-  StringKnobValue({
-    required String value,
-  }) : super(
-          value: value,
-        );
+  StringKnobValue({required super.value});
 
   @override
   Widget build({
@@ -45,13 +41,13 @@ class StringKnobValue extends KnobValue<String> {
 class StringKnobWidget extends StatelessWidget {
   /// {@macro string_knob_widget}
   const StringKnobWidget({
-    Key? key,
+    super.key,
     required this.label,
     required this.description,
     required this.value,
     required this.enabled,
     required this.nullable,
-  }) : super(key: key);
+  });
 
   final String label;
   final String? description;

@@ -57,7 +57,7 @@ Widget _buildWrapper(BuildContext _, Widget? child) => Localizations(
     );
 
 class _Contents extends StatefulWidget {
-  const _Contents({Key? key}) : super(key: key);
+  const _Contents();
 
   @override
   _ContentsState createState() => _ContentsState();
@@ -105,25 +105,20 @@ class _ContentsState extends State<_Contents> {
 
     final sectionStories = (grouped[''] ?? []).map(_buildStoryTile).toList();
 
-    if (stories.length == sectionStories.length) {
-      return sectionStories;
-    }
-
-    return [
-      ...grouped.keys
-          .where((k) => k.isNotEmpty)
-          .map(
-            (k) => _buildExpansionTile(
-              title: k,
-              childrenPadding:
-                  EdgeInsets.only(left: (depth - 1) * _sectionPadding),
-              stories: grouped[k]!,
-              children: _buildListChildren(grouped[k]!, depth: depth + 1),
-            ),
-          )
-          .toList(),
-      ...sectionStories
-    ];
+    return stories.length == sectionStories.length
+        ? sectionStories
+        : [
+            ...grouped.keys.where((k) => k.isNotEmpty).map(
+                  (k) => _buildExpansionTile(
+                    title: k,
+                    childrenPadding:
+                        EdgeInsets.only(left: (depth - 1) * _sectionPadding),
+                    stories: grouped[k]!,
+                    children: _buildListChildren(grouped[k]!, depth: depth + 1),
+                  ),
+                ),
+            ...sectionStories
+          ];
   }
 
   @override

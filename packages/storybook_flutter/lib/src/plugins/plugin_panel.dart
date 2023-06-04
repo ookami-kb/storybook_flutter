@@ -5,11 +5,11 @@ import 'package:storybook_flutter/src/plugins/plugin.dart';
 
 class PluginPanel extends StatefulWidget {
   const PluginPanel({
-    Key? key,
+    super.key,
     required this.plugins,
     required this.layerLink,
     required this.overlayKey,
-  }) : super(key: key);
+  });
 
   final List<Plugin> plugins;
   final LayerLink layerLink;
@@ -121,7 +121,7 @@ class PluginOverlay {
 }
 
 class OverlayController {
-  OverlayController({required this.remove});
+  const OverlayController({required this.remove});
 
   final VoidCallback remove;
 }
