@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:storybook_flutter/storybook_flutter.dart';
 import 'package:storybook_flutter_test/storybook_flutter_test.dart';
 
-Future<void> main() async => testStorybook(
+void main() => testStorybook(
       storybook,
       layouts: [
         (

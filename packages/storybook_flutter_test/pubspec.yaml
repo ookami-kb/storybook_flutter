@@ -20,3 +20,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: packages/storybook_flutter_test/fonts/Roboto-Regular.ttf

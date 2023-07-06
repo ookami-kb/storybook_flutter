@@ -20,6 +20,7 @@ Future<void> testStorybook(
   FutureOr<void> Function(WidgetTester tester, Story story)? pump,
 }) async {
   await loadAppFonts();
+
   for (final story
       in storybook.stories.where((s) => filterStories?.call(s) ?? true)) {
     _testStory(
@@ -80,7 +81,9 @@ void _testStory(
 
       await expectLater(
         find.byType(Storybook),
-        matchesGoldenFile('storybook_goldens/$story/${device.name}.png'),
+        matchesGoldenFile(
+          'storybook_goldens/$story/${device.name.replaceAll('"', '')}.png',
+        ),
       );
 
       debugDisableShadows = true;
