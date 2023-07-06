@@ -1,3 +1,12 @@
+## 0.13.0
+
+> Note: This release has breaking changes.
+
+ - **FIX**: reset knobs panel on story change.
+ - **FIX**: reset focus on tap (#104).
+ - **DOCS**: update readme.
+ - **BREAKING** **REFACTOR**: migrate to Dart 3 (#111).
+
 ## 0.12.0
 
 > Note: This release has breaking changes.

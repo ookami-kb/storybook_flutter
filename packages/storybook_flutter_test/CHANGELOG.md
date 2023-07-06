@@ -1,3 +1,8 @@
+## 0.0.3
+
+ - **FIX**: load fonts.
+ - **FEAT**: update tests generation.
+
 ## 0.0.2
 
  - **FEAT**: add storybook_flutter_test.

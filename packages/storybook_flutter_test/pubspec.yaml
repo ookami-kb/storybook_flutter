@@ -1,6 +1,6 @@
 name: storybook_flutter_test
 description: Test utilities for storybook_flutter.
-version: 0.0.2
+version: 0.0.3
 homepage: https://github.com/ookami-kb/storybook_flutter
 
 environment:
@@ -13,7 +13,7 @@ dependencies:
   flutter_test:
     sdk: flutter
   meta: ^1.9.1
-  storybook_flutter: ^0.12.0
+  storybook_flutter: ^0.13.0
 
 dev_dependencies:
   mews_pedantic: ^0.16.0
