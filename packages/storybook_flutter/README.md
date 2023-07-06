@@ -92,6 +92,8 @@ You can automatically test your stories by using `storybook_flutter_test` packag
      );
    ```
 
+4. Generate golden images by running `flutter test --update-goldens --tags=storybook`.
+
 ## Features and bugs
 
 Please file feature requests and bugs at the [issue tracker][tracker].
