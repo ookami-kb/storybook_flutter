@@ -12,7 +12,6 @@ dependencies:
     sdk: flutter
   flutter_test:
     sdk: flutter
-  golden_toolkit: ^0.15.0
   meta: ^1.9.1
   storybook_flutter: ^0.12.0
 
