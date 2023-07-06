@@ -1,6 +1,7 @@
 name: storybook_flutter_test
-description: A new Flutter package project.
+description: Test utilities for storybook_flutter.
 version: 0.0.2
+homepage: https://github.com/ookami-kb/storybook_flutter
 
 environment:
   sdk: ">=3.0.2 <4.0.0"
