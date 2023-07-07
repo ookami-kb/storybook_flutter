@@ -10,51 +10,59 @@ import 'package:storybook_flutter/storybook_flutter.dart';
 /// If `sidePanel` is true, the stories are shown in a left side panel,
 /// otherwise as a popup.
 class ContentsPlugin extends Plugin {
-  const ContentsPlugin({bool sidePanel = false})
+  const ContentsPlugin()
       : super(
-          icon: sidePanel ? null : _buildIcon,
-          panelBuilder: sidePanel ? null : _buildPanel,
-          wrapperBuilder: sidePanel ? _buildWrapper : null,
+          icon: _buildIcon,
+          panelBuilder: _buildPanel,
+          wrapperBuilder: _buildWrapper,
         );
 }
 
-Widget _buildIcon(BuildContext _) => const Icon(Icons.list);
+Widget? _buildIcon(BuildContext context) =>
+    switch (context.watch<EffectiveLayout>()) {
+      EffectiveLayout.compact => const Icon(Icons.list),
+      EffectiveLayout.expanded => null,
+    };
 
 Widget _buildPanel(BuildContext _) => const _Contents();
 
-Widget _buildWrapper(BuildContext _, Widget? child) => Localizations(
-      delegates: const [
-        DefaultMaterialLocalizations.delegate,
-        DefaultCupertinoLocalizations.delegate,
-        DefaultWidgetsLocalizations.delegate,
-      ],
-      locale: const Locale('en', 'US'),
-      child: Directionality(
-        textDirection: TextDirection.ltr,
-        child: Row(
-          children: [
-            Material(
-              child: DecoratedBox(
-                decoration: const BoxDecoration(
-                  border: Border(right: BorderSide(color: Colors.black12)),
-                ),
-                child: SizedBox(
-                  width: 250,
-                  child: Navigator(
-                    onGenerateRoute: (_) => PageRouteBuilder<void>(
-                      pageBuilder: (_, __, ___) => const _Contents(),
+Widget _buildWrapper(BuildContext context, Widget? child) =>
+    switch (context.watch<EffectiveLayout>()) {
+      EffectiveLayout.compact => child ?? const SizedBox.shrink(),
+      EffectiveLayout.expanded => Localizations(
+          delegates: const [
+            DefaultMaterialLocalizations.delegate,
+            DefaultCupertinoLocalizations.delegate,
+            DefaultWidgetsLocalizations.delegate,
+          ],
+          locale: const Locale('en', 'US'),
+          child: Directionality(
+            textDirection: TextDirection.ltr,
+            child: Row(
+              children: [
+                Material(
+                  child: DecoratedBox(
+                    decoration: const BoxDecoration(
+                      border: Border(right: BorderSide(color: Colors.black12)),
+                    ),
+                    child: SizedBox(
+                      width: 250,
+                      child: Navigator(
+                        onGenerateRoute: (_) => PageRouteBuilder<void>(
+                          pageBuilder: (_, __, ___) => const _Contents(),
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
+                Expanded(
+                  child: ClipRect(clipBehavior: Clip.hardEdge, child: child),
+                ),
+              ],
             ),
-            Expanded(
-              child: ClipRect(clipBehavior: Clip.hardEdge, child: child),
-            ),
-          ],
+          ),
         ),
-      ),
-    );
+    };
 
 class _Contents extends StatefulWidget {
   const _Contents();
