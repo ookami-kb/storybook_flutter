@@ -8,19 +8,19 @@ import 'package:storybook_flutter/src/story.dart';
 ///
 /// If `sidePanel` is true, the knobs will be displayed in the right side panel.
 class KnobsPlugin extends Plugin {
-  KnobsPlugin({bool sidePanel = false})
+  const KnobsPlugin()
       : super(
-          icon: sidePanel ? null : _buildIcon,
-          panelBuilder: sidePanel ? null : _buildPanel,
-          wrapperBuilder: (context, child) => _buildWrapper(
-            context,
-            child,
-            sidePanel: sidePanel,
-          ),
+          icon: _buildIcon,
+          panelBuilder: _buildPanel,
+          wrapperBuilder: _buildWrapper,
         );
 }
 
-Widget _buildIcon(BuildContext _) => const Icon(Icons.settings);
+Widget? _buildIcon(BuildContext context) =>
+    switch (context.watch<EffectiveLayout>()) {
+      EffectiveLayout.compact => const Icon(Icons.settings),
+      EffectiveLayout.expanded => null,
+    };
 
 Widget _buildPanel(BuildContext context) {
   final knobs = context.watch<KnobsNotifier>();
@@ -40,42 +40,38 @@ Widget _buildPanel(BuildContext context) {
         );
 }
 
-Widget _buildWrapper(
-  BuildContext _,
-  Widget? child, {
-  required bool sidePanel,
-}) =>
+Widget _buildWrapper(BuildContext context, Widget? child) =>
     ChangeNotifierProvider(
       create: (context) => KnobsNotifier(context.read<StoryNotifier>()),
-      child: sidePanel
-          ? Directionality(
-              textDirection: TextDirection.ltr,
-              child: Row(
-                children: [
-                  Expanded(child: child ?? const SizedBox.shrink()),
-                  RepaintBoundary(
-                    child: Material(
-                      child: DecoratedBox(
-                        decoration: const BoxDecoration(
-                          border: Border(
-                            left: BorderSide(color: Colors.black12),
-                          ),
+      child: switch (context.watch<EffectiveLayout>()) {
+        EffectiveLayout.compact => child,
+        EffectiveLayout.expanded => Directionality(
+            textDirection: TextDirection.ltr,
+            child: Row(
+              children: [
+                Expanded(child: child ?? const SizedBox.shrink()),
+                RepaintBoundary(
+                  child: Material(
+                    child: DecoratedBox(
+                      decoration: const BoxDecoration(
+                        border: Border(
+                          left: BorderSide(color: Colors.black12),
                         ),
-                        child: SafeArea(
-                          left: false,
-                          child: SizedBox(
-                            width: 250,
-                            child: Localizations(
-                              delegates: const [
-                                DefaultMaterialLocalizations.delegate,
-                                DefaultWidgetsLocalizations.delegate,
-                              ],
-                              locale: const Locale('en', 'US'),
-                              child: Navigator(
-                                onGenerateRoute: (_) => PageRouteBuilder<void>(
-                                  pageBuilder: (context, _, __) =>
-                                      _buildPanel(context),
-                                ),
+                      ),
+                      child: SafeArea(
+                        left: false,
+                        child: SizedBox(
+                          width: 250,
+                          child: Localizations(
+                            delegates: const [
+                              DefaultMaterialLocalizations.delegate,
+                              DefaultWidgetsLocalizations.delegate,
+                            ],
+                            locale: const Locale('en', 'US'),
+                            child: Navigator(
+                              onGenerateRoute: (_) => PageRouteBuilder<void>(
+                                pageBuilder: (context, _, __) =>
+                                    _buildPanel(context),
                               ),
                             ),
                           ),
@@ -83,10 +79,11 @@ Widget _buildWrapper(
                       ),
                     ),
                   ),
-                ],
-              ),
-            )
-          : child,
+                ),
+              ],
+            ),
+          ),
+      },
     );
 
 extension Knobs on BuildContext {

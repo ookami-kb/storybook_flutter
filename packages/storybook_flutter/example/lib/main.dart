@@ -4,19 +4,12 @@ import 'package:storybook_flutter_example/router_aware_stories.dart';
 
 void main() => runApp(const MyApp());
 
-final _plugins = initializePlugins(
-  contentsSidePanel: true,
-  knobsSidePanel: true,
-  initialDeviceFrameData: defaultDeviceFrameData,
-);
-
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) => Storybook(
         initialStory: 'Screens/Scaffold',
-        plugins: _plugins,
         stories: [
           ...routerAwareStories,
           Story(

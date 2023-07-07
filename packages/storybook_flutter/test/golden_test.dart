@@ -3,10 +3,7 @@ import 'package:golden_toolkit/golden_toolkit.dart';
 import 'package:storybook_flutter/storybook_flutter.dart';
 
 Widget simpleStorybook(String initialStory) => Storybook(
-      plugins: initializePlugins(
-        contentsSidePanel: true,
-        knobsSidePanel: true,
-      ),
+      plugins: initializePlugins(),
       initialStory: initialStory,
       stories: [
         Story(
