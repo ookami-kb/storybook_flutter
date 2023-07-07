@@ -1,3 +1,10 @@
+## 0.14.0
+
+> Note: This release has breaking changes.
+
+ - **DOCS**: update README.md (#115).
+ - **BREAKING** **FEAT**: add LayoutPlugin (#116).
+
 ## 0.13.0
 
 > Note: This release has breaking changes.

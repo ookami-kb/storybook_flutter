@@ -1,3 +1,7 @@
+## 0.1.0+1
+
+ - Update a dependency to the latest release.
+
 ## 0.1.0
 
  - Bump "storybook_flutter_test" to `0.1.0`.
