@@ -34,8 +34,7 @@ void _onPressed(
   }
 }
 
-Widget _buildWrapper(BuildContext _, Widget? child) =>
-    ChangeNotifierProvider<TextDirectionNotifier>(
+Widget _buildWrapper(BuildContext _, Widget? child) => ChangeNotifierProvider<TextDirectionNotifier>(
       create: (_) => TextDirectionNotifier(TextDirection.ltr),
       child: Builder(
         builder: (context) => Directionality(
@@ -49,5 +48,5 @@ Widget _buildWrapper(BuildContext _, Widget? child) =>
 ///
 /// `DirectionalityPlugin` should be added to plugins for this to work.
 class TextDirectionNotifier extends ValueNotifier<TextDirection> {
-  TextDirectionNotifier(TextDirection value) : super(value);
+  TextDirectionNotifier(super.value);
 }

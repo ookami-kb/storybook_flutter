@@ -54,6 +54,46 @@ Plugins documentation is TBD, but you can take a look at the existing
 first-party plugins: `ContentsPlugin`, `DeviceFramePlugin`, `KnobsPlugin`,
 `ThemModePlugin`.
 
+## Golden tests
+
+You can automatically test your stories by using `storybook_flutter_test` package:
+
+1. Add it to `dev_dependencies`:
+
+   ```yml
+   dev_dependencies:
+     storybook_flutter_test: any
+   ```
+
+2. Create test file, e.g. `storybook_test.dart`.
+
+3. Add the following content there:
+
+   ```dart
+   void main() => testStorybook(
+       storybook,
+       layouts: [
+         (
+           device: Devices.ios.iPhone13,
+           orientation: Orientation.portrait,
+           isFrameVisible: true,
+         ),
+         (
+           device: Devices.ios.iPadPro11Inches,
+           orientation: Orientation.landscape,
+           isFrameVisible: true,
+         ),
+         (
+           device: Devices.android.samsungGalaxyA50,
+           orientation: Orientation.portrait,
+           isFrameVisible: true,
+         ),
+       ],
+     );
+   ```
+
+4. Generate golden images by running `flutter test --update-goldens --tags=storybook`.
+
 ## Features and bugs
 
 Please file feature requests and bugs at the [issue tracker][tracker].

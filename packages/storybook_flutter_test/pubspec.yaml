@@ -1,0 +1,26 @@
+name: storybook_flutter_test
+description: Test utilities for storybook_flutter.
+version: 0.1.0+1
+homepage: https://github.com/ookami-kb/storybook_flutter
+
+environment:
+  sdk: ">=3.0.2 <4.0.0"
+  flutter: ">=3.10.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_test:
+    sdk: flutter
+  meta: ^1.9.1
+  storybook_flutter: ^0.14.0
+
+dev_dependencies:
+  mews_pedantic: ^0.16.0
+
+flutter:
+  uses-material-design: true
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: packages/storybook_flutter_test/fonts/Roboto-Regular.ttf

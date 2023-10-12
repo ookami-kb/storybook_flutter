@@ -3,8 +3,12 @@ name: storybook
 packages:
   - "packages/**"
 
+command:
+  version:
+    workspaceChangelog: false
+
 scripts:
-  format: flutter format --set-exit-if-changed -n .
+  format: dart format --set-exit-if-changed .
   pub_get:
     exec: flutter pub get
   analyze: flutter analyze .

@@ -5,11 +5,11 @@ import 'package:storybook_flutter/src/plugins/plugin.dart';
 
 class PluginPanel extends StatefulWidget {
   const PluginPanel({
-    Key? key,
+    super.key,
     required this.plugins,
     required this.layerLink,
     required this.overlayKey,
-  }) : super(key: key);
+  });
 
   final List<Plugin> plugins;
   final LayerLink layerLink;
@@ -21,6 +21,12 @@ class PluginPanel extends StatefulWidget {
 
 class _PluginPanelState extends State<PluginPanel> {
   PluginOverlay? _overlay;
+
+  @override
+  void dispose() {
+    _overlay?.remove();
+    super.dispose();
+  }
 
   OverlayEntry _createEntry(WidgetBuilder childBuilder) => OverlayEntry(
         builder: (context) => Provider<OverlayController>(
@@ -98,12 +104,12 @@ class _PluginPanelState extends State<PluginPanel> {
   Widget build(BuildContext context) => Wrap(
         runAlignment: WrapAlignment.center,
         children: widget.plugins
-            .where((p) => p.icon != null)
+            .map((p) => (p, p.icon?.call(context)))
+            .whereType<(Plugin, Widget)>()
             .map(
               (p) => IconButton(
-                // ignore: avoid-non-null-assertion, checked for null
-                icon: p.icon!.call(context),
-                onPressed: () => _onPluginButtonPressed(p),
+                icon: p.$2,
+                onPressed: () => _onPluginButtonPressed(p.$1),
               ),
             )
             .toList(),
@@ -121,7 +127,7 @@ class PluginOverlay {
 }
 
 class OverlayController {
-  OverlayController({required this.remove});
+  const OverlayController({required this.remove});
 
   final VoidCallback remove;
 }

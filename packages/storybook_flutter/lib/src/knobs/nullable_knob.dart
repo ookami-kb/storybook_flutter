@@ -7,15 +7,11 @@ import 'package:storybook_flutter/src/knobs/knobs.dart';
 class NullableKnob<T> extends Knob<T?> {
   /// {@macro nullable_knob}
   NullableKnob({
-    required String label,
-    String? description,
-    required KnobValue<T> knobValue,
+    required super.label,
+    super.description,
+    required KnobValue<T> super.knobValue,
     this.enabled = true,
-  }) : super(
-          label: label,
-          description: description,
-          knobValue: knobValue,
-        );
+  });
 
   @visibleForTesting
   bool enabled;

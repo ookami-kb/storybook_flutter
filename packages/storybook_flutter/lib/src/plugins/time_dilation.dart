@@ -35,8 +35,7 @@ void _onPressed(
   }
 }
 
-Widget _buildWrapper(BuildContext _, Widget? child) =>
-    ChangeNotifierProvider<TimeDilationNotifier>(
+Widget _buildWrapper(BuildContext _, Widget? child) => ChangeNotifierProvider<TimeDilationNotifier>(
       create: (_) => TimeDilationNotifier(false),
       child: Builder(
         builder: (context) {
@@ -51,5 +50,5 @@ Widget _buildWrapper(BuildContext _, Widget? child) =>
 ///
 /// `TimeDilationPlugin` should be added to plugins for this to work.
 class TimeDilationNotifier extends ValueNotifier<bool> {
-  TimeDilationNotifier(bool value) : super(value);
+  TimeDilationNotifier(super.value);
 }

@@ -39,16 +39,21 @@ final _defaultPlugins = initializePlugins();
 
 class Storybook extends StatefulWidget {
   Storybook({
-    Key? key,
+    super.key,
     required Iterable<Story> stories,
     Iterable<Plugin>? plugins,
     this.initialStory,
     this.wrapperBuilder = materialWrapper,
     this.showPanel = true,
     this.brandingWidget,
-  })  : plugins = UnmodifiableListView(plugins ?? _defaultPlugins),
-        stories = UnmodifiableListView(stories),
-        super(key: key);
+    Layout initialLayout = Layout.auto,
+  })  : plugins = UnmodifiableListView([
+          LayoutPlugin(initialLayout),
+          const ContentsPlugin(),
+          const KnobsPlugin(),
+          ...plugins ?? _defaultPlugins,
+        ]),
+        stories = UnmodifiableListView(stories);
 
   /// All enabled plugins.
   final List<Plugin> plugins;
@@ -110,7 +115,8 @@ class _StorybookState extends State<Storybook> {
       onTap: () {
         FocusManager.instance.primaryFocus?.unfocus();
       },
-      child: MediaQuery.fromWindow(
+      child: MediaQuery.fromView(
+        view: View.of(context),
         child: Nested(
           children: [
             Provider.value(value: widget.plugins),
@@ -118,7 +124,7 @@ class _StorybookState extends State<Storybook> {
             ...widget.plugins
                 .map((p) => p.wrapperBuilder)
                 .whereType<TransitionBuilder>()
-                .map((builder) => SingleChildBuilder(builder: builder))
+                .map((builder) => SingleChildBuilder(builder: builder)),
           ],
           child: widget.showPanel
               ? Stack(
@@ -153,8 +159,7 @@ class _StorybookState extends State<Storybook> {
                                             layerLink: _layerLink,
                                           ),
                                         ),
-                                        widget.brandingWidget ??
-                                            const SizedBox.shrink(),
+                                        widget.brandingWidget ?? const SizedBox.shrink(),
                                       ],
                                     ),
                                   ),
@@ -179,8 +184,7 @@ class _StorybookState extends State<Storybook> {
 }
 
 class CurrentStory extends StatelessWidget {
-  const CurrentStory({Key? key, required this.wrapperBuilder})
-      : super(key: key);
+  const CurrentStory({super.key, required this.wrapperBuilder});
 
   final TransitionBuilder wrapperBuilder;
 
@@ -210,9 +214,7 @@ class CurrentStory extends StatelessWidget {
 
     return KeyedSubtree(
       key: ValueKey(story.name),
-      child: pluginBuilders.isEmpty
-          ? child
-          : Nested(children: pluginBuilders, child: child),
+      child: pluginBuilders.isEmpty ? child : Nested(children: pluginBuilders, child: child),
     );
   }
 }

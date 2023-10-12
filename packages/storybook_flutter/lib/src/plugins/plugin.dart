@@ -1,39 +1,32 @@
 import 'package:flutter/widgets.dart';
-import 'package:storybook_flutter/src/plugins/contents/contents.dart';
 import 'package:storybook_flutter/src/plugins/device_frame.dart';
 import 'package:storybook_flutter/src/plugins/directionality.dart';
-import 'package:storybook_flutter/src/plugins/knobs.dart';
 import 'package:storybook_flutter/src/plugins/theme_mode.dart';
 import 'package:storybook_flutter/src/plugins/time_dilation.dart';
 
 export 'contents/contents.dart';
 export 'device_frame.dart';
 export 'knobs.dart';
+export 'layout.dart';
 export 'theme_mode.dart';
 
 /// Use this method to initialize and customize built-in plugins.
 List<Plugin> initializePlugins({
-  bool enableContents = true,
-  bool enableKnobs = true,
   bool enableThemeMode = true,
   bool enableDeviceFrame = true,
   bool enableTimeDilation = true,
   bool enableDirectionality = true,
-  DeviceFrameData initialDeviceFrameData = const DeviceFrameData(),
-  bool contentsSidePanel = false,
-  bool knobsSidePanel = false,
+  DeviceFrameData initialDeviceFrameData = defaultDeviceFrameData,
 }) =>
     [
-      if (enableContents) ContentsPlugin(sidePanel: contentsSidePanel),
-      if (enableKnobs) KnobsPlugin(sidePanel: knobsSidePanel),
       if (enableThemeMode) ThemeModePlugin(),
-      if (enableDeviceFrame)
-        DeviceFramePlugin(initialData: initialDeviceFrameData),
+      if (enableDeviceFrame) DeviceFramePlugin(initialData: initialDeviceFrameData),
       if (enableTimeDilation) TimeDilationPlugin(),
       if (enableDirectionality) DirectionalityPlugin(),
     ];
 
-typedef OnPluginButtonPressed = void Function(BuildContext);
+typedef OnPluginButtonPressed = void Function(BuildContext context);
+typedef NullableWidgetBuilder = Widget? Function(BuildContext context);
 
 class Plugin {
   const Plugin({
@@ -62,7 +55,7 @@ class Plugin {
   final TransitionBuilder? storyBuilder;
 
   /// Optional icon that will be displayed on the bottom panel.
-  final WidgetBuilder? icon;
+  final NullableWidgetBuilder? icon;
 
   /// Optional callback that will be called when user clicks on the [icon].
   ///

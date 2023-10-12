@@ -53,7 +53,6 @@ class RouterAwareStory extends Story {
           builder: (context) => MaterialApp.router(
             theme: ThemeData.light(),
             darkTheme: ThemeData.dark(),
-            useInheritedMediaQuery: true,
             debugShowCheckedModeBanner: false,
             routerDelegate: router.delegate(initialRoutes: initialRoutes),
             routeInformationParser: router.defaultRouteParser(),

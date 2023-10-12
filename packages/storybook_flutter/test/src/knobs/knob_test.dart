@@ -5,7 +5,7 @@ import 'package:storybook_flutter/storybook_flutter.dart';
 const knobWidget = SizedBox(key: Key('knob-widget'));
 
 class FakeKnobValue extends KnobValue<bool> {
-  FakeKnobValue({required bool value}) : super(value: value);
+  FakeKnobValue({required super.value});
 
   @override
   Widget build({
