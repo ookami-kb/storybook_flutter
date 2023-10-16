@@ -12,7 +12,6 @@ Widget materialWrapper(BuildContext context, Widget? child) => MaterialApp(
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
       debugShowCheckedModeBanner: false,
-      useInheritedMediaQuery: true,
       home: Directionality(
         textDirection: Directionality.of(context),
         child: Scaffold(
@@ -26,7 +25,6 @@ Widget materialWrapper(BuildContext context, Widget? child) => MaterialApp(
 /// Use this wrapper to wrap each story into a [CupertinoApp] widget.
 Widget cupertinoWrapper(BuildContext context, Widget? child) => CupertinoApp(
       debugShowCheckedModeBanner: false,
-      useInheritedMediaQuery: true,
       home: Directionality(
         textDirection: Directionality.of(context),
         child: CupertinoPageScaffold(
@@ -45,10 +43,16 @@ class Storybook extends StatefulWidget {
     this.initialStory,
     this.wrapperBuilder = materialWrapper,
     this.showPanel = true,
+    this.enableLayout = true,
     this.brandingWidget,
     Layout initialLayout = Layout.auto,
+    double autoLayoutThreshold = 1000,
   })  : plugins = UnmodifiableListView([
-          LayoutPlugin(initialLayout),
+          LayoutPlugin(
+            initialLayout,
+            autoLayoutThreshold,
+            enableLayout: enableLayout,
+          ),
           const ContentsPlugin(),
           const KnobsPlugin(),
           ...plugins ?? _defaultPlugins,
@@ -69,6 +73,9 @@ class Storybook extends StatefulWidget {
 
   /// Whether to show the plugin panel at the bottom.
   final bool showPanel;
+
+  /// Whether to enable the layout plugin in the plugin panel.
+  final bool enableLayout;
 
   /// Branding widget to use in the plugin panel.
   final Widget? brandingWidget;
@@ -111,10 +118,8 @@ class _StorybookState extends State<Storybook> {
       wrapperBuilder: widget.wrapperBuilder,
     );
 
-    return GestureDetector(
-      onTap: () {
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
+    return TapRegion(
+      onTapOutside: (PointerDownEvent _) => FocusScope.of(context).unfocus(),
       child: MediaQuery.fromView(
         view: View.of(context),
         child: Nested(
@@ -214,7 +219,9 @@ class CurrentStory extends StatelessWidget {
 
     return KeyedSubtree(
       key: ValueKey(story.name),
-      child: pluginBuilders.isEmpty ? child : Nested(children: pluginBuilders, child: child),
+      child: pluginBuilders.isEmpty
+          ? child
+          : Nested(children: pluginBuilders, child: child),
     );
   }
 }

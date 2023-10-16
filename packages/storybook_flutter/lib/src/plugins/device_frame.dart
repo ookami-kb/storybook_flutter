@@ -7,21 +7,41 @@ import 'package:storybook_flutter/src/plugins/plugin.dart';
 /// Plugin that allows wrapping each story into a device frame.
 class DeviceFramePlugin extends Plugin {
   DeviceFramePlugin({
+    bool enableCompactLayoutDeviceFrame = true,
+    bool enableExpandedLayoutDeviceFrame = true,
     DeviceFrameData initialData = defaultDeviceFrameData,
-    List<DeviceInfo>? deviceInfos,
+    List<DeviceInfo>? deviceInfo,
   }) : super(
-          icon: _buildIcon,
-          storyBuilder: _buildStoryWrapper,
-          wrapperBuilder: (context, child) => _buildWrapper(
+          icon: (BuildContext context) => _buildIcon(
             context,
-            child,
-            initial: initialData,
+            enableCompactLayoutDeviceFrame,
+            enableExpandedLayoutDeviceFrame,
           ),
-          panelBuilder: (context) => _buildPanel(context, deviceInfos),
+          storyBuilder: _buildStoryWrapper,
+          wrapperBuilder: (BuildContext context, Widget? child) =>
+              _buildWrapper(context, child, initial: initialData),
+          panelBuilder: (BuildContext context) =>
+              _buildPanel(context, deviceInfo),
         );
 }
 
-Widget _buildIcon(BuildContext _) => const Icon(Icons.phone_android);
+Widget? _buildIcon(
+  BuildContext context,
+  bool enableCompactDeviceFrame,
+  bool enableExpandedDeviceFrame,
+) {
+  final EffectiveLayout effectiveLayout = context.watch<EffectiveLayout>();
+
+  final bool showIconForCompactLayout =
+      effectiveLayout == EffectiveLayout.compact && enableCompactDeviceFrame;
+
+  final bool showIconForExpandedLayout =
+      effectiveLayout == EffectiveLayout.expanded && enableExpandedDeviceFrame;
+
+  return showIconForCompactLayout || showIconForExpandedLayout
+      ? const Icon(Icons.phone_android)
+      : null;
+}
 
 Widget _buildStoryWrapper(BuildContext context, Widget? child) {
   final d = context.watch<DeviceFrameDataNotifier>().value;
@@ -67,21 +87,38 @@ class DeviceFrameDataNotifier extends ValueNotifier<DeviceFrameData> {
 }
 
 Widget _buildWrapper(
-  BuildContext _,
+  BuildContext context,
   Widget? child, {
   required DeviceFrameData initial,
-}) =>
-    ChangeNotifierProvider(
-      create: (context) => DeviceFrameDataNotifier(initial),
-      child: child,
-    );
+}) {
+  final Layout layout = context.read<LayoutProvider>().value;
+  final EffectiveLayout effectiveLayout = context.watch<EffectiveLayout>();
 
-Widget _buildPanel(BuildContext context, List<DeviceInfo>? deviceInfos) {
+  return layout == Layout.auto
+      ? ChangeNotifierProvider(
+          create: (BuildContext _) => DeviceFrameDataNotifier(
+            (
+              isFrameVisible: initial.isFrameVisible,
+              device: effectiveLayout == EffectiveLayout.compact
+                  ? null
+                  : initial.device,
+              orientation: initial.orientation,
+            ),
+          ),
+          child: child,
+        )
+      : ChangeNotifierProvider(
+          create: (BuildContext _) => DeviceFrameDataNotifier(initial),
+          child: child,
+        );
+}
+
+Widget _buildPanel(BuildContext context, List<DeviceInfo>? deviceInfo) {
   final d = context.watch<DeviceFrameDataNotifier>().value;
   void update(DeviceFrameData data) =>
       context.read<DeviceFrameDataNotifier>().value = data;
 
-  final devices = (deviceInfos ?? Devices.all)
+  final devices = (deviceInfo ?? Devices.all)
       .map(
         (device) => ListTile(
           leading: CircleAvatar(

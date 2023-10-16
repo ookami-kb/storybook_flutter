@@ -11,11 +11,18 @@ class LayoutProvider extends ValueNotifier<Layout> {
 }
 
 class LayoutPlugin extends Plugin {
-  LayoutPlugin(Layout initialLayout)
-      : super(
-          icon: _buildIcon,
-          wrapperBuilder: (context, child) =>
-              _buildWrapper(context, child, initialLayout),
+  LayoutPlugin(
+    Layout initialLayout,
+    double autoLayoutThreshold, {
+    bool enableLayout = true,
+  }) : super(
+          icon: enableLayout ? _buildIcon : null,
+          wrapperBuilder: (context, child) => _buildWrapper(
+            context,
+            child,
+            initialLayout,
+            autoLayoutThreshold,
+          ),
           onPressed: _onPressed,
         );
 }
@@ -31,10 +38,14 @@ Widget _buildWrapper(
   BuildContext _,
   Widget? child,
   Layout initialLayout,
+  double autoLayoutThreshold,
 ) =>
     ChangeNotifierProvider(
       create: (context) => LayoutProvider(initialLayout),
-      child: _EffectiveLayoutBuilder(child: child),
+      child: _EffectiveLayoutBuilder(
+        autoLayoutThreshold: autoLayoutThreshold,
+        child: child,
+      ),
     );
 
 void _onPressed(BuildContext context) {
@@ -44,8 +55,12 @@ void _onPressed(BuildContext context) {
 }
 
 class _EffectiveLayoutBuilder extends StatefulWidget {
-  const _EffectiveLayoutBuilder({required this.child});
+  const _EffectiveLayoutBuilder({
+    required this.autoLayoutThreshold,
+    required this.child,
+  });
 
+  final double autoLayoutThreshold;
   final Widget? child;
 
   @override
@@ -61,8 +76,9 @@ class _EffectiveLayoutBuilderState extends State<_EffectiveLayoutBuilder> {
     super.didChangeDependencies();
     final width = MediaQuery.sizeOf(context).width;
     _layout = switch (context.watch<LayoutProvider>().value) {
-      Layout.auto =>
-        width < 800 ? EffectiveLayout.compact : EffectiveLayout.expanded,
+      Layout.auto => width < widget.autoLayoutThreshold
+          ? EffectiveLayout.compact
+          : EffectiveLayout.expanded,
       Layout.compact => EffectiveLayout.compact,
       Layout.expanded => EffectiveLayout.expanded,
     };

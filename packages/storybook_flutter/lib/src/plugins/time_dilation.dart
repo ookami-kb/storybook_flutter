@@ -35,7 +35,8 @@ void _onPressed(
   }
 }
 
-Widget _buildWrapper(BuildContext _, Widget? child) => ChangeNotifierProvider<TimeDilationNotifier>(
+Widget _buildWrapper(BuildContext _, Widget? child) =>
+    ChangeNotifierProvider<TimeDilationNotifier>(
       create: (_) => TimeDilationNotifier(false),
       child: Builder(
         builder: (context) {

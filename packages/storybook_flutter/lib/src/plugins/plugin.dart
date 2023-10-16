@@ -12,15 +12,22 @@ export 'theme_mode.dart';
 
 /// Use this method to initialize and customize built-in plugins.
 List<Plugin> initializePlugins({
+  bool enableLayout = true,
   bool enableThemeMode = true,
-  bool enableDeviceFrame = true,
+  bool enableCompactLayoutDeviceFrame = true,
+  bool enableExpandedLayoutDeviceFrame = true,
   bool enableTimeDilation = true,
   bool enableDirectionality = true,
   DeviceFrameData initialDeviceFrameData = defaultDeviceFrameData,
 }) =>
     [
       if (enableThemeMode) ThemeModePlugin(),
-      if (enableDeviceFrame) DeviceFramePlugin(initialData: initialDeviceFrameData),
+      if (enableCompactLayoutDeviceFrame || enableExpandedLayoutDeviceFrame)
+        DeviceFramePlugin(
+          initialData: initialDeviceFrameData,
+          enableCompactLayoutDeviceFrame: enableCompactLayoutDeviceFrame,
+          enableExpandedLayoutDeviceFrame: enableExpandedLayoutDeviceFrame,
+        ),
       if (enableTimeDilation) TimeDilationPlugin(),
       if (enableDirectionality) DirectionalityPlugin(),
     ];
