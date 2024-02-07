@@ -41,6 +41,7 @@ Widget _buildWrapper(BuildContext context, Widget? child) =>
             child: Row(
               children: [
                 Material(
+                  color: Colors.transparent,
                   child: DecoratedBox(
                     decoration: const BoxDecoration(
                       border: Border(right: BorderSide(color: Colors.black12)),

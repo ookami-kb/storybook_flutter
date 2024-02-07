@@ -52,6 +52,7 @@ Widget _buildWrapper(BuildContext context, Widget? child) =>
                 Expanded(child: child ?? const SizedBox.shrink()),
                 RepaintBoundary(
                   child: Material(
+                    color: Colors.transparent,
                     child: DecoratedBox(
                       decoration: const BoxDecoration(
                         border: Border(

@@ -32,6 +32,7 @@ Widget _buildStoryWrapper(BuildContext context, Widget? child) {
       : SizedBox(
           width: double.infinity,
           child: Material(
+            color: Colors.transparent,
             child: SafeArea(
               bottom: false,
               child: Padding(

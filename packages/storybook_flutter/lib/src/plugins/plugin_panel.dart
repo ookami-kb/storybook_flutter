@@ -63,6 +63,7 @@ class _PluginPanelState extends State<PluginPanel> {
                     onGenerateRoute: (_) => MaterialPageRoute<void>(
                       builder: (context) => PointerInterceptor(
                         child: Material(
+                          color: Colors.transparent,
                           child: childBuilder(context),
                         ),
                       ),

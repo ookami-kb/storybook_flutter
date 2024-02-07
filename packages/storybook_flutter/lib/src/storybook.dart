@@ -9,7 +9,7 @@ import 'package:storybook_flutter/src/story.dart';
 
 /// Use this wrapper to wrap each story into a [MaterialApp] widget.
 Widget materialWrapper(BuildContext _, Widget? child) => MaterialApp(
-      theme: ThemeData.light(),
+      theme: ThemeData.light().copyWith(scaffoldBackgroundColor: Colors.white),
       darkTheme: ThemeData.dark(),
       debugShowCheckedModeBanner: false,
       home: Scaffold(body: Center(child: child)),
@@ -94,9 +94,7 @@ class _StorybookState extends State<Storybook> {
     );
 
     return GestureDetector(
-      onTap: () {
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
+      onTap: FocusManager.instance.primaryFocus?.unfocus,
       child: MediaQuery.fromView(
         view: View.of(context),
         child: Nested(
@@ -106,7 +104,7 @@ class _StorybookState extends State<Storybook> {
             ...widget.plugins
                 .map((p) => p.wrapperBuilder)
                 .whereType<TransitionBuilder>()
-                .map((builder) => SingleChildBuilder(builder: builder))
+                .map((builder) => SingleChildBuilder(builder: builder)),
           ],
           child: widget.showPanel
               ? Stack(
@@ -117,6 +115,7 @@ class _StorybookState extends State<Storybook> {
                         Expanded(child: currentStory),
                         RepaintBoundary(
                           child: Material(
+                            color: Colors.transparent,
                             child: SafeArea(
                               top: false,
                               child: CompositedTransformTarget(
@@ -167,7 +166,10 @@ class CurrentStory extends StatelessWidget {
     if (story == null) {
       return const Directionality(
         textDirection: TextDirection.ltr,
-        child: Material(child: Center(child: Text('Select story'))),
+        child: Material(
+          color: Colors.transparent,
+          child: Center(child: Text('Select story')),
+        ),
       );
     }
 

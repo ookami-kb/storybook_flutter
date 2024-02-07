@@ -51,7 +51,8 @@ class RouterAwareStory extends Story {
           name: name,
           wrapperBuilder: (context, child) => child as Widget,
           builder: (context) => MaterialApp.router(
-            theme: ThemeData.light(),
+            theme: ThemeData.light()
+                .copyWith(scaffoldBackgroundColor: Colors.white),
             darkTheme: ThemeData.dark(),
             debugShowCheckedModeBanner: false,
             routerDelegate: router.delegate(initialRoutes: initialRoutes),
