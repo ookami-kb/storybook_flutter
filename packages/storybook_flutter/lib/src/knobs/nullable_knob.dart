@@ -1,3 +1,5 @@
+// ignore_for_file: match-getter-setter-field-names
+
 import 'package:flutter/material.dart';
 import 'package:storybook_flutter/src/knobs/knobs.dart';
 

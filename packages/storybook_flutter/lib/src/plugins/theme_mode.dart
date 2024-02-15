@@ -22,13 +22,10 @@ Widget _buildIcon(BuildContext context) {
   switch (context.watch<ThemeModeNotifier>().value) {
     case ThemeMode.system:
       icon = Icons.brightness_auto_outlined;
-      break;
     case ThemeMode.light:
       icon = Icons.brightness_5_outlined;
-      break;
     case ThemeMode.dark:
       icon = Icons.brightness_3_outlined;
-      break;
   }
 
   return Icon(icon);
@@ -39,16 +36,12 @@ void _onPressed(BuildContext context, ValueSetter<ThemeMode>? onThemeChanged) {
     case ThemeMode.system:
       context.read<ThemeModeNotifier>().value = ThemeMode.light;
       onThemeChanged?.call(ThemeMode.light);
-      break;
     case ThemeMode.light:
       context.read<ThemeModeNotifier>().value = ThemeMode.dark;
       onThemeChanged?.call(ThemeMode.dark);
-
-      break;
     case ThemeMode.dark:
       context.read<ThemeModeNotifier>().value = ThemeMode.system;
       onThemeChanged?.call(ThemeMode.system);
-      break;
   }
 }
 
@@ -58,11 +51,11 @@ Widget _buildWrapper(BuildContext _, Widget? child, ThemeMode? initialTheme) =>
       child: Builder(
         builder: (context) {
           final themeMode = context.watch<ThemeModeNotifier>().value;
-          final brightness = themeMode == ThemeMode.system
-              ? MediaQuery.platformBrightnessOf(context)
-              : themeMode == ThemeMode.light
-                  ? Brightness.light
-                  : Brightness.dark;
+          final brightness = switch (themeMode) {
+            ThemeMode.system => MediaQuery.platformBrightnessOf(context),
+            ThemeMode.light => Brightness.light,
+            ThemeMode.dark => Brightness.dark,
+          };
 
           return MediaQuery(
             data: MediaQuery.of(context).copyWith(
@@ -78,5 +71,5 @@ Widget _buildWrapper(BuildContext _, Widget? child, ThemeMode? initialTheme) =>
 ///
 /// `ThemeModePlugin` should be added to plugins for this to work.
 class ThemeModeNotifier extends ValueNotifier<ThemeMode> {
-  ThemeModeNotifier(super.value);
+  ThemeModeNotifier(super._value);
 }

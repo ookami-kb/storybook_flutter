@@ -7,7 +7,7 @@ enum Layout { compact, expanded, auto }
 enum EffectiveLayout { compact, expanded }
 
 class LayoutProvider extends ValueNotifier<Layout> {
-  LayoutProvider(super.value);
+  LayoutProvider(super._value);
 }
 
 class LayoutPlugin extends Plugin {

@@ -1,5 +1,4 @@
 import 'package:device_frame/device_frame.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:storybook_flutter/src/plugins/plugin.dart';
@@ -63,7 +62,7 @@ const DeviceFrameData defaultDeviceFrameData = (
 );
 
 class DeviceFrameDataNotifier extends ValueNotifier<DeviceFrameData> {
-  DeviceFrameDataNotifier(super.value);
+  DeviceFrameDataNotifier(super._value);
 }
 
 Widget _buildWrapper(
@@ -96,7 +95,7 @@ Widget _buildPanel(BuildContext context, List<DeviceInfo>? deviceInfos) {
           ),
           subtitle: Text(
             '${device.screenSize.width.toInt()}×'
-            '${device.screenSize.height.toInt()} (${describeEnum(device.identifier.platform)})',
+            '${device.screenSize.height.toInt()} (${device.identifier.platform.name})',
           ),
           trailing: d.device == device ? const Icon(Icons.check) : null,
           onTap: () => update(
@@ -134,7 +133,7 @@ Widget _buildPanel(BuildContext context, List<DeviceInfo>? deviceInfos) {
       if (i == 1) {
         return ListTile(
           title: const Text('Orientation'),
-          subtitle: Text(describeEnum(d.orientation)),
+          subtitle: Text(d.orientation.name),
           onTap: () {
             final orientation = d.orientation == Orientation.portrait
                 ? Orientation.landscape
