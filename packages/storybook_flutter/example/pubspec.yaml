@@ -7,7 +7,6 @@ environment:
   sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
-  auto_route: ^5.0.2
   flutter:
     sdk: flutter
   storybook_flutter:
@@ -15,11 +14,9 @@ dependencies:
   universal_html: ^2.0.8
 
 dev_dependencies:
-  auto_route_generator: ^5.0.2
-  build_runner: ^2.3.2
   flutter_test:
     sdk: flutter
-  mews_pedantic: ^0.11.0
+  mews_pedantic: ^0.23.0
 
 flutter:
   uses-material-design: true
