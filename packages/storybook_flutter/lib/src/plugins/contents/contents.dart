@@ -125,7 +125,7 @@ class _ContentsState extends State<_Contents> {
                     children: _buildListChildren(grouped[k]!, depth: depth + 1),
                   ),
                 ),
-            ...sectionStories
+            ...sectionStories,
           ];
   }
 
