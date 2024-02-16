@@ -26,7 +26,7 @@ class Knob<T> {
   T get value => knobValue.value;
 
   /// {@macro knob.value}
-  set value(T newValue) => knobValue.value = newValue;
+  set value(T value) => knobValue.value = value;
 
   @protected
   KnobValue<T> knobValue;
