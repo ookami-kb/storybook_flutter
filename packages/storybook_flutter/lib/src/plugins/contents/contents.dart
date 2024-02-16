@@ -122,10 +122,11 @@ class _ContentsState extends State<_Contents> {
                     childrenPadding:
                         EdgeInsets.only(left: (depth - 1) * _sectionPadding),
                     stories: grouped[k]!,
+                    // ignore: avoid-recursive-calls, intentional recursion
                     children: _buildListChildren(grouped[k]!, depth: depth + 1),
                   ),
                 ),
-            ...sectionStories
+            ...sectionStories,
           ];
   }
 

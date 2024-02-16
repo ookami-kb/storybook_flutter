@@ -124,7 +124,9 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     return _knobs[story.name]?.values.toList() ?? [];
   }
 
-  T _addKnob<T>(Knob<T> value) {
+  /// Allows to add a knob to the current story.
+  /// Using the convenience functions (boolean, text, ...) is recommended.
+  T addKnob<T>(Knob<T> value) {
     // ignore: avoid-non-null-assertion, having null here is a bug
     final story = _storyNotifier.currentStory!;
     final knobs = _knobs.putIfAbsent(story.name, () => {});
@@ -143,7 +145,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     String? description,
     bool initial = false,
   }) =>
-      _addKnob(
+      addKnob(
         Knob(
           label: label,
           description: description,
@@ -159,7 +161,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     String? description,
     String initial = '',
   }) =>
-      _addKnob(
+      addKnob(
         Knob(
           label: label,
           description: description,
@@ -176,7 +178,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     required T initial,
     List<Option<T>> options = const [],
   }) =>
-      _addKnob(
+      addKnob(
         Knob(
           label: label,
           description: description,
@@ -195,7 +197,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     double max = 1,
     double min = 0,
   }) =>
-      _addKnob(
+      addKnob(
         Knob(
           label: label,
           description: description,
@@ -216,7 +218,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     int min = 0,
     int divisions = 100,
   }) =>
-      _addKnob(
+      addKnob(
         Knob(
           label: label,
           description: description,
@@ -249,7 +251,7 @@ class _NullableKnobsBuilder extends NullableKnobsBuilder {
     bool initial = false,
     bool enabled = true,
   }) =>
-      _knobs._addKnob(
+      _knobs.addKnob(
         NullableKnob(
           enabled: enabled,
           label: label,
@@ -268,7 +270,7 @@ class _NullableKnobsBuilder extends NullableKnobsBuilder {
     List<Option<T>> options = const [],
     bool enabled = true,
   }) =>
-      _knobs._addKnob(
+      _knobs.addKnob(
         NullableKnob(
           enabled: enabled,
           label: label,
@@ -289,7 +291,7 @@ class _NullableKnobsBuilder extends NullableKnobsBuilder {
     double min = 0,
     bool enabled = true,
   }) =>
-      _knobs._addKnob(
+      _knobs.addKnob(
         NullableKnob(
           enabled: enabled,
           label: label,
@@ -313,7 +315,7 @@ class _NullableKnobsBuilder extends NullableKnobsBuilder {
     bool enabled = true,
   }) =>
       _knobs
-          ._addKnob(
+          .addKnob(
             NullableKnob(
               enabled: enabled,
               label: label,
@@ -336,7 +338,7 @@ class _NullableKnobsBuilder extends NullableKnobsBuilder {
     String initial = '',
     bool enabled = true,
   }) =>
-      _knobs._addKnob(
+      _knobs.addKnob(
         NullableKnob(
           enabled: enabled,
           label: label,

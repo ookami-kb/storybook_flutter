@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:storybook_flutter/storybook_flutter.dart';
-import 'package:storybook_flutter_example/router_aware_stories.dart';
 
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) => Storybook(
         initialStory: 'Screens/Scaffold',
         stories: [
-          ...routerAwareStories,
           Story(
             name: 'Screens/Scaffold',
             description: 'Story with scaffold and different knobs.',
@@ -75,6 +73,7 @@ class MyApp extends StatelessWidget {
                 description: 'Show FAB button',
               )
                   ? FloatingActionButton(
+                      heroTag: 'FAB',
                       onPressed: () {},
                       child: const Icon(Icons.add),
                     )
@@ -129,10 +128,10 @@ class MyApp extends StatelessWidget {
 
 class CounterPage extends StatefulWidget {
   const CounterPage({
-    Key? key,
+    super.key,
     required this.title,
     this.enabled = true,
-  }) : super(key: key);
+  });
 
   final String title;
   final bool enabled;
@@ -177,6 +176,7 @@ class _CounterPageState extends State<CounterPage> {
         ),
         floatingActionButton: widget.enabled
             ? FloatingActionButton(
+                heroTag: 'FAB',
                 onPressed: _incrementCounter,
                 tooltip: 'Increment',
                 child: const Icon(Icons.add),

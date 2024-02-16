@@ -108,7 +108,7 @@ class _StorybookState extends State<Storybook> {
             ...widget.plugins
                 .map((p) => p.wrapperBuilder)
                 .whereType<TransitionBuilder>()
-                .map((builder) => SingleChildBuilder(builder: builder))
+                .map((builder) => SingleChildBuilder(builder: builder)),
           ],
           child: widget.showPanel
               ? Stack(
