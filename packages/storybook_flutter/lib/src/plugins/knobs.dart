@@ -233,6 +233,24 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
       ).toInt();
 
   @override
+  T color<T>({
+    required String label,
+    String? description,
+    required T initial,
+    List<Option<T>> options = const [],
+  }) =>
+      _addKnob(
+        Knob(
+          label: label,
+          description: description,
+          knobValue: ColorKnobValue(
+            value: initial,
+            options: options,
+          ),
+        ),
+      );
+
+  @override
   void dispose() {
     _storyNotifier.removeListener(_onStoryChanged);
     super.dispose();
@@ -345,6 +363,26 @@ class _NullableKnobsBuilder extends NullableKnobsBuilder {
           description: description,
           knobValue: StringKnobValue(
             value: initial,
+          ),
+        ),
+      );
+
+  @override
+  T? color<T>({
+    required String label,
+    String? description,
+    required T initial,
+    List<Option<T>> options = const [],
+    bool enabled = true,
+  }) =>
+      _knobs._addKnob(
+        NullableKnob(
+          enabled: enabled,
+          label: label,
+          description: description,
+          knobValue: ColorKnobValue(
+            value: initial,
+            options: options,
           ),
         ),
       );

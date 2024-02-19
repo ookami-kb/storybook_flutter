@@ -68,6 +68,15 @@ abstract class KnobsBuilder {
     required T initial,
     List<Option<T>> options = const [],
   });
+
+  /// Creates select field with [label], [description], [initial] value and
+  /// list of [options].
+  T color<T>({
+    required String label,
+    String? description,
+    required T initial,
+    List<Option<T>> options = const [],
+  });
 }
 
 /// {@template nullable_knobs_builder}
@@ -127,4 +136,13 @@ abstract class NullableKnobsBuilder {
     List<Option<T>> options = const [],
     bool enabled = true,
   });
+
+  T? color<T>({
+    required String label,
+    String? description,
+    required T initial,
+    List<Option<T>> options = const [],
+    bool enabled = true,
+  });
+
 }
