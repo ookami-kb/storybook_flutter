@@ -19,7 +19,7 @@ Widget simpleStorybook(String initialStory) => Storybook(
             onPressed: () {},
             child: Text(context.knobs.text(label: 'Text', initial: 'Push me')),
           ),
-        )
+        ),
       ],
     );
 

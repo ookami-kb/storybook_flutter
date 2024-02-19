@@ -8,7 +8,7 @@ void main() => testStorybook(
         (
           device: Devices.ios.iPhone13,
           orientation: Orientation.portrait,
-          isFrameVisible: true,
+          isFrameVisible: false,
         ),
         (
           device: Devices.ios.iPadPro11Inches,

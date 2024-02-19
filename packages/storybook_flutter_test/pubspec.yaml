@@ -16,7 +16,7 @@ dependencies:
   storybook_flutter: ^0.14.0
 
 dev_dependencies:
-  mews_pedantic: ^0.16.0
+  mews_pedantic: ^0.23.0
 
 flutter:
   uses-material-design: true
