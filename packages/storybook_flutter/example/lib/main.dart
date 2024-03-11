@@ -110,6 +110,15 @@ class MyApp extends StatelessWidget {
             builder: (context) => const Center(child: Text('Fourth')),
           ),
           Story(
+            name: 'Story/Logging',
+            builder: (context) => Center(
+              child: ElevatedButton(
+                onPressed: () => context.logger.log('This is a test message'),
+                child: const Text('Log something'),
+              ),
+            ),
+          ),
+          Story(
             name: 'Story without a category',
             builder: (context) => const Center(child: Text('Simple text')),
           ),

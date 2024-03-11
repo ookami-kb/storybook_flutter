@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
+import 'package:storybook_flutter/src/plugins/logging.dart';
 import 'package:storybook_flutter/src/plugins/plugin.dart';
 import 'package:storybook_flutter/src/plugins/plugin_panel.dart';
 import 'package:storybook_flutter/src/story.dart';
@@ -36,6 +37,7 @@ class Storybook extends StatefulWidget {
           LayoutPlugin(initialLayout),
           const ContentsPlugin(),
           const KnobsPlugin(),
+          const LoggingPlugin(),
           ...plugins ?? _defaultPlugins,
         ]),
         stories = UnmodifiableListView(stories);
