@@ -1,4 +1,4 @@
-import 'package:storybook_flutter/src/knobs/select_knob.dart';
+import 'package:storybook_flutter/src/knobs/knobs.dart';
 
 /// {@template knobs_builder}
 /// Provides helper methods for creating knobs: control elements
@@ -68,6 +68,10 @@ abstract class KnobsBuilder {
     required T initial,
     List<Option<T>> options = const [],
   });
+
+  /// Allows to add a custom knob.
+  /// Using the convenience functions (boolean, text, ...) is recommended.
+  T addKnob<T>(Knob<T> knob);
 }
 
 /// {@template nullable_knobs_builder}

@@ -126,6 +126,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
 
   /// Allows to add a knob to the current story.
   /// Using the convenience functions (boolean, text, ...) is recommended.
+  @override
   T addKnob<T>(Knob<T> value) {
     // ignore: avoid-non-null-assertion, having null here is a bug
     final story = _storyNotifier.currentStory!;
