@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart' show DefaultCupertinoLocalizations;
 import 'package:flutter/material.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:provider/provider.dart';
@@ -48,6 +49,7 @@ class _PluginPanelState extends State<PluginPanel> {
                 delegates: const [
                   DefaultMaterialLocalizations.delegate,
                   DefaultWidgetsLocalizations.delegate,
+                  DefaultCupertinoLocalizations.delegate,
                 ],
                 locale: const Locale('en', 'US'),
                 child: Dialog(

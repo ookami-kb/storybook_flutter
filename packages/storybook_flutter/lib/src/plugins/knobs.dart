@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart' show DefaultCupertinoLocalizations;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:storybook_flutter/src/knobs/knobs.dart';
@@ -66,6 +67,7 @@ Widget _buildWrapper(BuildContext context, Widget? child) =>
                             delegates: const [
                               DefaultMaterialLocalizations.delegate,
                               DefaultWidgetsLocalizations.delegate,
+                              DefaultCupertinoLocalizations.delegate,
                             ],
                             locale: const Locale('en', 'US'),
                             child: Navigator(
