@@ -22,7 +22,7 @@ abstract interface class Logger {
 
 class LoggingNotifier extends ChangeNotifier implements Logger {
   final _logs = <String>[];
-  var _panelVisible = false;
+  bool _panelVisible = false;
 
   List<String> get logs => List.unmodifiable(_logs);
 
@@ -44,7 +44,7 @@ extension Logging on BuildContext {
   Logger get logger => read<LoggingNotifier>();
 }
 
-Widget? _buildIcon(BuildContext context) => const Icon(
+Widget _buildIcon(BuildContext context) => const Icon(
       Icons.format_quote,
       semanticLabel: 'Log output',
     );
