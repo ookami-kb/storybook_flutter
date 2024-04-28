@@ -1,3 +1,11 @@
+## 0.14.1
+
+ - **REFACTOR**: update flutter and mews_pedantic (#134).
+ - **FIX**: add missing Cupertino localisations (#137).
+ - **FEAT**: Add addKnob method to KnobsBuilder (#136).
+ - **FEAT**(plugins): add logging plugin that allows writing logs to storybook (#131).
+ - **FEAT**: allow addKnob to be called from outside (#130).
+
 ## 0.14.0
 
 > Note: This release has breaking changes.
