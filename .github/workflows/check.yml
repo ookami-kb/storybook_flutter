@@ -22,7 +22,7 @@ jobs:
       - run: melos run check_master
       - name: Store failure artifacts
         if: ${{ failure() }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: golden-test-failure
           path: "**/test/failures/"
